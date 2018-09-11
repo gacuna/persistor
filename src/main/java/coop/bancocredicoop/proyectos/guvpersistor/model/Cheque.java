@@ -1,11 +1,14 @@
 package coop.bancocredicoop.proyectos.guvpersistor.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-public class Cheque implements Jsoneable, Serializable {
+@Entity
+public class Cheque implements Serializable {
 
+    @Id
     private Long id;
-    private String cmc7;
+    private String activo;
 
     public Cheque() {}
 
@@ -17,11 +20,15 @@ public class Cheque implements Jsoneable, Serializable {
         this.id = id;
     }
 
-    public String getCmc7() {
-        return cmc7;
+    public String getActivo() {
+        return activo;
     }
 
-    public void setCmc7(String cmc7) {
-        this.cmc7 = cmc7;
+    public void setActivo(String activo) {
+        this.activo = activo;
+    }
+
+    public Cheque(Long id){
+        this.id = id;
     }
 }

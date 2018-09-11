@@ -1,7 +1,6 @@
 package coop.bancocredicoop.proyectos.guvpersistor.config;
 
 import coop.bancocredicoop.proyectos.guvpersistor.model.Cheque;
-import coop.bancocredicoop.proyectos.guvpersistor.model.Jsoneable;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
