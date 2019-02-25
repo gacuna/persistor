@@ -1,6 +1,5 @@
 package coop.bancocredicoop.guv.persistor.config;
 
-import coop.bancocredicoop.guv.persistor.models.Jsonable;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
