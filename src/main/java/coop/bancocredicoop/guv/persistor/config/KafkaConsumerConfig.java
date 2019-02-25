@@ -1,7 +1,7 @@
 package coop.bancocredicoop.guv.persistor.config;
 
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import coop.bancocredicoop.guv.persistor.models.Jsonable;
+import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +11,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,19 +27,20 @@ public class KafkaConsumerConfig {
     private String groupId;
 
     @Bean
-    public ConsumerFactory<String, Jsonable> jsonableConsumerFactory() {
+    public ConsumerFactory<String, Correccion> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        return new DefaultKafkaConsumerFactory<>(props);
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
+                new JsonDeserializer<>(Correccion.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Jsonable> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Jsonable> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(jsonableConsumerFactory());
+    public ConcurrentKafkaListenerContainerFactory<String, Correccion> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Correccion> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 }

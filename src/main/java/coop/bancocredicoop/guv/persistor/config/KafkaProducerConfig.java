@@ -1,7 +1,6 @@
 package coop.bancocredicoop.guv.persistor.config;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
-import coop.bancocredicoop.guv.persistor.models.Jsonable;
+import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class KafkaProducerConfig {
     private String bootstrapAddress;
 
     @Bean
-    public ProducerFactory<String, Jsonable> jsonableProducerFactory() {
+    public ProducerFactory<String, Correccion> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -30,7 +30,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, Jsonable> jsonableKafkaTemplate() {
-        return new KafkaTemplate<>(jsonableProducerFactory());
+    public KafkaTemplate<String, Correccion> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
     }
 }
