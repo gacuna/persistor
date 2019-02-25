@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class KafkaConsumer {
 
     @KafkaListener(topics = "correcciones_topic", groupId = "${kafka.groupId}")
-    public void consume(Correccion message) {
-        System.out.println("Consumed message: " + message);
+    public void consume(Correccion correccion) {
+        System.out.println("Cheque Id: " + correccion.getId() + ", importe: " + correccion.getImporte());
     }
 }

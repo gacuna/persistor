@@ -7,6 +7,8 @@ import java.util.Date;
 
 public class CorreccionImporte extends Correccion {
 
+    public CorreccionImporte() {}
+
     public CorreccionImporte(Long id, BigDecimal importe, Date fechaDiferida, String cuit, Integer codMoneda, CMC7 cmc7) {
         super(id, importe, fechaDiferida, cuit, codMoneda, cmc7);
     }
