@@ -11,7 +11,7 @@ import static coop.bancocredicoop.guv.persistor.utils.SpringExtension.SPRING_EXT
 
 @Configuration
 @ComponentScan
-public class Config {
+public class AkkaConfig {
 
     @Autowired
     private ApplicationContext applicationContext;

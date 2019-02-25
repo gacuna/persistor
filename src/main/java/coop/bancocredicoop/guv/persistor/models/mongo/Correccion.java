@@ -18,7 +18,6 @@ public abstract class Correccion implements Serializable {
     protected String cuit;
     protected Integer codMoneda;
     protected CMC7 cmc7;
-    @Indexed(name = "expire_at_120_seconds", expireAfterSeconds = 120)
     protected LocalDateTime createdAt;
 
     public Correccion() {}
