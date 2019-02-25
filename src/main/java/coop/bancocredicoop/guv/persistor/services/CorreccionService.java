@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 
 @Service
 public class CorreccionService {
-
+    /*
     @Autowired
     private CorreccionImporteRepository importeRepository;
 
@@ -77,10 +77,6 @@ public class CorreccionService {
             default:
                 return Flux.empty();
         }
-    }
+    }*/
 
-    private Correccion setTTL(Correccion correccion){
-        correccion.setCreatedAt(LocalDateTime.now());
-        return correccion;
-    }
 }
