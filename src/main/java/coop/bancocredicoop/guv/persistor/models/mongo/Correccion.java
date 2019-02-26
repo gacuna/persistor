@@ -1,7 +1,6 @@
 package coop.bancocredicoop.guv.persistor.models.mongo;
 
 import coop.bancocredicoop.guv.persistor.models.CMC7;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document
-public abstract class Correccion implements Serializable {
+public class Correccion implements Serializable {
 
     protected Long id;
     protected BigDecimal importe;
@@ -62,5 +61,18 @@ public abstract class Correccion implements Serializable {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Correccion{" +
+                "id=" + id +
+                ", importe=" + importe +
+                ", fechaDiferida=" + fechaDiferida +
+                ", cuit='" + cuit + '\'' +
+                ", codMoneda=" + codMoneda +
+                ", cmc7=" + cmc7 +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

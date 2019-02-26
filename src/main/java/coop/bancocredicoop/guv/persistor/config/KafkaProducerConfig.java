@@ -1,6 +1,6 @@
 package coop.bancocredicoop.guv.persistor.config;
 
-import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
+import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +21,7 @@ public class KafkaProducerConfig {
     private String bootstrapAddress;
 
     @Bean
-    public ProducerFactory<String, Correccion> producerFactory() {
+    public ProducerFactory<String, UpdateMessage> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -30,7 +30,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, Correccion> kafkaTemplate() {
+    public KafkaTemplate<String, UpdateMessage> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

@@ -79,4 +79,9 @@ public class CorreccionService {
         }
     }*/
 
+    public void update(Correccion correccion) throws Exception {
+        //TODO Implementar un metodo como la gente, esto es para probar el circuito
+        System.out.println("UPDATE CHEQUE SET IMPORTE = " + correccion.getImporte() + " WHERE ID = " + correccion.getId());
+    }
+
 }

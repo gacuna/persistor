@@ -1,7 +1,7 @@
 package coop.bancocredicoop.guv.persistor.controllers.api;
 
+import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
-import coop.bancocredicoop.guv.persistor.models.mongo.CorreccionImporte;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +19,13 @@ public class PersistorController {
     private CorreccionService correccionService;
 
     @Autowired
-    private KafkaTemplate<String, Correccion> template;
+    private KafkaTemplate<String, UpdateMessage> template;
 
     private static Logger log = LoggerFactory.getLogger(PersistorController.class);
 
     @PostMapping
-    public Mono<String> save(@RequestBody CorreccionImporte correccion) {
-        this.template.send("correccion_topic", correccion);
+    public Mono<String> save(@RequestBody Correccion correccion) {
+        this.template.send("correccion_topic", new UpdateMessage("importe", correccion));
         return Mono.just("OK");
     }
 

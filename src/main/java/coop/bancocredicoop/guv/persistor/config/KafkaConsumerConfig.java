@@ -1,5 +1,6 @@
 package coop.bancocredicoop.guv.persistor.config;
 
+import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -26,20 +27,21 @@ public class KafkaConsumerConfig {
     private String groupId;
 
     @Bean
-    public ConsumerFactory<String, Correccion> consumerFactory() {
+    public ConsumerFactory<String, UpdateMessage> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
-                new JsonDeserializer<>(Correccion.class));
+                new JsonDeserializer<>(UpdateMessage.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Correccion> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Correccion> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, UpdateMessage> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, UpdateMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
+
 }
