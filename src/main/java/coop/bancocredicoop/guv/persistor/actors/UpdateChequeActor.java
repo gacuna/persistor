@@ -1,6 +1,8 @@
 package coop.bancocredicoop.guv.persistor.actors;
 
 import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
 import akka.actor.PoisonPill;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
@@ -16,6 +18,10 @@ import static io.vavr.API.*;
 import static io.vavr.Patterns.$Failure;
 import static io.vavr.Patterns.$Success;
 
+import java.util.UUID;
+
+import static coop.bancocredicoop.guv.persistor.utils.SpringExtension.SPRING_EXTENSION_PROVIDER;
+
 @Component("updateChequeActor")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class UpdateChequeActor extends AbstractActor {
@@ -25,31 +31,37 @@ public class UpdateChequeActor extends AbstractActor {
     @Autowired
     private CorreccionService service;
 
+    @Autowired
+    private ActorSystem system;
+
     public UpdateChequeActor() {}
 
     @Override
     public Receive createReceive() {
         return receiveBuilder()
             .match(UpdateMessage.class, msg -> {
+                logger.info("Mensaje de actualizacion de importe recibo");
                 Try<String> _try = Match(msg.getType()).of(
                         Case($("importe"), (o) -> this.service.update(msg.getCorreccion())),
-                        Case($("cmc7"), (o) -> this.service.update(msg.getCorreccion()))
+                        Case($("cmc7"), (o) -> this.service.update(msg.getCorreccion())),
+                        Case($("fecha"), (o) -> this.service.update(msg.getCorreccion())),
+                        Case($("cuit"), (o) -> this.service.update(msg.getCorreccion()))
                 );
 
                 Match(_try).of(
                         Case($Success($()), o -> {
                             logger.info("update service OK");
-                            return x.apply("OK");
+                            final ActorRef postUpdateActor = system.actorOf(
+                                    SPRING_EXTENSION_PROVIDER.get(system).props("postUpdateActor"),
+                                    "postUpdateActor_" + UUID.randomUUID());
+                            postUpdateActor.tell(msg, ActorRef.noSender());
+                            return Success("OK");
                         }),
                         Case($Failure($()), o -> {
                             logger.error("update service ERROR", o);
-                            return x.apply("ERROR");
+                            return Failure(o);
                         })
-                ).map(x -> {
-                    logger.info("Mensaje de actualizacion de importe recibo");
-                    getSelf().tell("KILL-CHEQUE-ACTOR", getSelf());
-                    return x;
-                });
+                ).andFinally(() -> getSelf().tell("KILL-CHEQUE-ACTOR", getSelf()));
             })
             .match(String.class, msg -> {
                 logger.info("Mensaje de envenenamiento: " + msg + " -> pildora recibida!");
@@ -58,7 +70,5 @@ public class UpdateChequeActor extends AbstractActor {
             .matchAny(o -> logger.error("Tipo de mensaje desconocido"))
             .build();
     }
-
-    private Function1<String, Option<String>> x = (status) -> Some(status);
 
 }

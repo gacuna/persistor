@@ -1,31 +1,49 @@
 package coop.bancocredicoop.guv.persistor.actors;
 
 import akka.actor.AbstractActor;
+import akka.actor.PoisonPill;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
+import coop.bancocredicoop.guv.persistor.services.CorreccionService;
+import io.vavr.API;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
+import static io.vavr.Predicates.instanceOf;
+
+@Component("postUpdateActor")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class PostUpdateActor extends AbstractActor {
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().getSystem(), this);
 
+    @Autowired
+    private CorreccionService service;
+
     @Override
     public Receive createReceive() {
         return receiveBuilder()
-                .match(AfterImporteUpdateMessage.class, msg -> {
-                    //TODO Llamar al servicio de post procesamiento adecuado, por ej. para ejecutar un post al backend de guv
+                .match(UpdateMessage.class, msg -> {
+                    this.service.verificacionDepositoBackgroundPost(msg.getCorreccion())
+                        .recover(e -> API.Match(e).of(
+                            Case($(instanceOf(Exception.class)), te -> logAndReturnStatus(te))
+                        ))
+                        .andFinally(() -> getSelf().tell(PoisonPill.getInstance(), getSelf()));
                 })
-                .matchAny(o -> logger.error("Tipo de mensaje desconocido"))
+                .matchAny(o -> {
+                    logger.error("Tipo de mensaje desconocido");
+                    getSelf().tell(PoisonPill.getInstance(), getSelf());
+                })
                 .build();
     }
 
-    public static class AfterImporteUpdateMessage {}
-    public static class AfterCuitUpdateMessage {}
-    public static class AfterCMC7UpdateMessage {}
-    public static class AfterFechaUpdateMessage {}
-
+    private Integer logAndReturnStatus(Exception e) {
+        logger.error("Error al enviar request al servicio de verificacion de deposito");
+        logger.error(e.getMessage());
+        return -1;
+    }
 }
