@@ -23,9 +23,9 @@ public class PersistorController {
 
     private static Logger log = LoggerFactory.getLogger(PersistorController.class);
 
-    @PostMapping
-    public Mono<String> save(@RequestBody Correccion correccion) {
-        this.template.send("correccion_topic", new UpdateMessage("importe", correccion));
+    @PostMapping("/{type}")
+    public Mono<String> save(@PathVariable String type, @RequestBody Correccion correccion) {
+        this.template.send("correccion_topic", new UpdateMessage(type, correccion));
         return Mono.just("OK");
     }
 

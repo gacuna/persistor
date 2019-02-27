@@ -1,5 +1,7 @@
 package coop.bancocredicoop.guv.persistor.services;
 
+import coop.bancocredicoop.guv.persistor.models.mongo.CorreccionImporte;
+import io.vavr.Function1;
 import io.vavr.control.Try;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -23,11 +25,42 @@ public class CorreccionService {
      * @param correccion
      * @return
      */
-    public Try<String> update(Correccion correccion) {
+    public Try<String> update(Function1<Correccion, String> f, Correccion correccion) {
         //TODO Implementar un metodo como la gente, esto es para probar el circuito
-        System.out.println("UPDATE CHEQUE SET IMPORTE = " + correccion.getImporte() + " WHERE ID = " + correccion.getId());
-        return Success("OK");
+        return Try.of(() -> f.apply(correccion));
     }
+
+    public Function1<Correccion, String> updateImporte = new Function1<Correccion, String>(){
+        @Override
+        public String apply(Correccion correccion) {
+            System.out.println("UPDATE CHEQUE SET IMPORTE = " + correccion.getImporte() + " WHERE ID = " + correccion.getId());
+            return "OK";
+        }
+    };
+
+    public Function1<Correccion, String> updateCMC7 = new Function1<Correccion, String>(){
+        @Override
+        public String apply(Correccion correccion) {
+            System.out.println("UPDATE CHEQUE SET CMC7 = " + correccion.getCmc7() + " WHERE ID = " + correccion.getId());
+            return "OK";
+        }
+    };
+
+    public Function1<Correccion, String> updateCUIT = new Function1<Correccion, String>(){
+        @Override
+        public String apply(Correccion correccion) {
+            System.out.println("UPDATE CHEQUE SET CUIT = " + correccion.getCuit() + " WHERE ID = " + correccion.getId());
+            return "OK";
+        }
+    };
+
+    public Function1<Correccion, String> updateFecha = new Function1<Correccion, String>(){
+        @Override
+        public String apply(Correccion correccion) {
+            System.out.println("UPDATE CHEQUE SET FECHA = " + correccion.getFechaDiferida() + " WHERE ID = " + correccion.getId());
+            return "OK";
+        }
+    };
 
     /**
      * Envia un mensaje de verificacion del estado del deposito al backend de GUV, utilizando el verbo HTTP POST.

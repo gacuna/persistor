@@ -7,16 +7,12 @@ import akka.actor.PoisonPill;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
-import io.vavr.Function1;
-import io.vavr.control.Option;
 import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import static io.vavr.API.*;
-import static io.vavr.Patterns.$Failure;
-import static io.vavr.Patterns.$Success;
 
 import java.util.UUID;
 
@@ -41,27 +37,17 @@ public class UpdateChequeActor extends AbstractActor {
         return receiveBuilder()
             .match(UpdateMessage.class, msg -> {
                 logger.info("Mensaje de actualizacion de importe recibo");
-                Try<String> _try = Match(msg.getType()).of(
-                        Case($("importe"), (o) -> this.service.update(msg.getCorreccion())),
-                        Case($("cmc7"), (o) -> this.service.update(msg.getCorreccion())),
-                        Case($("fecha"), (o) -> this.service.update(msg.getCorreccion())),
-                        Case($("cuit"), (o) -> this.service.update(msg.getCorreccion()))
-                );
+                Match(msg.getType()).of(
+                        Case($("importe"), (o) -> this.service.update(this.service.updateImporte, msg.getCorreccion())),
+                        Case($("cmc7"), (o) -> this.service.update(this.service.updateCMC7, msg.getCorreccion())),
+                        Case($("fecha"), (o) -> this.service.update(this.service.updateFecha, msg.getCorreccion())),
+                        Case($("cuit"), (o) -> this.service.update(this.service.updateCUIT, msg.getCorreccion()))
+                ).recover(e -> logAndReturn(e)).andThen(() -> {
+                    logger.info("update service OK");
+                    final ActorRef postUpdateActor = system.actorOf(SPRING_EXTENSION_PROVIDER.get(system).props("postUpdateActor"), "postUpdateActor_" + UUID.randomUUID());
+                    postUpdateActor.tell(msg, ActorRef.noSender());
+                }).andFinally(() -> getSelf().tell("KILL-CHEQUE-ACTOR", getSelf()));
 
-                Match(_try).of(
-                        Case($Success($()), o -> {
-                            logger.info("update service OK");
-                            final ActorRef postUpdateActor = system.actorOf(
-                                    SPRING_EXTENSION_PROVIDER.get(system).props("postUpdateActor"),
-                                    "postUpdateActor_" + UUID.randomUUID());
-                            postUpdateActor.tell(msg, ActorRef.noSender());
-                            return Success("OK");
-                        }),
-                        Case($Failure($()), o -> {
-                            logger.error("update service ERROR", o);
-                            return Failure(o);
-                        })
-                ).andFinally(() -> getSelf().tell("KILL-CHEQUE-ACTOR", getSelf()));
             })
             .match(String.class, msg -> {
                 logger.info("Mensaje de envenenamiento: " + msg + " -> pildora recibida!");
@@ -71,4 +57,9 @@ public class UpdateChequeActor extends AbstractActor {
             .build();
     }
 
+    private String logAndReturn(Throwable e) {
+        logger.error("Error al actualizar los datos del cheque");
+        logger.error(e.getMessage());
+        return "ERROR";
+    }
 }
