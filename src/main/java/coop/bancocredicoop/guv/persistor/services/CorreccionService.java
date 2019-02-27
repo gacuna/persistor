@@ -6,6 +6,7 @@ import coop.bancocredicoop.guv.persistor.repositories.mongo.CorreccionCMC7Reposi
 import coop.bancocredicoop.guv.persistor.repositories.mongo.CorreccionCUITRepository;
 import coop.bancocredicoop.guv.persistor.repositories.mongo.CorreccionFechaRepository;
 import coop.bancocredicoop.guv.persistor.repositories.mongo.CorreccionImporteRepository;
+import io.vavr.control.Try;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 
 import java.time.LocalDateTime;
+
+import static io.vavr.API.Success;
 
 @Service
 public class CorreccionService {
@@ -79,9 +82,10 @@ public class CorreccionService {
         }
     }*/
 
-    public void update(Correccion correccion) throws Exception {
+    public Try<String> update(Correccion correccion) {
         //TODO Implementar un metodo como la gente, esto es para probar el circuito
         System.out.println("UPDATE CHEQUE SET IMPORTE = " + correccion.getImporte() + " WHERE ID = " + correccion.getId());
+        return Success("OK");
     }
 
 }
