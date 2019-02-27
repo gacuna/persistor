@@ -157,4 +157,11 @@ public class Cheque implements Serializable {
         CUIT
     }
 
+    public CMC7 getCmc7() {
+        return cmc7;
+    }
+
+    public void setCmc7(CMC7 cmc7) {
+        this.cmc7 = cmc7;
+    }
 }

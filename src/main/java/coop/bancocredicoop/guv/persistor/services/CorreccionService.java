@@ -1,7 +1,9 @@
 package coop.bancocredicoop.guv.persistor.services;
 
-import coop.bancocredicoop.guv.persistor.models.mongo.CorreccionImporte;
-import io.vavr.Function1;
+import coop.bancocredicoop.guv.persistor.models.Cheque;
+import coop.bancocredicoop.guv.persistor.repositories.ChequeRepository;
+import io.vavr.Function2;
+import io.vavr.concurrent.Future;
 import io.vavr.control.Try;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -9,10 +11,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import static io.vavr.API.Success;
 
 @Service
 public class CorreccionService {
@@ -20,46 +21,39 @@ public class CorreccionService {
     @Value(value = "${guv.web.url}")
     private String guvUrl;
 
+    @Autowired
+    private ChequeRepository repository;
+
     /**
      *
      * @param correccion
      * @return
      */
-    public Try<String> update(Function1<Correccion, String> f, Correccion correccion) {
-        //TODO Implementar un metodo como la gente, esto es para probar el circuito
-        return Try.of(() -> f.apply(correccion));
+    public Future<Cheque> update(Function2<Correccion, Cheque, Cheque> f, Correccion correccion) {
+        //TODO Mejorar con un pattern matching y loguear si no hay un cheque con ese id
+        return Future.of(() -> this.repository.findById(correccion.getId()))
+              .map(cheque -> f.apply(correccion, cheque.get()))
+              .map(cheque -> this.repository.save(cheque));
     }
 
-    public Function1<Correccion, String> updateImporte = new Function1<Correccion, String>(){
-        @Override
-        public String apply(Correccion correccion) {
-            System.out.println("UPDATE CHEQUE SET IMPORTE = " + correccion.getImporte() + " WHERE ID = " + correccion.getId());
-            return "OK";
-        }
+    public Function2<Correccion, Cheque, Cheque> updateImporte = (correccion, cheque) -> {
+        cheque.setImporte(correccion.getImporte());
+        return cheque;
     };
 
-    public Function1<Correccion, String> updateCMC7 = new Function1<Correccion, String>(){
-        @Override
-        public String apply(Correccion correccion) {
-            System.out.println("UPDATE CHEQUE SET CMC7 = " + correccion.getCmc7() + " WHERE ID = " + correccion.getId());
-            return "OK";
-        }
+    public Function2<Correccion, Cheque, Cheque> updateCmc7 = (correccion, cheque) -> {
+        cheque.setCmc7(correccion.getCmc7());
+        return cheque;
     };
 
-    public Function1<Correccion, String> updateCUIT = new Function1<Correccion, String>(){
-        @Override
-        public String apply(Correccion correccion) {
-            System.out.println("UPDATE CHEQUE SET CUIT = " + correccion.getCuit() + " WHERE ID = " + correccion.getId());
-            return "OK";
-        }
+    public Function2<Correccion, Cheque, Cheque> updateFecha = (correccion, cheque) -> {
+        cheque.setFechaDiferida(correccion.getFechaDiferida());
+        return cheque;
     };
 
-    public Function1<Correccion, String> updateFecha = new Function1<Correccion, String>(){
-        @Override
-        public String apply(Correccion correccion) {
-            System.out.println("UPDATE CHEQUE SET FECHA = " + correccion.getFechaDiferida() + " WHERE ID = " + correccion.getId());
-            return "OK";
-        }
+    public Function2<Correccion, Cheque, Cheque> updateCuit = (correccion, cheque) -> {
+        cheque.setCuit(correccion.getCuit());
+        return cheque;
     };
 
     /**

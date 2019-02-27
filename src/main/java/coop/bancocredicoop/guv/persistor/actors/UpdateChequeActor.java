@@ -6,7 +6,9 @@ import akka.actor.ActorSystem;
 import akka.actor.PoisonPill;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
+import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
+import io.vavr.concurrent.Future;
 import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -39,15 +41,16 @@ public class UpdateChequeActor extends AbstractActor {
                 logger.info("Mensaje de actualizacion de importe recibo");
                 Match(msg.getType()).of(
                         Case($("importe"), (o) -> this.service.update(this.service.updateImporte, msg.getCorreccion())),
-                        Case($("cmc7"), (o) -> this.service.update(this.service.updateCMC7, msg.getCorreccion())),
+                        Case($("cmc7"), (o) -> this.service.update(this.service.updateCmc7, msg.getCorreccion())),
                         Case($("fecha"), (o) -> this.service.update(this.service.updateFecha, msg.getCorreccion())),
-                        Case($("cuit"), (o) -> this.service.update(this.service.updateCUIT, msg.getCorreccion()))
-                ).recover(e -> logAndReturn(e)).andThen(() -> {
-                    logger.info("update service OK");
+                        Case($("cuit"), (o) -> this.service.update(this.service.updateCuit, msg.getCorreccion())))
+                .onFailure((e) -> logAndReturn(e))
+                .onSuccess((cheque) -> logger.info("cheque con id {} fue actualizado correctamente", cheque.getId()))
+                .onComplete((s) -> {
                     final ActorRef postUpdateActor = system.actorOf(SPRING_EXTENSION_PROVIDER.get(system).props("postUpdateActor"), "postUpdateActor_" + UUID.randomUUID());
                     postUpdateActor.tell(msg, ActorRef.noSender());
-                }).andFinally(() -> getSelf().tell("KILL-CHEQUE-ACTOR", getSelf()));
-
+                    getSelf().tell("KILL-CHEQUE-ACTOR", getSelf());
+                });
             })
             .match(String.class, msg -> {
                 logger.info("Mensaje de envenenamiento: " + msg + " -> pildora recibida!");
@@ -60,6 +63,6 @@ public class UpdateChequeActor extends AbstractActor {
     private String logAndReturn(Throwable e) {
         logger.error("Error al actualizar los datos del cheque");
         logger.error(e.getMessage());
-        return "ERROR";
+        return "OK";
     }
 }
