@@ -3,12 +3,15 @@ package coop.bancocredicoop.guv.persistor.controllers.api;
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
+import io.vavr.Function1;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import static io.vavr.API.*;
 
 @CrossOrigin
 @RestController
@@ -25,6 +28,7 @@ public class PersistorController {
 
     @PostMapping("/{type}")
     public Mono<String> save(@PathVariable String type, @RequestBody Correccion correccion) {
+        correccion = this.correccionService.chequearTruncamientoAndApply(type, this.correccionService.truncarSiSuperaImporteTruncamiento, correccion);
         this.template.send("correccion_topic", new UpdateMessage(type, correccion));
         return Mono.just("OK");
     }

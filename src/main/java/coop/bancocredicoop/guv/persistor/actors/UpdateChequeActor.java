@@ -6,15 +6,13 @@ import akka.actor.ActorSystem;
 import akka.actor.PoisonPill;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
-import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
-import io.vavr.concurrent.Future;
-import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import static io.vavr.API.*;
+import static coop.bancocredicoop.guv.persistor.utils.CorreccionUtils.*;
 
 import java.util.UUID;
 
@@ -40,10 +38,10 @@ public class UpdateChequeActor extends AbstractActor {
             .match(UpdateMessage.class, msg -> {
                 logger.info("Mensaje de actualizacion de importe recibo");
                 Match(msg.getType()).of(
-                        Case($("importe"), (o) -> this.service.update(this.service.updateImporte, msg.getCorreccion())),
-                        Case($("cmc7"), (o) -> this.service.update(this.service.updateCmc7, msg.getCorreccion())),
-                        Case($("fecha"), (o) -> this.service.update(this.service.updateFecha, msg.getCorreccion())),
-                        Case($("cuit"), (o) -> this.service.update(this.service.updateCuit, msg.getCorreccion())))
+                        Case($("importe"), (o) -> this.service.update(updateImporte, msg.getCorreccion())),
+                        Case($("cmc7"), (o) -> this.service.update(updateCmc7, msg.getCorreccion())),
+                        Case($("fecha"), (o) -> this.service.update(updateFecha, msg.getCorreccion())),
+                        Case($("cuit"), (o) -> this.service.update(updateCuit, msg.getCorreccion())))
                 .onFailure((e) -> logAndReturn(e))
                 .onSuccess((cheque) -> logger.info("cheque con id {} fue actualizado correctamente", cheque.getId()))
                 .onComplete((s) -> {

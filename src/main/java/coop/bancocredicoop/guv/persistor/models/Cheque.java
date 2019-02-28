@@ -13,6 +13,13 @@ import java.util.Set;
 @Entity
 public class Cheque implements Serializable {
 
+    public enum Observacion {
+        CMC7,
+        IMPORTE,
+        FECHA,
+        CUIT
+    }
+
     @Id
     private Long id;
 
@@ -47,6 +54,9 @@ public class Cheque implements Serializable {
 
     @Column(name = "numero")
     private BigInteger numero;
+
+    @Column(name = "truncado")
+    private Boolean truncado;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Observacion> observaciones;
@@ -150,18 +160,19 @@ public class Cheque implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public enum Observacion {
-        CMC7,
-        IMPORTE,
-        FECHA,
-        CUIT
-    }
-
     public CMC7 getCmc7() {
         return cmc7;
     }
 
     public void setCmc7(CMC7 cmc7) {
         this.cmc7 = cmc7;
+    }
+
+    public Boolean getTruncado() {
+        return truncado;
+    }
+
+    public void setTruncado(Boolean truncado) {
+        this.truncado = truncado;
     }
 }

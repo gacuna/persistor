@@ -19,6 +19,7 @@ public class Correccion implements Serializable {
     protected CMC7 cmc7;
     protected String token;
     protected LocalDateTime createdAt;
+    protected Boolean truncado;
 
     public Correccion() {}
 
@@ -65,6 +66,14 @@ public class Correccion implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public Boolean getTruncado() {
+        return truncado;
+    }
+
+    public void setTruncado(Boolean truncado) {
+        this.truncado = truncado;
+    }
+
     @Override
     public String toString() {
         return "Correccion{" +
@@ -74,6 +83,7 @@ public class Correccion implements Serializable {
                 ", cuit='" + cuit + '\'' +
                 ", codMoneda=" + codMoneda +
                 ", cmc7=" + cmc7 +
+                ", truncado=" + truncado +
                 ", createdAt=" + createdAt +
                 '}';
     }

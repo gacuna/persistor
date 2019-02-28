@@ -2,6 +2,8 @@ package coop.bancocredicoop.guv.persistor.services;
 
 import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.repositories.ChequeRepository;
+import coop.bancocredicoop.guv.persistor.utils.GuvConfigEnum;
+import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.concurrent.Future;
 import io.vavr.control.Try;
@@ -15,14 +17,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
+
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
+import static io.vavr.API.Match;
+
 @Service
 public class CorreccionService {
 
-    @Value(value = "${guv.web.url}")
+    @Value(value = "${guv-web.url}")
     private String guvUrl;
+
+    @Value(value = "${guv-web.verificacion.deposito.endpoint}")
+    private String verificacionDepositoEndpoint;
 
     @Autowired
     private ChequeRepository repository;
+
+    @Autowired
+    private GuvConfigService guvConfigService;
+
+    private BigDecimal importeTruncamiento;
+
+    @PostConstruct
+    private void loadParameters() {
+        this.importeTruncamiento = this.guvConfigService.getProperty(GuvConfigEnum.IMPORTE_TRUCAMIENTO, BigDecimal.class);
+    }
 
     /**
      *
@@ -36,26 +58,6 @@ public class CorreccionService {
               .map(cheque -> this.repository.save(cheque));
     }
 
-    public Function2<Correccion, Cheque, Cheque> updateImporte = (correccion, cheque) -> {
-        cheque.setImporte(correccion.getImporte());
-        return cheque;
-    };
-
-    public Function2<Correccion, Cheque, Cheque> updateCmc7 = (correccion, cheque) -> {
-        cheque.setCmc7(correccion.getCmc7());
-        return cheque;
-    };
-
-    public Function2<Correccion, Cheque, Cheque> updateFecha = (correccion, cheque) -> {
-        cheque.setFechaDiferida(correccion.getFechaDiferida());
-        return cheque;
-    };
-
-    public Function2<Correccion, Cheque, Cheque> updateCuit = (correccion, cheque) -> {
-        cheque.setCuit(correccion.getCuit());
-        return cheque;
-    };
-
     /**
      * Envia un mensaje de verificacion del estado del deposito al backend de GUV, utilizando el verbo HTTP POST.
      *
@@ -65,7 +67,7 @@ public class CorreccionService {
     public Try<Integer> verificacionDepositoBackgroundPost(Correccion correccion) {
         return Try.of(() -> {
             try(CloseableHttpClient client = HttpClients.createDefault()){
-                HttpPost post = new HttpPost(guvUrl + "camenviada/correccion/verificar_deposito");
+                HttpPost post = new HttpPost(guvUrl + verificacionDepositoEndpoint);
                 String json = "{\"id\": " + correccion.getId() + "}";
                 StringEntity body = new StringEntity(json);
                 post.setEntity(body);
@@ -79,5 +81,17 @@ public class CorreccionService {
             }
         });
     }
+
+    public Correccion chequearTruncamientoAndApply(String type, Function1<Correccion, Correccion> f, Correccion correccion) {
+        return Match(type).of(
+                Case($("importe"), f.apply(correccion)),
+                Case($(), correccion)
+        );
+    }
+
+    public Function1<Correccion, Correccion> truncarSiSuperaImporteTruncamiento = (Correccion correccion) -> {
+        correccion.setTruncado(this.importeTruncamiento.compareTo(correccion.getImporte()) > 0);
+        return correccion;
+    };
 
 }
