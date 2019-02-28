@@ -42,7 +42,7 @@ public class UpdateChequeActor extends AbstractActor {
                         Case($("cmc7"), (o) -> this.service.update(updateCmc7, msg.getCorreccion())),
                         Case($("fecha"), (o) -> this.service.update(updateFecha, msg.getCorreccion())),
                         Case($("cuit"), (o) -> this.service.update(updateCuit, msg.getCorreccion())))
-                .onFailure((e) -> logAndReturn(e))
+                .onFailure(this::logAndReturn)
                 .onSuccess((cheque) -> logger.info("cheque con id {} fue actualizado correctamente", cheque.getId()))
                 .onComplete((s) -> {
                     final ActorRef postUpdateActor = system.actorOf(SPRING_EXTENSION_PROVIDER.get(system).props("postUpdateActor"), "postUpdateActor_" + UUID.randomUUID());

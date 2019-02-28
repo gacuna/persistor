@@ -17,20 +17,18 @@ public class Correccion implements Serializable {
     protected String cuit;
     protected Integer codMoneda;
     protected CMC7 cmc7;
-    protected String token;
     protected LocalDateTime createdAt;
     protected Boolean truncado;
 
     public Correccion() {}
 
-    public Correccion(Long id, BigDecimal importe, Date fechaDiferida, String cuit, Integer codMoneda, CMC7 cmc7, String token) {
+    public Correccion(Long id, BigDecimal importe, Date fechaDiferida, String cuit, Integer codMoneda, CMC7 cmc7) {
         this.id = id;
         this.importe = importe;
         this.fechaDiferida = fechaDiferida;
         this.cuit = cuit;
         this.codMoneda = codMoneda;
         this.cmc7 = cmc7;
-        this.token = token;
         this.createdAt = null;
     }
 
