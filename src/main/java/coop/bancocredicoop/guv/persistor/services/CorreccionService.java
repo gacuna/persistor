@@ -15,10 +15,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import static io.vavr.API.$;
 import static io.vavr.API.Case;
@@ -66,19 +69,16 @@ public class CorreccionService {
      */
     public Try<Integer> verificacionDepositoBackgroundPost(Correccion correccion, String token) {
         return Try.of(() -> {
-            try(CloseableHttpClient client = HttpClients.createDefault()){
-                HttpPost post = new HttpPost(guvUrl + verificacionDepositoEndpoint);
-                String json = "{\"id\": " + correccion.getId() + "}";
-                StringEntity body = new StringEntity(json);
-                post.setEntity(body);
-                post.setHeader("Accept", "application/json");
-                post.setHeader("Content-type", "application/json");
-                post.setHeader("GUV-AUTH-TOKEN", token);
-                CloseableHttpResponse response = client.execute(post);
-                int status = response.getStatusLine().getStatusCode();
-                response.close();
-                return status;
-            }
+            HttpEntity<Long> request = new HttpEntity<>(correccion.getId());
+            RestTemplate restTemplate = new RestTemplate();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("GUV-AUTH-TOKEN", token);
+
+            ResponseEntity<String> response = restTemplate.postForEntity(guvUrl + verificacionDepositoEndpoint, request, String.class);
+            return response.getStatusCodeValue();
         });
     }
 

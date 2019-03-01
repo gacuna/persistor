@@ -38,10 +38,10 @@ public class UpdateChequeActor extends AbstractActor {
             .match(UpdateMessage.class, msg -> {
                 logger.info("Mensaje de actualizacion de importe recibo");
                 Match(msg.getType()).of(
-                        Case($("importe"), (o) -> this.service.update(updateImporte, msg.getCorreccion())),
-                        Case($("cmc7"), (o) -> this.service.update(updateCmc7, msg.getCorreccion())),
-                        Case($("fecha"), (o) -> this.service.update(updateFecha, msg.getCorreccion())),
-                        Case($("cuit"), (o) -> this.service.update(updateCuit, msg.getCorreccion())))
+                        Case($("importe"), (o) -> this.service.update(setImporteAndTruncado, msg.getCorreccion())),
+                        Case($("cmc7"), (o) -> this.service.update(setCMC7, msg.getCorreccion())),
+                        Case($("fecha"), (o) -> this.service.update(setFecha, msg.getCorreccion())),
+                        Case($("cuit"), (o) -> this.service.update(setCuit, msg.getCorreccion())))
                 .onFailure(this::logAndReturn)
                 .onSuccess((cheque) -> logger.info("cheque con id {} fue actualizado correctamente", cheque.getId()))
                 .onComplete((s) -> {

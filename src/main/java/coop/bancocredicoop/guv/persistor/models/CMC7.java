@@ -65,4 +65,10 @@ public class CMC7 implements Serializable {
     public Short getDvCuenta() {
         return dvCuenta;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s%s%s%s%s", this.codBanco, this.codFilial, this.codPostal, this.codCheque, this.codCuenta);
+    }
+
 }

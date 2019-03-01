@@ -6,23 +6,23 @@ import io.vavr.Function2;
 
 public final class CorreccionUtils {
 
-    public static Function2<Correccion, Cheque, Cheque> updateImporte = (correccion, cheque) -> {
+    public static Function2<Correccion, Cheque, Cheque> setImporteAndTruncado = (correccion, cheque) -> {
         cheque.setTruncado(correccion.getTruncado());
         cheque.setImporte(correccion.getImporte());
         return cheque;
     };
 
-    public static Function2<Correccion, Cheque, Cheque> updateCmc7 = (correccion, cheque) -> {
+    public static Function2<Correccion, Cheque, Cheque> setCMC7 = (correccion, cheque) -> {
         cheque.setCmc7(correccion.getCmc7());
         return cheque;
     };
 
-    public static Function2<Correccion, Cheque, Cheque> updateFecha = (correccion, cheque) -> {
+    public static Function2<Correccion, Cheque, Cheque> setFecha = (correccion, cheque) -> {
         cheque.setFechaDiferida(correccion.getFechaDiferida());
         return cheque;
     };
 
-    public static Function2<Correccion, Cheque, Cheque> updateCuit = (correccion, cheque) -> {
+    public static Function2<Correccion, Cheque, Cheque> setCuit = (correccion, cheque) -> {
         cheque.setCuit(correccion.getCuit());
         return cheque;
     };

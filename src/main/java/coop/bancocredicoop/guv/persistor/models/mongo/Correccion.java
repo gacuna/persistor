@@ -1,7 +1,9 @@
 package coop.bancocredicoop.guv.persistor.models.mongo;
 
 import coop.bancocredicoop.guv.persistor.models.CMC7;
+import coop.bancocredicoop.guv.persistor.models.Deposito;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,21 +16,28 @@ public class Correccion implements Serializable {
     protected Long id;
     protected BigDecimal importe;
     protected Date fechaDiferida;
+    protected Date fechaIngreso1;
+    protected Date fechaIngreso2;
     protected String cuit;
     protected Integer codMoneda;
     protected CMC7 cmc7;
     protected LocalDateTime createdAt;
     protected Boolean truncado;
+    protected Deposito deposito;
 
     public Correccion() {}
 
-    public Correccion(Long id, BigDecimal importe, Date fechaDiferida, String cuit, Integer codMoneda, CMC7 cmc7) {
+    public Correccion(Long id, BigDecimal importe, Date fechaDiferida, Date fechaIngreso1, Date fechaIngreso2, String cuit,
+                      Integer codMoneda, CMC7 cmc7, Deposito deposito) {
         this.id = id;
         this.importe = importe;
         this.fechaDiferida = fechaDiferida;
+        this.fechaIngreso1 = fechaIngreso1;
+        this.fechaIngreso2 = fechaIngreso2;
         this.cuit = cuit;
         this.codMoneda = codMoneda;
         this.cmc7 = cmc7;
+        this.deposito = deposito;
         this.createdAt = null;
     }
 
@@ -42,6 +51,14 @@ public class Correccion implements Serializable {
 
     public Date getFechaDiferida() {
         return fechaDiferida;
+    }
+
+    public Date getFechaIngreso1() {
+        return fechaIngreso1;
+    }
+
+    public Date getFechaIngreso2() {
+        return fechaIngreso2;
     }
 
     public String getCuit() {
@@ -72,15 +89,22 @@ public class Correccion implements Serializable {
         this.truncado = truncado;
     }
 
+    public Deposito getDeposito() {
+        return deposito;
+    }
+
     @Override
     public String toString() {
         return "Correccion{" +
                 "id=" + id +
                 ", importe=" + importe +
                 ", fechaDiferida=" + fechaDiferida +
+                ", fechaIngreso1=" + fechaIngreso1 +
+                ", fechaIngreso2=" + fechaIngreso2 +
                 ", cuit='" + cuit + '\'' +
                 ", codMoneda=" + codMoneda +
-                ", cmc7=" + cmc7 +
+                ", cmc7=" + (cmc7 != null ? cmc7.toString() : "") +
+                ", deposito= " + (deposito != null ? ObjectUtils.nullSafeToString(deposito.getId()) : "") +
                 ", truncado=" + truncado +
                 ", createdAt=" + createdAt +
                 '}';

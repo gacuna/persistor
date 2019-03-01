@@ -1,6 +1,7 @@
 package coop.bancocredicoop.guv.persistor.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 
 import javax.persistence.*;
 
@@ -174,5 +175,20 @@ public class Cheque implements Serializable {
 
     public void setTruncado(Boolean truncado) {
         this.truncado = truncado;
+    }
+
+    public static Cheque of(Correccion correccion) {
+        Cheque cheque = new Cheque();
+        cheque.setId(correccion.getId());
+        cheque.setImporte(correccion.getImporte());
+        cheque.setFechaDiferida(correccion.getFechaDiferida());
+        cheque.setCuit(correccion.getCuit());
+        cheque.setDeposito(correccion.getDeposito());
+        cheque.setFechaIngreso1(correccion.getFechaIngreso1());
+        cheque.setFechaIngreso2(correccion.getFechaIngreso2());
+        cheque.setTruncado(correccion.getTruncado());
+        cheque.setCmc7(correccion.getCmc7());
+
+        return cheque;
     }
 }
