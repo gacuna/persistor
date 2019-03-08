@@ -2,17 +2,13 @@ package coop.bancocredicoop.guv.persistor.services;
 
 import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.repositories.ChequeRepository;
+import coop.bancocredicoop.guv.persistor.utils.CorreccionUtils;
 import coop.bancocredicoop.guv.persistor.utils.GuvConfigEnum;
 import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.concurrent.Future;
 import io.vavr.control.Try;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -69,13 +65,13 @@ public class CorreccionService {
      */
     public Try<Integer> verificacionDepositoBackgroundPost(Correccion correccion, String token) {
         return Try.of(() -> {
-            HttpEntity<Long> request = new HttpEntity<>(correccion.getId());
-            RestTemplate restTemplate = new RestTemplate();
-
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("GUV-AUTH-TOKEN", token);
+            headers.set(CorreccionUtils.GUV_AUTH_TOKEN, token);
+
+            HttpEntity<Long> request = new HttpEntity<>(correccion.getId(), headers);
+            RestTemplate restTemplate = new RestTemplate();
 
             ResponseEntity<String> response = restTemplate.postForEntity(guvUrl + verificacionDepositoEndpoint, request, String.class);
             return response.getStatusCodeValue();

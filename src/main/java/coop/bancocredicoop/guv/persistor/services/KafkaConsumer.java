@@ -4,6 +4,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,11 @@ public class KafkaConsumer {
 
     @Autowired
     private ActorSystem system;
+
+    @Value(value = "${kafka.topic}")
+    private String topic;
+
+    //TODO Sacar del simple-kafka-consumer
 
     @KafkaListener(topics = "correccion_topic", groupId = "${kafka.groupId}")
     public void consume(UpdateMessage message) {

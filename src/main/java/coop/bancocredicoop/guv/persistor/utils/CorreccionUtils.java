@@ -6,6 +6,8 @@ import io.vavr.Function2;
 
 public final class CorreccionUtils {
 
+    public final static String GUV_AUTH_TOKEN = "GUV-AUTH-TOKEN";
+
     public static Function2<Correccion, Cheque, Cheque> setImporteAndTruncado = (correccion, cheque) -> {
         cheque.setTruncado(correccion.getTruncado());
         cheque.setImporte(correccion.getImporte());

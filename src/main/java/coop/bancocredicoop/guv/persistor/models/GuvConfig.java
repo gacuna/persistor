@@ -9,9 +9,11 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 @Entity
+@Table(name = "GUVCONFIG")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class GuvConfig {
