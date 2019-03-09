@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static io.vavr.API.$;
 import static io.vavr.API.Case;
@@ -38,11 +39,11 @@ public class CorreccionService {
     @Autowired
     private GuvConfigService guvConfigService;
 
-    private BigDecimal importeTruncamiento;
+    private Optional<BigDecimal> importeTruncamiento;
 
     @PostConstruct
     private void loadParameters() {
-        this.importeTruncamiento = this.guvConfigService.getProperty(GuvConfigEnum.IMPORTE_TRUCAMIENTO, BigDecimal.class);
+        this.importeTruncamiento = Optional.ofNullable(this.guvConfigService.getProperty(GuvConfigEnum.IMPORTE_TRUCAMIENTO, BigDecimal.class));
     }
 
     /**
@@ -86,7 +87,7 @@ public class CorreccionService {
     }
 
     public Function1<Correccion, Correccion> truncarSiSuperaImporteTruncamiento = (Correccion correccion) -> {
-        correccion.setTruncado(this.importeTruncamiento.compareTo(correccion.getImporte()) > 0);
+        correccion.setTruncado(this.importeTruncamiento.orElse(BigDecimal.ZERO).compareTo(correccion.getImporte()) > 0);
         return correccion;
     };
 

@@ -6,6 +6,7 @@ import coop.bancocredicoop.guv.persistor.services.CorreccionService;
 import coop.bancocredicoop.guv.persistor.utils.CorreccionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -32,6 +33,8 @@ public class PersistorController {
     public Mono<String> save(@PathVariable String type,
                              @RequestBody Correccion correccion,
                              @RequestHeader(CorreccionUtils.GUV_AUTH_TOKEN) String token) {
+        MDC.put("user", "bender");
+        log.info("Entro por persistorController -> save");
         correccion = this.correccionService.chequearTruncamientoAndApply(type, this.correccionService.truncarSiSuperaImporteTruncamiento, correccion);
         this.template.send(this.topic, new UpdateMessage(type, correccion, token));
         return Mono.just("OK");
