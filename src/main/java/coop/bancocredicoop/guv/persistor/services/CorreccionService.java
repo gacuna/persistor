@@ -1,6 +1,7 @@
 package coop.bancocredicoop.guv.persistor.services;
 
 import coop.bancocredicoop.guv.persistor.models.Cheque;
+import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.repositories.ChequeRepository;
 import coop.bancocredicoop.guv.persistor.utils.CorreccionUtils;
 import coop.bancocredicoop.guv.persistor.utils.GuvConfigEnum;
@@ -79,16 +80,36 @@ public class CorreccionService {
         });
     }
 
-    public Correccion chequearTruncamientoAndApply(String type, Function1<Correccion, Correccion> f, Correccion correccion) {
+    public Try<Correccion> validateAndApply(TipoCorreccionEnum type, Function1<Correccion, Try<Correccion>> f, Correccion correccion) {
         return Match(type).of(
-                Case($("importe"), f.apply(correccion)),
-                Case($(), correccion)
+                Case($(TipoCorreccionEnum.IMPORTE), f.apply(correccion)),
+                Case($(TipoCorreccionEnum.CMC7), f.apply(correccion)),
+                Case($(), f.apply(correccion))
         );
     }
 
-    public Function1<Correccion, Correccion> truncarSiSuperaImporteTruncamiento = (Correccion correccion) -> {
+    /**
+     * Valida el importe de truncamiento, de ser asi marca el cheque como truncado.
+     */
+    public Function1<Correccion, Try<Correccion>> truncarSiSuperaImporteTruncamiento = (Correccion correccion) -> {
         correccion.setTruncado(this.importeTruncamiento.orElse(BigDecimal.ZERO).compareTo(correccion.getImporte()) > 0);
-        return correccion;
+        return Try.of(() -> correccion);
+    };
+
+    /**
+     * Chequea que no exceda el limite de reintentos, caso contrario devuelve un error.
+     */
+    public Function1<Correccion, Try<Correccion>> superaReintentosValidos = (Correccion correccion) -> {
+        //TODO Ver como manejar los reintentos... podria ser en una cache
+        //Si hay error enviar un failure con una exception adentro
+        return Try.of(() -> correccion);
+    };
+
+    /**
+     * No realiza ninguna validacion y devuelve la misma correccion recibida por parametro.
+     */
+    public Function1<Correccion, Try<Correccion>> defaultValidation = (Correccion correccion) -> {
+        return Try.of(() -> correccion);
     };
 
 }

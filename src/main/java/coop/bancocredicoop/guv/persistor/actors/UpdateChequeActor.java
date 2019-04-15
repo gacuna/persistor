@@ -6,6 +6,7 @@ import akka.actor.ActorSystem;
 import akka.actor.PoisonPill;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
+import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -38,10 +39,10 @@ public class UpdateChequeActor extends AbstractActor {
             .match(UpdateMessage.class, msg -> {
                 logger.info("Mensaje de actualizacion de importe recibo");
                 Match(msg.getType()).of(
-                        Case($("importe"), (o) -> this.service.update(setImporteAndTruncado, msg.getCorreccion())),
-                        Case($("cmc7"), (o) -> this.service.update(setCMC7, msg.getCorreccion())),
-                        Case($("fecha"), (o) -> this.service.update(setFecha, msg.getCorreccion())),
-                        Case($("cuit"), (o) -> this.service.update(setCuit, msg.getCorreccion())))
+                        Case($(TipoCorreccionEnum.IMPORTE), (o) -> this.service.update(setImporteAndTruncado, msg.getCorreccion())),
+                        Case($(TipoCorreccionEnum.CMC7), (o) -> this.service.update(setCMC7, msg.getCorreccion())),
+                        Case($(TipoCorreccionEnum.FECHA), (o) -> this.service.update(setFecha, msg.getCorreccion())),
+                        Case($(TipoCorreccionEnum.CUIT), (o) -> this.service.update(setCuit, msg.getCorreccion())))
                 .onFailure(this::logAndReturn)
                 .onSuccess((cheque) -> logger.info("cheque con id {} fue actualizado correctamente", cheque.getId()))
                 .onComplete((s) -> {
