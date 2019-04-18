@@ -18,11 +18,17 @@ public class KafkaTopicConfig {
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
 
-    @Value(value = "${kafka.topic}")
-    private String topic;
+    @Value(value = "${kafka.correccion.topic}")
+    private String correccionTopic;
 
-    @Value(value = "${kafka.partitions}")
+    @Value(value = "${kafka.verificacion.topic}")
+    private String verificacionTopic;
+
+    @Value(value = "${kafka.correccion.partitions}")
     private Integer partitions;
+
+    @Value(value = "${kafka.verificacion.partitions}")
+    private Integer verificacionPartitions;
 
     @Bean
     public KafkaAdmin kafkaAdmin() {
@@ -32,7 +38,12 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic topic1() {
-        return new NewTopic(topic,  partitions, (short) 1);
+    public NewTopic correccionTopic() {
+        return new NewTopic(correccionTopic,  partitions, (short) 1);
+    }
+
+    @Bean
+    public NewTopic verificacionTopic() {
+        return new NewTopic(verificacionTopic, verificacionPartitions, (short) 1);
     }
 }
