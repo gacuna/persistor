@@ -10,6 +10,8 @@ import io.vavr.Function2;
 import io.vavr.concurrent.Future;
 import io.vavr.control.Try;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -31,8 +33,11 @@ public class CorreccionService {
     @Value(value = "${guv-web.url}")
     private String guvUrl;
 
-    @Value(value = "${guv-web.verificacion.deposito.endpoint}")
-    private String verificacionDepositoEndpoint;
+    @Value(value = "${guv-web.correccion.observar.endpoint}")
+    private String observarChequeEndpoint;
+
+    @Value(value = "${guv-web.correccion.save.endpoint}")
+    private String saveCorreccionEndpoint;
 
     @Autowired
     private ChequeRepository repository;
@@ -41,6 +46,8 @@ public class CorreccionService {
     private GuvConfigService guvConfigService;
 
     private Optional<BigDecimal> importeTruncamiento;
+
+    private static Logger LOGGER = LoggerFactory.getLogger(CorreccionService.class);
 
     @PostConstruct
     private void loadParameters() {
@@ -60,26 +67,61 @@ public class CorreccionService {
     }
 
     /**
-     * Envia un mensaje de verificacion del estado del deposito al backend de GUV, utilizando el verbo HTTP POST.
+     * Envia un mensaje de observacion de cheque al backend de GUV, utilizando el verbo HTTP POST.
      *
-     * @param correccion
-     * @return
+     * @param cheque
+     * @param observacion
+     * @param token
+     * @return http status code
      */
-    public Try<Integer> verificacionDepositoBackgroundPost(Correccion correccion, String token) {
+    public Try<Integer> observarChequeBackgroundPost(Cheque cheque, Cheque.Observacion observacion, String token) {
         return Try.of(() -> {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set(CorreccionUtils.GUV_AUTH_TOKEN, token);
 
-            HttpEntity<Long> request = new HttpEntity<>(correccion.getId(), headers);
+            HttpEntity<Cheque> request = new HttpEntity<>(cheque, headers);
             RestTemplate restTemplate = new RestTemplate();
 
-            ResponseEntity<String> response = restTemplate.postForEntity(guvUrl + verificacionDepositoEndpoint, request, String.class);
+            String url = guvUrl + observarChequeEndpoint + observacion.name();
+
+            ResponseEntity<Cheque> response = restTemplate.postForEntity(url, request, Cheque.class);
             return response.getStatusCodeValue();
         });
     }
 
+    /**
+     * Envia un mensaje de actualizacion de cheque al backend de GUV, utilizando el verbo HTTP POST.
+     *
+     * @param cheque entidad a actualizar
+     * @param token guv access token
+     * @return http status code
+     */
+    public Try<Integer> saveCorreccionBackgroundPost(Cheque cheque, String token) {
+        return Try.of(() -> {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set(CorreccionUtils.GUV_AUTH_TOKEN, token);
+
+            HttpEntity<Cheque> request = new HttpEntity<Cheque>(cheque, headers);
+            RestTemplate restTemplate = new RestTemplate();
+
+            String url = guvUrl + saveCorreccionEndpoint;
+
+            ResponseEntity<Cheque> response = restTemplate.postForEntity(url, request, Cheque.class);
+            return response.getStatusCodeValue();
+        });
+    }
+
+    /**
+     *
+     * @param type tipo de correccion a validar
+     * @param f validacion a ejecutar
+     * @param correccion entidad a validar
+     * @return
+     */
     public Try<Correccion> validateAndApply(TipoCorreccionEnum type, Function1<Correccion, Try<Correccion>> f, Correccion correccion) {
         return Match(type).of(
                 Case($(TipoCorreccionEnum.IMPORTE), f.apply(correccion)),
@@ -102,7 +144,13 @@ public class CorreccionService {
     public Function1<Correccion, Try<Correccion>> superaReintentosValidos = (Correccion correccion) -> {
         //TODO Ver como manejar los reintentos... podria ser en una cache
         //Si hay error enviar un failure con una exception adentro
-        return Try.of(() -> correccion);
+        //Si supera los reintentos tiene que poner una observacion en el cheque
+        return Try.of(() -> {
+            Try<Integer> backgroundPost = observarChequeBackgroundPost(Cheque.of(correccion), Cheque.Observacion.CMC7, "");
+            backgroundPost.onFailure(ex -> LOGGER.error("Hubo un error inesperado al observar el cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage()));
+            backgroundPost.onSuccess(status -> LOGGER.info("Se realizo correctamente la observacion del cheque con id {}", correccion.getId()));
+            return correccion;
+        });
     };
 
     /**

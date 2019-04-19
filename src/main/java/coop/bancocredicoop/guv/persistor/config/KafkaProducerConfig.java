@@ -1,6 +1,7 @@
 package coop.bancocredicoop.guv.persistor.config;
 
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
+import coop.bancocredicoop.guv.persistor.actors.VerifyMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +22,7 @@ public class KafkaProducerConfig {
     private String bootstrapAddress;
 
     @Bean
-    public ProducerFactory<String, UpdateMessage> producerFactory() {
+    public ProducerFactory<String, UpdateMessage> updateProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -30,7 +31,22 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, UpdateMessage> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public ProducerFactory<String, VerifyMessage> verificationProducerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configProps);
     }
+
+    @Bean
+    public KafkaTemplate<String, UpdateMessage> updateMessageTemplate() {
+        return new KafkaTemplate<>(updateProducerFactory());
+    }
+
+    @Bean
+    public KafkaTemplate<String, VerifyMessage> verificationMessageTemplate() {
+        return new KafkaTemplate<>(verificationProducerFactory());
+    }
+
 }

@@ -20,6 +20,7 @@ public final class CorreccionUtils {
     };
 
     public static Function2<Correccion, Cheque, Cheque> setFecha = (correccion, cheque) -> {
+        //TODO Analizar bien como se hace actualmente en el backend!!!
         cheque.setFechaDiferida(correccion.getFechaDiferida());
         return cheque;
     };

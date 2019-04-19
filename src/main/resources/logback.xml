@@ -5,22 +5,16 @@
 <configuration debug="true" scan="false">
     <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />-->
 
+    <!--
     <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <!-- remoteHost and port are optional (default values shown) -->
         <destination>localhost:9200</destination>
-
-        <!-- encoder is required -->
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
                 <mdc/>
-
                 <context/>
-
                 <version/>
-
                 <logLevel/>
                 <loggerName/>
-
                 <pattern>
                     <pattern>
                         {
@@ -29,20 +23,15 @@
                         }
                     </pattern>
                 </pattern>
-
                 <threadName/>
-
                 <message/>
-
                 <logstashMarkers/>
                 <arguments/>
-
                 <stackTrace/>
             </providers>
         </encoder>
     </appender>
-    <!---->
-
+    -->
 
     <!-- Debugging appender (duplicates the normal log, PLUS any debug messages) -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -71,14 +60,14 @@
     <logger name="coop.bancocredicoop.guv.persistor" level="INFO" additivity="false">
         <appender-ref ref="FILE"/>
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="STASH"/>
+        <!--appender-ref ref="STASH"/-->
     </logger>
 
     <!-- ROOT logger setup -->
     <root level="INFO">
         <appender-ref ref="FILE"/>
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="STASH"/>
+        <!--appender-ref ref="STASH"/-->
     </root>
 
 </configuration>

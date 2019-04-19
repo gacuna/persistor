@@ -1,18 +1,15 @@
 package coop.bancocredicoop.guv.persistor.controllers.api;
 
-import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
+import coop.bancocredicoop.guv.persistor.services.KafkaProducer;
 import coop.bancocredicoop.guv.persistor.utils.CorreccionUtils;
 import io.vavr.Function1;
 import io.vavr.control.Try;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -29,10 +26,7 @@ public class PersistorController {
     private CorreccionService correccionService;
 
     @Autowired
-    private KafkaTemplate<String, UpdateMessage> template;
-
-    @Value(value = "${kafka.topic}")
-    private String topic;
+    private KafkaProducer producer;
 
     private static Logger log = LoggerFactory.getLogger(PersistorController.class);
 
@@ -59,9 +53,13 @@ public class PersistorController {
             log.error("Error de validación en la correccion del cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage());
         });
 
-        correccionTry.onSuccess(correccionValidated -> this.template.send(this.topic, new UpdateMessage(tipoCorreccionEnum, correccionValidated, token)))
-        .onFailure(ex -> log.error("Error al enviar mensaje de actualizacion del cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage()))
-        .onSuccess(correccionSent -> log.info("Mensaje de actualizacion del cheque con id {}, detalle: Enviado OK", correccionSent.getId()));
+        correccionTry
+            .onSuccess(correccionValidated -> {
+                this.producer.sendUpdateMessage(tipoCorreccionEnum, correccionValidated, token)
+                        .onFailure(ex -> log.error("Error al enviar mensaje de actualizacion del cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage()))
+                        .onSuccess(future -> log.info("Mensaje de actualizacion del cheque con id {} fue enviado correctamente a kafka", correccion.getId()));
+            })
+            .onFailure(ex -> log.error("Error al validar mensaje de actualizacion del cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage()));
 
         return Mono.just("OK");
     }
