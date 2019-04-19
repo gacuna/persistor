@@ -10,8 +10,4 @@ import java.math.BigDecimal;
 
 @Repository
 public interface ChequeRepository extends CrudRepository<Cheque, Long> {
-
-    //TODO VER SI VALE LA PENA HACER UNA QUERY NATIVA POR CADA TIPO DE CORRECCION
-    //@Query(value = "UPDATE cheque SET importe = :importe, truncado = :truncado WHERE id = :id", nativeQuery = true)
-    //public void updateImporte(@Param("id") Long id, @Param("importe") BigDecimal importe, @Param("truncado") Boolean truncado);
 }
