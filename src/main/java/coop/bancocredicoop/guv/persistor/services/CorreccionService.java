@@ -1,15 +1,21 @@
 package coop.bancocredicoop.guv.persistor.services;
 
+import coop.bancocredicoop.guv.persistor.exceptions.InvalidEntityStateException;
+import coop.bancocredicoop.guv.persistor.models.CMC7;
 import coop.bancocredicoop.guv.persistor.models.Cheque;
-import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
+import coop.bancocredicoop.guv.persistor.models.Deposito;
+import coop.bancocredicoop.guv.persistor.models.EstadoCheque;
 import coop.bancocredicoop.guv.persistor.repositories.ChequeRepository;
-import coop.bancocredicoop.guv.persistor.utils.CorreccionUtils;
+import coop.bancocredicoop.guv.persistor.utils.ChequeValidator;
 import coop.bancocredicoop.guv.persistor.utils.GuvConfigEnum;
 import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.concurrent.Future;
 import io.vavr.control.Try;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
+import io.vavr.control.Validation;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +25,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Optional;
-
-import static io.vavr.API.$;
-import static io.vavr.API.Case;
-import static io.vavr.API.Match;
 
 @Service
 public class CorreccionService {
+
+    public final static String GUV_AUTH_TOKEN = "GUV_AUTH_TOKEN";
+
+    public final static String CREDICOOP_CUIT = "30571421352";
 
     @Value(value = "${guv-web.url}")
     private String guvUrl;
@@ -40,7 +49,13 @@ public class CorreccionService {
     private String saveCorreccionEndpoint;
 
     @Autowired
-    private ChequeRepository repository;
+    private ChequeRepository chequeRepository;
+
+    @Autowired
+    private ChequeService chequeService;
+
+    @Autowired
+    private FeriadoService feriadoService;
 
     @Autowired
     private GuvConfigService guvConfigService;
@@ -59,11 +74,20 @@ public class CorreccionService {
      * @param correccion
      * @return
      */
-    public Future<Cheque> update(Function2<Correccion, Cheque, Cheque> f, Correccion correccion) {
-        //TODO Mejorar con un pattern matching y loguear si no hay un cheque con ese id
-        return Future.of(() -> this.repository.findById(correccion.getId()))
-              .map(cheque -> f.apply(correccion, cheque.get()))
-              .map(cheque -> this.repository.save(cheque));
+    public Future<Cheque> update(Function2<Correccion, Cheque, Cheque> decorator, Correccion correccion) {
+        return Future.of(() -> {
+            LOGGER.info("Cheque con id {} recibido para ser persistido en la base de datos", correccion.getId());
+            final Optional<Cheque> chequeOpt = this.chequeRepository.findById(correccion.getId());
+            final Cheque cheque = chequeOpt.orElseThrow(EntityNotFoundException::new);
+            Validation<String, Cheque> validation = ChequeValidator.validateStatusForUpdating(cheque);
+            if (validation.isInvalid()) {
+                LOGGER.error("Cheque con id {} no puede ser actualizado dado que su estado en la base de datos es {}", cheque.getId(), cheque.getEstado());
+                throw new InvalidEntityStateException("Estado del cheque inconsistente");
+            }
+            final Cheque chequeDecorated = decorator.apply(correccion, cheque);
+            LOGGER.info("Persistiendo cheque con id {} y estado {}", chequeDecorated.getId(), chequeDecorated.getEstado());
+            return this.chequeRepository.save(chequeDecorated);
+        });
     }
 
     /**
@@ -79,7 +103,7 @@ public class CorreccionService {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set(CorreccionUtils.GUV_AUTH_TOKEN, token);
+            headers.set(GUV_AUTH_TOKEN, token);
 
             HttpEntity<Cheque> request = new HttpEntity<>(cheque, headers);
             RestTemplate restTemplate = new RestTemplate();
@@ -103,7 +127,7 @@ public class CorreccionService {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set(CorreccionUtils.GUV_AUTH_TOKEN, token);
+            headers.set(CorreccionService.GUV_AUTH_TOKEN, token);
 
             HttpEntity<Cheque> request = new HttpEntity<Cheque>(cheque, headers);
             RestTemplate restTemplate = new RestTemplate();
@@ -114,29 +138,6 @@ public class CorreccionService {
             return response.getStatusCodeValue();
         });
     }
-
-    /**
-     *
-     * @param type tipo de correccion a validar
-     * @param f validacion a ejecutar
-     * @param correccion entidad a validar
-     * @return
-     */
-    public Try<Correccion> validateAndApply(TipoCorreccionEnum type, Function1<Correccion, Try<Correccion>> f, Correccion correccion) {
-        return Match(type).of(
-                Case($(TipoCorreccionEnum.IMPORTE), f.apply(correccion)),
-                Case($(TipoCorreccionEnum.CMC7), f.apply(correccion)),
-                Case($(), f.apply(correccion))
-        );
-    }
-
-    /**
-     * Valida el importe de truncamiento, de ser asi marca el cheque como truncado.
-     */
-    public Function1<Correccion, Try<Correccion>> truncarSiSuperaImporteTruncamiento = (Correccion correccion) -> {
-        correccion.setTruncado(this.importeTruncamiento.orElse(BigDecimal.ZERO).compareTo(correccion.getImporte()) > 0);
-        return Try.of(() -> correccion);
-    };
 
     /**
      * Chequea que no exceda el limite de reintentos, caso contrario devuelve un error.
@@ -153,11 +154,90 @@ public class CorreccionService {
         });
     };
 
-    /**
-     * No realiza ninguna validacion y devuelve la misma correccion recibida por parametro.
-     */
-    public Function1<Correccion, Try<Correccion>> defaultValidation = (Correccion correccion) -> {
-        return Try.of(() -> correccion);
+    public Function2<Correccion, Cheque, Cheque> setImporteAndTruncado = (correccion, cheque) -> {
+        cheque.setTruncado(this.importeTruncamiento.orElse(BigDecimal.ZERO).compareTo(correccion.getImporte()) > 0);
+        cheque.setImporte(correccion.getImporte());
+        return cheque;
     };
+
+    public Function2<Correccion, Cheque, Cheque> setCMC7 = (correccion, cheque) -> {
+        CMC7 cmc7 = fixCMC7Fields(correccion.getCmc7());
+        cmc7.setNumero(new BigInteger(cmc7.toString()));
+        cheque.setCmc7(cmc7);
+
+        if (!cheque.getObservaciones().isEmpty()) {
+            cheque.getObservaciones().remove(Cheque.Observacion.CMC7);
+        }
+
+        return cheque;
+    };
+
+    public Function2<Correccion, Cheque, Cheque> setFecha = (correccion, cheque) -> {
+        if (cheque.getFechaIngreso1() == null) {
+            cheque.setFechaIngreso1(cheque.getFechaDiferida());
+        } else if (cheque.getFechaIngreso2() == null) {
+            cheque.setFechaIngreso2(cheque.getFechaDiferida());
+        }
+
+        if (cheque.getFechaIngreso1() != null && cheque.getFechaIngreso2() != null) {
+            if (DateUtils.isSameDay(cheque.getFechaIngreso1(), cheque.getFechaIngreso2())) {
+                cheque.setFechaDiferida(cheque.getFechaIngreso1());
+            } else {
+                cheque.addObservacion(Cheque.Observacion.FECHA);
+            }
+        }
+        return cheque;
+    };
+
+    public Function2<Correccion, Cheque, Cheque> setCuit = (correccion, cheque) -> {
+        cheque.setCuit(correccion.getCuit());
+        return cheque;
+    };
+
+    /**
+     * Funcion que permite calcular el nuevo estado del cheque.
+     */
+    public Function2<Correccion, Cheque, Cheque> setStatus = (correccion, cheque) -> {
+        if (cheque.isCorregido() && cheque.getObservaciones().isEmpty()) {
+            //Cheque corregido y sin observaciones
+            cheque.setEstado(EstadoCheque.CORREGIDO);
+        } else if (cheque.isCorregido()) {
+            // Verifica si el cheque esta duplicado por CMC7
+            if (!cheque.getObservaciones().contains(Cheque.Observacion.CMC7)
+                    && chequeService.existeCMC7Dulicado(cheque.getCmc7().getNumero())) {
+                LOGGER.info("Marcando al cheque con id {} como duplicado por cmc7", cheque.getId());
+                cheque.setEstado(EstadoCheque.ELIMINADO_DUP);
+            } else {
+                //Cheque corregido pero con observaciones.
+                cheque.setEstado(EstadoCheque.OBSERVADO);
+            }
+        }
+        return cheque;
+    };
+
+    /**
+     * Funcion que permite actuaizar la fecha diferida y el cuit del cheque para el
+     * tipo de operatoria VALORES NEGOCIADOS.
+     */
+    public Function2<Correccion, Cheque, Cheque> setFechaDiferidaAndCuit = (correccion, cheque) -> {
+        if (Deposito.TipoOperatoria.VAL_NEG.equals(cheque.getDeposito().getTipoOperatoria())) {
+            Date proxHabil = feriadoService.calcularProximoDiaHabil(new Date(), 1);
+
+            cheque.setFechaDiferida(proxHabil);
+            cheque.setCuit(CREDICOOP_CUIT);
+
+            LOGGER.info("Actualizando fecha diferida {} y cuit {} al cheque con id {}", proxHabil, CREDICOOP_CUIT, cheque.getId());
+        }
+        return cheque;
+    };
+
+    private CMC7 fixCMC7Fields(CMC7 cmc7){
+        cmc7.setCodBanco(StringUtils.leftPad(cmc7.getCodBanco(), 3, "0"));
+        cmc7.setCodFilial(StringUtils.leftPad(cmc7.getCodFilial(), 3, "0"));
+        cmc7.setCodPostal(StringUtils.leftPad(cmc7.getCodPostal(), 4, "0"));
+        cmc7.setCodCheque(StringUtils.leftPad(cmc7.getCodCheque(), 8, "0"));
+        cmc7.setCodCuenta(StringUtils.leftPad(cmc7.getCodCuenta(), 11, "0"));
+        return cmc7;
+    }
 
 }

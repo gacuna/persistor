@@ -1,18 +1,19 @@
 package coop.bancocredicoop.guv.persistor.actors;
 
+import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 
 public class VerifyMessage {
     private TipoCorreccionEnum type;
-    private Correccion correccion;
+    private Cheque cheque;
     private String token;
 
     public VerifyMessage() {}
 
-    public VerifyMessage(TipoCorreccionEnum type, Correccion correccion, String token) {
+    public VerifyMessage(TipoCorreccionEnum type, Cheque cheque, String token) {
         this.type = type;
-        this.correccion = correccion;
+        this.cheque = cheque;
         this.token = token;
     }
 
@@ -20,8 +21,8 @@ public class VerifyMessage {
         return type;
     }
 
-    public Correccion getCorreccion() {
-        return correccion;
+    public Cheque getCheque() {
+        return cheque;
     }
 
     public String getToken() {
@@ -32,7 +33,7 @@ public class VerifyMessage {
     public String toString() {
         return "VerifyMessage{" +
                 "type='" + type.toString() + '\'' +
-                ", correccion='" + correccion.toString() + '\'' +
+                ", cheque='" + cheque.toString() + '\'' +
                 ", token='" + type + '\'' +
                 '}';
     }

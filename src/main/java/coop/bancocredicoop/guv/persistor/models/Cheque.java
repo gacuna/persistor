@@ -1,6 +1,5 @@
 package coop.bancocredicoop.guv.persistor.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 
 import javax.persistence.*;
@@ -34,7 +33,6 @@ public class Cheque implements Serializable {
     @Column(name = "estado")
     private EstadoCheque estado;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", locale = "es_AR", timezone = "America/Argentina/Buenos_Aires")
     @Column(name = "fechadiferida")
     private Date fechaDiferida;
 
@@ -177,6 +175,10 @@ public class Cheque implements Serializable {
         this.truncado = truncado;
     }
 
+    public void addObservacion(Observacion observacion) {
+        this.observaciones.add(observacion);
+    }
+
     public static Cheque of(Correccion correccion) {
         Cheque cheque = new Cheque();
         cheque.setId(correccion.getId());
@@ -191,4 +193,37 @@ public class Cheque implements Serializable {
 
         return cheque;
     }
+
+    public Boolean isCorregido() {
+        return this.importeCorregido() && this.cmc7Corregido() && this.fechaCorregida() && this.cuitCorregido();
+    }
+
+    public Boolean importeCorregido() {
+        return ((this.getImporte() != null) && (this.getImporte().compareTo(BigDecimal.ZERO) > 0)) || this.observaciones.contains(Observacion.IMPORTE);
+    }
+
+    public Boolean cmc7Corregido() {
+        return this.cmc7.isCorregido() || isCmc7Observado();
+    }
+
+    private Boolean isCmc7Observado() {
+        return this.observaciones.contains(Observacion.CMC7);
+    }
+
+    public Boolean fechaCorregida() {
+        boolean flagFechaDiferida = Boolean.TRUE;
+        if (!Deposito.TipoOperatoria.VAL_NEG.equals(this.deposito.getTipoOperatoria()) && this.deposito.getTipoOperatoria().isDiferido()) {
+            flagFechaDiferida = this.fechaDiferida != null;
+        }
+        return flagFechaDiferida || this.observaciones.contains(Observacion.FECHA);
+    }
+
+    public Boolean cuitCorregido() {
+        boolean flagCuit = Boolean.TRUE;
+        if (!Deposito.TipoOperatoria.VAL_NEG.equals(this.deposito.getTipoOperatoria()) && this.deposito.getTipoOperatoria().isDiferido()) {
+            flagCuit = this.cuit != null;
+        }
+        return flagCuit || this.observaciones.contains(Observacion.CUIT);
+    }
+
 }

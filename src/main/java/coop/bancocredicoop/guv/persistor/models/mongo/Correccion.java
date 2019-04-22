@@ -16,8 +16,6 @@ public class Correccion implements Serializable {
     protected Long id;
     protected BigDecimal importe;
     protected Date fechaDiferida;
-    protected Date fechaIngreso1;
-    protected Date fechaIngreso2;
     protected String cuit;
     protected Integer codMoneda;
     protected CMC7 cmc7;
@@ -32,8 +30,6 @@ public class Correccion implements Serializable {
         this.id = id;
         this.importe = importe;
         this.fechaDiferida = fechaDiferida;
-        this.fechaIngreso1 = fechaIngreso1;
-        this.fechaIngreso2 = fechaIngreso2;
         this.cuit = cuit;
         this.codMoneda = codMoneda;
         this.cmc7 = cmc7;
@@ -51,14 +47,6 @@ public class Correccion implements Serializable {
 
     public Date getFechaDiferida() {
         return fechaDiferida;
-    }
-
-    public Date getFechaIngreso1() {
-        return fechaIngreso1;
-    }
-
-    public Date getFechaIngreso2() {
-        return fechaIngreso2;
     }
 
     public String getCuit() {
@@ -99,8 +87,6 @@ public class Correccion implements Serializable {
                 "id=" + id +
                 ", importe=" + importe +
                 ", fechaDiferida=" + fechaDiferida +
-                ", fechaIngreso1=" + fechaIngreso1 +
-                ", fechaIngreso2=" + fechaIngreso2 +
                 ", cuit='" + cuit + '\'' +
                 ", codMoneda=" + codMoneda +
                 ", cmc7=" + (cmc7 != null ? cmc7.toString() : "") +

@@ -7,7 +7,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
 
 @Repository
 public interface ChequeRepository extends CrudRepository<Cheque, Long> {
+
+    @Query(value = "SELECT CASE WHEN COUNT(c) > 1 THEN true ELSE false END FROM Cheque c WHERE c.cmc7.numero = :numero " +
+            "AND c.estado NOT IN ('RESCATADO', 'ELIMINADO', 'ELIMINADO_DUP') AND c.cmc7.codCuenta NOT IN (88888888888) " +
+            "AND c.fechaIngreso BETWEEN :fechaIngreso AND :fechaActual")
+    Boolean existCMC7MatchingBetweenDatesAndNotCuentaAjuste(@Param("numero") BigInteger numero,
+                                                            @Param("fechaIngreso") Date fechaIngreso,
+                                                            @Param("fechaActual") Date fechaActual);
+
 }
