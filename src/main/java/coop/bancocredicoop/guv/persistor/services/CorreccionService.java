@@ -8,7 +8,6 @@ import coop.bancocredicoop.guv.persistor.models.EstadoCheque;
 import coop.bancocredicoop.guv.persistor.repositories.ChequeRepository;
 import coop.bancocredicoop.guv.persistor.utils.ChequeValidator;
 import coop.bancocredicoop.guv.persistor.utils.GuvConfigEnum;
-import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.concurrent.Future;
 import io.vavr.control.Try;
@@ -41,9 +40,6 @@ public class CorreccionService {
 
     @Value(value = "${guv-web.url}")
     private String guvUrl;
-
-    @Value(value = "${guv-web.correccion.observar.endpoint}")
-    private String observarChequeEndpoint;
 
     @Value(value = "${guv-web.correccion.save.endpoint}")
     private String saveCorreccionEndpoint;
@@ -91,31 +87,6 @@ public class CorreccionService {
     }
 
     /**
-     * Envia un mensaje de observacion de cheque al backend de GUV, utilizando el verbo HTTP POST.
-     *
-     * @param cheque
-     * @param observacion
-     * @param token
-     * @return http status code
-     */
-    public Try<Integer> observarChequeBackgroundPost(Cheque cheque, Cheque.Observacion observacion, String token) {
-        return Try.of(() -> {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set(GUV_AUTH_TOKEN, token);
-
-            HttpEntity<Cheque> request = new HttpEntity<>(cheque, headers);
-            RestTemplate restTemplate = new RestTemplate();
-
-            String url = guvUrl + observarChequeEndpoint + observacion.name();
-
-            ResponseEntity<Cheque> response = restTemplate.postForEntity(url, request, Cheque.class);
-            return response.getStatusCodeValue();
-        });
-    }
-
-    /**
      * Envia un mensaje de actualizacion de cheque al backend de GUV, utilizando el verbo HTTP POST.
      *
      * @param cheque entidad a actualizar
@@ -140,26 +111,17 @@ public class CorreccionService {
     }
 
     /**
-     * Chequea que no exceda el limite de reintentos, caso contrario devuelve un error.
+     * Funcion para setear el importe y calcular si un cheque debe ser marcado como truncado.
      */
-    public Function1<Correccion, Try<Correccion>> superaReintentosValidos = (Correccion correccion) -> {
-        //TODO Ver como manejar los reintentos... podria ser en una cache
-        //Si hay error enviar un failure con una exception adentro
-        //Si supera los reintentos tiene que poner una observacion en el cheque
-        return Try.of(() -> {
-            Try<Integer> backgroundPost = observarChequeBackgroundPost(Cheque.of(correccion), Cheque.Observacion.CMC7, "");
-            backgroundPost.onFailure(ex -> LOGGER.error("Hubo un error inesperado al observar el cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage()));
-            backgroundPost.onSuccess(status -> LOGGER.info("Se realizo correctamente la observacion del cheque con id {}", correccion.getId()));
-            return correccion;
-        });
-    };
-
     public Function2<Correccion, Cheque, Cheque> setImporteAndTruncado = (correccion, cheque) -> {
         cheque.setTruncado(this.importeTruncamiento.orElse(BigDecimal.ZERO).compareTo(correccion.getImporte()) > 0);
         cheque.setImporte(correccion.getImporte());
         return cheque;
     };
 
+    /**
+     * Funcion para setear el CMC7 de un cheque y ademas remueve alguna observacion de este tipo si es que tuviere.
+     */
     public Function2<Correccion, Cheque, Cheque> setCMC7 = (correccion, cheque) -> {
         CMC7 cmc7 = fixCMC7Fields(correccion.getCmc7());
         cmc7.setNumero(new BigInteger(cmc7.toString()));
@@ -172,6 +134,9 @@ public class CorreccionService {
         return cheque;
     };
 
+    /**
+     * Funcion para calcular que fecha del cheque debe setearse.
+     */
     public Function2<Correccion, Cheque, Cheque> setFecha = (correccion, cheque) -> {
         if (cheque.getFechaIngreso1() == null) {
             cheque.setFechaIngreso1(cheque.getFechaDiferida());
@@ -189,6 +154,9 @@ public class CorreccionService {
         return cheque;
     };
 
+    /**
+     * Funcion para setear el cuit de un cheque.
+     */
     public Function2<Correccion, Cheque, Cheque> setCuit = (correccion, cheque) -> {
         cheque.setCuit(correccion.getCuit());
         return cheque;
@@ -221,15 +189,25 @@ public class CorreccionService {
      */
     public Function2<Correccion, Cheque, Cheque> setFechaDiferidaAndCuit = (correccion, cheque) -> {
         if (Deposito.TipoOperatoria.VAL_NEG.equals(cheque.getDeposito().getTipoOperatoria())) {
-            Date proxHabil = feriadoService.calcularProximoDiaHabil(new Date(), 1);
-
-            cheque.setFechaDiferida(proxHabil);
-            cheque.setCuit(CREDICOOP_CUIT);
-
-            LOGGER.info("Actualizando fecha diferida {} y cuit {} al cheque con id {}", proxHabil, CREDICOOP_CUIT, cheque.getId());
+            if (cheque.getFechaDiferida() == null) {
+                Date proxHabil = feriadoService.calcularProximoDiaHabil(new Date(), 1);
+                cheque.setFechaDiferida(proxHabil);
+                LOGGER.info("Actualizando fecha diferida {} al cheque con id {}", proxHabil, CREDICOOP_CUIT, cheque.getId());
+            }
+            if (StringUtils.trimToEmpty(cheque.getCuit()).length() == 0) {
+                cheque.setCuit(CREDICOOP_CUIT);
+                LOGGER.info("Actualizando cuit {} (CREDICOOP) al cheque con id {}", CREDICOOP_CUIT, cheque.getId());
+            }
         }
         return cheque;
     };
+
+    public Function2<Correccion, Cheque, Cheque> setObservacion = ((correccion, cheque) -> {
+        if (!cheque.getObservaciones().contains(correccion.getTipoObservacion())) {
+            cheque.addObservacion(correccion.getTipoObservacion());
+        }
+        return cheque;
+    });
 
     private CMC7 fixCMC7Fields(CMC7 cmc7){
         cmc7.setCodBanco(StringUtils.leftPad(cmc7.getCodBanco(), 3, "0"));

@@ -1,6 +1,7 @@
 package coop.bancocredicoop.guv.persistor.models.mongo;
 
 import coop.bancocredicoop.guv.persistor.models.CMC7;
+import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.Deposito;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.util.ObjectUtils;
@@ -19,9 +20,9 @@ public class Correccion implements Serializable {
     protected String cuit;
     protected Integer codMoneda;
     protected CMC7 cmc7;
-    protected LocalDateTime createdAt;
     protected Boolean truncado;
     protected Deposito deposito;
+    protected Cheque.Observacion tipoObservacion;
 
     public Correccion() {}
 
@@ -34,7 +35,6 @@ public class Correccion implements Serializable {
         this.codMoneda = codMoneda;
         this.cmc7 = cmc7;
         this.deposito = deposito;
-        this.createdAt = null;
     }
 
     public Long getId() {
@@ -61,24 +61,20 @@ public class Correccion implements Serializable {
         return cmc7;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Boolean getTruncado() {
         return truncado;
     }
 
-    public void setTruncado(Boolean truncado) {
-        this.truncado = truncado;
-    }
-
     public Deposito getDeposito() {
         return deposito;
+    }
+
+    public Cheque.Observacion getTipoObservacion() {
+        return tipoObservacion;
+    }
+
+    public void setTipoObservacion(Cheque.Observacion tipoObservacion) {
+        this.tipoObservacion = tipoObservacion;
     }
 
     @Override
@@ -92,7 +88,7 @@ public class Correccion implements Serializable {
                 ", cmc7=" + (cmc7 != null ? cmc7.toString() : "") +
                 ", deposito= " + (deposito != null ? ObjectUtils.nullSafeToString(deposito.getId()) : "") +
                 ", truncado=" + truncado +
-                ", createdAt=" + createdAt +
+                ", tipoObservacion=" + tipoObservacion.toString() +
                 '}';
     }
 }

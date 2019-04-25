@@ -1,7 +1,9 @@
 package coop.bancocredicoop.guv.persistor.services;
 
+import coop.bancocredicoop.guv.persistor.actors.ObserveMessage;
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.actors.VerifyMessage;
+import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import io.vavr.control.Try;
@@ -33,8 +35,9 @@ public class KafkaProducer {
         );
     }
 
-    public Try<ListenableFuture<SendResult<String, VerifyMessage>>> sendVerificationMessage(TipoCorreccionEnum tipoCorreccionEnum, Correccion correccion, String token) {
+    public Try<ListenableFuture<SendResult<String, VerifyMessage>>> sendVerificationMessage(TipoCorreccionEnum tipoCorreccionEnum, Cheque cheque, String token) {
         return Try.of(() ->
-                this.verificationMessageTemplate.send(this.verificacionTopic, new VerifyMessage(tipoCorreccionEnum, correccion, token)));
+                this.verificationMessageTemplate.send(this.verificacionTopic, new VerifyMessage(tipoCorreccionEnum, cheque, token)));
     }
+
 }

@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.Set;
 
@@ -45,14 +44,14 @@ public class Cheque implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Moneda moneda;
 
+    @Column(name = "fechaingreso")
+    private Date fechaIngreso;
+
     @Column(name = "fechaingreso1")
     private Date fechaIngreso1;
 
     @Column(name = "fechaingreso2")
     private Date fechaIngreso2;
-
-    @Column(name = "numero")
-    private BigInteger numero;
 
     @Column(name = "truncado")
     private Boolean truncado;
@@ -127,6 +126,14 @@ public class Cheque implements Serializable {
         this.moneda = moneda;
     }
 
+    public Date getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
     public Date getFechaIngreso1() {
         return fechaIngreso1;
     }
@@ -141,14 +148,6 @@ public class Cheque implements Serializable {
 
     public void setFechaIngreso2(Date fechaIngreso2) {
         this.fechaIngreso2 = fechaIngreso2;
-    }
-
-    public BigInteger getNumero() {
-        return numero;
-    }
-
-    public void setNumero(BigInteger numero) {
-        this.numero = numero;
     }
 
     public Set<Observacion> getObservaciones() {
@@ -186,8 +185,6 @@ public class Cheque implements Serializable {
         cheque.setFechaDiferida(correccion.getFechaDiferida());
         cheque.setCuit(correccion.getCuit());
         cheque.setDeposito(correccion.getDeposito());
-        cheque.setFechaIngreso1(correccion.getFechaIngreso1());
-        cheque.setFechaIngreso2(correccion.getFechaIngreso2());
         cheque.setTruncado(correccion.getTruncado());
         cheque.setCmc7(correccion.getCmc7());
 

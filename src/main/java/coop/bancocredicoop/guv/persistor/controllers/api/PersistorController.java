@@ -1,5 +1,6 @@
 package coop.bancocredicoop.guv.persistor.controllers.api;
 
+import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
@@ -34,6 +35,20 @@ public class PersistorController {
             .onFailure(ex -> log.error("Error al enviar mensaje de actualizacion del cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage()))
             .onSuccess(future -> log.info("Mensaje de actualizacion del cheque con id {} fue enviado correctamente a kafka", correccion.getId()));
 
+        return Mono.just("OK");
+    }
+
+    @PostMapping("/observation/{type}")
+    public Mono<String> observe(@PathVariable String type,
+                                @RequestBody Correccion correccion,
+                                @RequestHeader(CorreccionService.GUV_AUTH_TOKEN) String token) {
+        log.info("Iniciando observacion de tipo {} del cheque con id {}", type, correccion.getId());
+
+        correccion.setTipoObservacion(Cheque.Observacion.valueOf(type));
+
+        this.producer.sendUpdateMessage(TipoCorreccionEnum.valueOf(type), correccion, token)
+                .onFailure(ex -> log.error("Error al enviar mensaje de observacion del cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage()))
+                .onSuccess(future -> log.info("Mensaje de observacion del cheque con id {} fue enviado correctamente a kafka", correccion.getId()));
         return Mono.just("OK");
     }
 

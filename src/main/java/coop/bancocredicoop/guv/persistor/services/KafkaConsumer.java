@@ -43,10 +43,10 @@ public class KafkaConsumer {
     @KafkaListener(topics = "${kafka.verificacion.topic}", groupId = "${kafka.groupId}")
     public void consume(@Payload VerifyMessage message, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition) {
         LOGGER.info("Mensaje de verificación recibido en particion: {}, json: {}", partition, message.toString());
-        Cheque cheque = Cheque.of(message.getCorreccion());
-        Try<Integer> post = this.correccionService.saveCorreccionBackgroundPost(cheque, message.getToken());
-        post.onFailure(ex -> LOGGER.error("Error al enviar el mensaje de actualizacion al backend para el cheque con id {}, detalle: ", cheque.getId(), ex.getMessage()));
-        post.onSuccess(status -> LOGGER.info("Se envio correctamente el mensaje de actualizacion al backend para cheque con id {}", cheque.getId()));
+        Cheque cheque = message.getCheque();
+        final ActorRef postUpdateActor = system.actorOf(SPRING_EXTENSION_PROVIDER.get(system)
+                .props("postUpdateActor"), "postUpdateActor_" + UUID.randomUUID());
+        postUpdateActor.tell(message, ActorRef.noSender()); //fire and forget pattern!
     }
 
 }

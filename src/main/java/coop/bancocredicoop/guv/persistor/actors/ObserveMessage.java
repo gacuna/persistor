@@ -3,19 +3,15 @@ package coop.bancocredicoop.guv.persistor.actors;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 
-public class UpdateMessage {
+public class ObserveMessage {
     private TipoCorreccionEnum type;
     private Correccion correccion;
-    private Boolean mustObserve;
-    private String token;
 
-    public UpdateMessage() {}
+    public ObserveMessage() {}
 
-    public UpdateMessage(TipoCorreccionEnum type, Correccion correccion, Boolean mustObserve, String token) {
+    public ObserveMessage(TipoCorreccionEnum type, Correccion correccion) {
         this.type = type;
         this.correccion = correccion;
-        this.mustObserve = mustObserve;
-        this.token = token;
     }
 
     public TipoCorreccionEnum getType() {
@@ -26,21 +22,11 @@ public class UpdateMessage {
         return correccion;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public Boolean mustObserve() {
-        return mustObserve;
-    }
-
     @Override
     public String toString() {
-        return "UpdateMessage{" +
+        return "ObserveMessage{" +
                 "type='" + type.toString() + '\'' +
                 ", correccion='" + correccion.toString() + '\'' +
-                ", mustObserve='" + mustObserve.toString() + '\'' +
-                ", token='" + type + '\'' +
                 '}';
     }
 }

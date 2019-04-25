@@ -10,6 +10,7 @@ import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
+import coop.bancocredicoop.guv.persistor.services.KafkaProducer;
 import io.vavr.Function2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -31,7 +32,7 @@ public class UpdateChequeActor extends AbstractActor {
     private CorreccionService service;
 
     @Autowired
-    private ActorSystem system;
+    private KafkaProducer producer;
 
     public UpdateChequeActor() {}
 
@@ -41,20 +42,19 @@ public class UpdateChequeActor extends AbstractActor {
             .match(UpdateMessage.class, msg -> {
                 logger.info("Mensaje de actualizacion de tipo {} para cheque con id {} listo para procesar", msg.getType());
 
-                Function2<Correccion, Cheque, Cheque> decorator = Match(msg.getType()).of(
-                        Case($(TipoCorreccionEnum.IMPORTE), (type) -> service.setImporteAndTruncado),
-                        Case($(TipoCorreccionEnum.CMC7), (type) -> service.setCMC7),
-                        Case($(TipoCorreccionEnum.FECHA), (type) -> service.setFecha),
-                        Case($(TipoCorreccionEnum.CUIT), (type) -> service.setCuit))
-                        .andThen(service.setStatus.curried().apply(msg.getCorreccion()))
-                        .andThen(service.setFechaDiferidaAndCuit.curried().apply(msg.getCorreccion()));
+                Function2<Correccion, Cheque, Cheque> decorator = Match(msg.mustObserve()).of(
+                    Case($(Boolean.TRUE), observacionPipeline(msg)),
+                    Case($(Boolean.FALSE), correccionPipeline(msg))
+                );
 
                 this.service.update(decorator, msg.getCorreccion())
                     .onFailure(this::logAndReturn)
                     .onSuccess((cheque) -> {
-                        logger.info("cheque con id {} fue actualizado correctamente", cheque.getId());
-                        final ActorRef postUpdateActor = system.actorOf(SPRING_EXTENSION_PROVIDER.get(system).props("postUpdateActor"), "postUpdateActor_" + UUID.randomUUID());
-                        postUpdateActor.tell(new VerifyMessage(msg.getType(), cheque, msg.getToken()), ActorRef.noSender());
+                        logger.info("cheque con id {} fue actualizado correctamente, se procede a verificar el estado del deposito {}",
+                                cheque.getId(), cheque.getDeposito().getId());
+                        //envia mensaje de verificacion de deposito a kafka para que el consumer de kafka delegue
+                        //esta accion al post update actor
+                        this.producer.sendVerificationMessage(msg.getType(), cheque, msg.getToken());
                     })
                     .onComplete((s) -> {
                         getSelf().tell("KILL-CHEQUE-ACTOR", getSelf());
@@ -66,6 +66,34 @@ public class UpdateChequeActor extends AbstractActor {
             })
             .matchAny(o -> logger.error("Tipo de mensaje desconocido"))
             .build();
+    }
+
+    /**
+     * Funcion que detalla el pipeline de ejecucion para realizar la actualizacion de un cheque.
+     *
+     * @param msg
+     * @return
+     */
+    private Function2<Correccion, Cheque, Cheque> correccionPipeline(UpdateMessage msg) {
+        return Match(msg.getType()).of(
+                Case($(TipoCorreccionEnum.IMPORTE), (type) -> service.setImporteAndTruncado),
+                Case($(TipoCorreccionEnum.CMC7), (type) -> service.setCMC7),
+                Case($(TipoCorreccionEnum.FECHA), (type) -> service.setFecha),
+                Case($(TipoCorreccionEnum.CUIT), (type) -> service.setCuit))
+                .andThen(service.setStatus.curried().apply(msg.getCorreccion()))
+                .andThen(service.setFechaDiferidaAndCuit.curried().apply(msg.getCorreccion()));
+    }
+
+    /**
+     * Funcion que detalla el pipeline de ejecucion para realizar la observacion de un cheque.
+     *
+     * @param msg
+     * @return
+     */
+    private Function2<Correccion, Cheque, Cheque> observacionPipeline(UpdateMessage msg) {
+        return service.setObservacion
+                .andThen(service.setStatus.curried().apply(msg.getCorreccion()))
+                .andThen(service.setFechaDiferidaAndCuit.curried().apply(msg.getCorreccion()));
     }
 
     private void logAndReturn(Throwable e) {

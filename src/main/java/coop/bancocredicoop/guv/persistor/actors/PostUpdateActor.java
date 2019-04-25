@@ -26,9 +26,6 @@ public class PostUpdateActor extends AbstractActor {
     @Autowired
     private CorreccionService service;
 
-    @Autowired
-    private KafkaProducer producer;
-
     @Override
     public Receive createReceive() {
         return receiveBuilder()

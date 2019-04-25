@@ -1,6 +1,5 @@
 package coop.bancocredicoop.guv.persistor.models;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -35,6 +34,7 @@ public class CMC7 implements Serializable {
     @Column(name = "DVCUENTA")
     private Short dvCuenta;
 
+    @Column(name = "numero")
     private BigInteger numero;
 
     public String getCodCMC7() {
