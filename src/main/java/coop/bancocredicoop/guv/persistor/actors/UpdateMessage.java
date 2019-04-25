@@ -1,24 +1,25 @@
 package coop.bancocredicoop.guv.persistor.actors;
 
+import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
+import io.vavr.control.Either;
+import io.vavr.control.Option;
 
 public class UpdateMessage {
-    private TipoCorreccionEnum type;
+    private Either<TipoCorreccionEnum, Cheque.Observacion> type;
     private Correccion correccion;
-    private Boolean mustObserve;
-    private String token;
+    private Option<String> token;
 
     public UpdateMessage() {}
 
-    public UpdateMessage(TipoCorreccionEnum type, Correccion correccion, Boolean mustObserve, String token) {
-        this.type = type;
+    public UpdateMessage(Either<TipoCorreccionEnum, Cheque.Observacion> type, Correccion correccion, Option<String> token) {
+        this.type= type;
         this.correccion = correccion;
-        this.mustObserve = mustObserve;
         this.token = token;
     }
 
-    public TipoCorreccionEnum getType() {
+    public Either<TipoCorreccionEnum, Cheque.Observacion> getType() {
         return type;
     }
 
@@ -26,21 +27,16 @@ public class UpdateMessage {
         return correccion;
     }
 
-    public String getToken() {
+    public Option<String> getToken() {
         return token;
-    }
-
-    public Boolean mustObserve() {
-        return mustObserve;
     }
 
     @Override
     public String toString() {
         return "UpdateMessage{" +
-                "type='" + type.toString() + '\'' +
+                "tipoCorreccion='" + type.toString() + '\'' +
                 ", correccion='" + correccion.toString() + '\'' +
-                ", mustObserve='" + mustObserve.toString() + '\'' +
-                ", token='" + type + '\'' +
+                ", token='" + token.getOrNull() + '\'' +
                 '}';
     }
 }

@@ -1,0 +1,784 @@
+2019-04-15 09:17:28,481 [main] ERROR o.s.b.SpringApplication - Application run failed
+java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderAction - Could not create an Appender of type [net.logstash.logback.appender.LogstashTcpSocketAppender]. ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@8:92 - ActionException in Action for tag [appender] ch.qos.logback.core.joran.spi.ActionException: ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [STASH]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [STASH]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:169)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reinitialize(LogbackLoggingSystem.java:224)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:75)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:117)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:264)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:237)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:200)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:74)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:320)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at coop.bancocredicoop.guv.persistor.PersistorApplication.main(PersistorApplication.java:10)
+2019-04-15 09:24:03,914 [main] ERROR o.s.b.SpringApplication - Application run failed
+java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderAction - Could not create an Appender of type [net.logstash.logback.appender.LogstashTcpSocketAppender]. ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@8:92 - ActionException in Action for tag [appender] ch.qos.logback.core.joran.spi.ActionException: ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [STASH]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [STASH]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:169)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reinitialize(LogbackLoggingSystem.java:224)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:75)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:117)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:264)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:237)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:200)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:74)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:320)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at coop.bancocredicoop.guv.persistor.PersistorApplication.main(PersistorApplication.java:10)
+2019-04-15 09:24:47,401 [main] INFO o.s.b.t.c.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [coop.bancocredicoop.guv.persistor.PersistorApplicationTests], using SpringBootContextLoader
+2019-04-15 09:24:47,415 [main] INFO o.s.t.c.s.AbstractContextLoader - Could not detect default resource locations for test class [coop.bancocredicoop.guv.persistor.PersistorApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+2019-04-15 09:24:47,416 [main] INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [coop.bancocredicoop.guv.persistor.PersistorApplicationTests]: PersistorApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2019-04-15 09:24:47,629 [main] INFO o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration coop.bancocredicoop.guv.persistor.PersistorApplication for test class coop.bancocredicoop.guv.persistor.PersistorApplicationTests
+2019-04-15 09:24:47,835 [main] INFO o.s.b.t.c.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2019-04-15 09:24:47,875 [main] INFO o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@1672fe87, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@5026735c, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@1b45c0e, org.springframework.test.context.support.DirtiesContextTestExecutionListener@11f0a5a1, org.springframework.test.context.transaction.TransactionalTestExecutionListener@10f7f7de, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@73a8da0f, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@50dfbc58, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@4416d64f, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@6bf08014, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@5e3d57c7, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@732d0d24]
+2019-04-15 09:24:48,876 [main] INFO c.b.g.p.PersistorApplicationTests - Starting PersistorApplicationTests on DESKTOP-DABJFGI with PID 2104 (started by GyL in C:\development\guv-persistor)
+2019-04-15 09:24:48,878 [main] DEBUG c.b.g.p.PersistorApplicationTests - Running with Spring Boot v2.0.4.RELEASE, Spring v5.0.8.RELEASE
+2019-04-15 09:24:48,880 [main] INFO c.b.g.p.PersistorApplicationTests - No active profile set, falling back to default profiles: default
+2019-04-15 09:24:48,946 [main] INFO o.s.b.w.r.c.GenericReactiveWebApplicationContext - Refreshing org.springframework.boot.web.reactive.context.GenericReactiveWebApplicationContext@ff684e1: startup date [Mon Apr 15 09:24:48 ART 2019]; root of context hierarchy
+2019-04-15 09:24:50,976 [main] INFO o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-15 09:24:51,116 [main] INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JPA - Could not safely identify store assignment for repository candidate interface coop.bancocredicoop.guv.persistor.repositories.mongo.CorreccionImporteRepository.
+2019-04-15 09:24:51,180 [main] INFO o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-15 09:24:51,484 [main] INFO o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-15 09:24:51,512 [main] INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface coop.bancocredicoop.guv.persistor.repositories.ChequeRepository.
+2019-04-15 09:24:51,523 [main] INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface coop.bancocredicoop.guv.persistor.repositories.GuvConfigRepository.
+2019-04-15 09:24:52,311 [main] INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$c0c6a2a9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-15 09:24:52,613 [main] INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$ed149126] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-15 09:24:53,675 [main] INFO c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2019-04-15 09:24:53,995 [main] INFO c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2019-04-15 09:24:54,101 [main] INFO o.s.o.j.LocalContainerEntityManagerFactoryBean - Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-04-15 09:24:54,136 [main] INFO o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-04-15 09:24:54,349 [main] INFO o.h.Version - HHH000412: Hibernate Core {5.2.17.Final}
+2019-04-15 09:24:54,352 [main] INFO o.h.c.Environment - HHH000206: hibernate.properties not found
+2019-04-15 09:24:54,440 [main] INFO o.h.a.c.Version - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2019-04-15 09:24:54,883 [main] INFO o.h.d.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2019-04-15 09:24:56,645 [main] INFO o.h.t.s.i.SchemaCreatorImpl - HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@635ff2a5'
+2019-04-15 09:24:56,649 [main] INFO o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-04-15 09:24:56,888 [main] INFO o.s.j.d.i.ScriptUtils - Executing SQL script from URL [file:/C:/development/guv-persistor/target/test-classes/data.sql]
+2019-04-15 09:24:56,901 [main] INFO o.s.j.d.i.ScriptUtils - Executed SQL script from URL [file:/C:/development/guv-persistor/target/test-classes/data.sql] in 10 ms.
+2019-04-15 09:25:03,075 [main] INFO o.m.d.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=50}
+2019-04-15 09:25:04,011 [main] INFO o.m.d.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=50}
+2019-04-15 09:25:04,111 [cluster-ClusterId{value='5cb47820fecd7608382258fa', description='null'}-localhost:27017] INFO o.m.d.connection - Opened connection [connectionId{localValue:2, serverValue:1}] to localhost:27017
+2019-04-15 09:25:04,121 [cluster-ClusterId{value='5cb47820fecd7608382258fa', description='null'}-localhost:27017] INFO o.m.d.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 5]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=6192800}
+2019-04-15 09:25:04,615 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field '_id' in type 'Cheque' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:25:04,622 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field 'cheques' in type 'Deposito' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:25:04,920 [cluster-ClusterId{value='5cb4781ffecd7608382258f9', description='null'}-localhost:27017] INFO o.m.d.connection - Opened connection [connectionId{localValue:1, serverValue:2}] to localhost:27017
+2019-04-15 09:25:04,927 [cluster-ClusterId{value='5cb4781ffecd7608382258f9', description='null'}-localhost:27017] INFO o.m.d.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 5]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=3097100}
+2019-04-15 09:25:05,395 [main] INFO o.s.b.a.e.w.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2019-04-15 09:25:05,439 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/auditevents],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,446 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/beans],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,450 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,454 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/conditions],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,458 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/configprops],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,462 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/env],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,466 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/env/{toMatch}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,472 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,478 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/loggers],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,482 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/loggers/{name}],methods=[POST],consumes=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$WriteOperationHandler.handle(org.springframework.web.server.ServerWebExchange,java.util.Map<java.lang.String, java.lang.String>)
+2019-04-15 09:25:05,485 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/loggers/{name}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,544 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/heapdump],methods=[GET],produces=[application/octet-stream]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,547 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/threaddump],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,552 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/prometheus],methods=[GET],produces=[text/plain;version=0.0.4;charset=utf-8]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,555 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/metrics],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,591 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/metrics/{requiredMetricName}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,600 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/scheduledtasks],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,607 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/httptrace],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,610 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/mappings],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:05,615 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.reactive.WebFluxEndpointHandlerMapping.links(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:25:06,256 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field '_id' in type 'Cheque' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:25:06,265 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field 'cheques' in type 'Deposito' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:25:07,203 [main] INFO o.a.k.c.a.AdminClientConfig - AdminClientConfig values: 
+	bootstrap.servers = [localhost:9092]
+	client.id = 
+	connections.max.idle.ms = 300000
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 120000
+	retries = 5
+	retry.backoff.ms = 100
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+
+2019-04-15 09:25:07,364 [main] INFO o.a.k.c.u.AppInfoParser - Kafka version : 1.0.2
+2019-04-15 09:25:07,364 [main] INFO o.a.k.c.u.AppInfoParser - Kafka commitId : 2a121f7b1d402825
+2019-04-15 09:25:08,600 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:09,703 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:10,808 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:12,064 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:13,421 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:15,286 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:17,148 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:19,009 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:20,818 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:22,838 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:24,801 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:26,917 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:28,830 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:25:44,693 [main] ERROR o.s.b.SpringApplication - Application run failed
+java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderAction - Could not create an Appender of type [net.logstash.logback.appender.LogstashTcpSocketAppender]. ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@8:92 - ActionException in Action for tag [appender] ch.qos.logback.core.joran.spi.ActionException: ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [STASH]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [STASH]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:169)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reinitialize(LogbackLoggingSystem.java:224)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:75)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:117)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:264)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:237)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:200)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:74)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:320)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at coop.bancocredicoop.guv.persistor.PersistorApplication.main(PersistorApplication.java:10)
+2019-04-15 09:26:42,323 [main] ERROR o.s.b.SpringApplication - Application run failed
+java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderAction - Could not create an Appender of type [net.logstash.logback.appender.LogstashTcpSocketAppender]. ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@8:92 - ActionException in Action for tag [appender] ch.qos.logback.core.joran.spi.ActionException: ch.qos.logback.core.util.DynamicClassLoadingException: Failed to instantiate type net.logstash.logback.appender.LogstashTcpSocketAppender
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [STASH]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [STASH]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:169)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reinitialize(LogbackLoggingSystem.java:224)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:75)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:117)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:264)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:237)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:200)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:74)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:320)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at coop.bancocredicoop.guv.persistor.PersistorApplication.main(PersistorApplication.java:10)
+2019-04-15 09:30:56,827 [main] INFO c.b.g.p.PersistorApplication - Starting PersistorApplication on DESKTOP-DABJFGI with PID 14276 (C:\development\guv-persistor\target\classes started by GyL in C:\development\guv-persistor)
+2019-04-15 09:30:56,888 [main] DEBUG c.b.g.p.PersistorApplication - Running with Spring Boot v2.0.4.RELEASE, Spring v5.0.8.RELEASE
+2019-04-15 09:30:56,891 [main] INFO c.b.g.p.PersistorApplication - No active profile set, falling back to default profiles: default
+2019-04-15 09:30:57,354 [main] INFO o.s.b.w.r.c.AnnotationConfigReactiveWebServerApplicationContext - Refreshing org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@324a0017: startup date [Mon Apr 15 09:30:57 ART 2019]; root of context hierarchy
+2019-04-15 09:31:00,270 [main] INFO o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-15 09:31:00,383 [main] INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JPA - Could not safely identify store assignment for repository candidate interface coop.bancocredicoop.guv.persistor.repositories.mongo.CorreccionImporteRepository.
+2019-04-15 09:31:00,442 [main] INFO o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-15 09:31:00,517 [main] INFO o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-15 09:31:00,555 [main] INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface coop.bancocredicoop.guv.persistor.repositories.ChequeRepository.
+2019-04-15 09:31:00,561 [main] INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface coop.bancocredicoop.guv.persistor.repositories.GuvConfigRepository.
+2019-04-15 09:31:01,461 [main] INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$3a5a08e9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-15 09:31:01,839 [main] INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$66a7f766] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-15 09:31:04,807 [main] INFO o.m.d.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=50}
+2019-04-15 09:31:05,960 [main] INFO o.m.d.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=50}
+2019-04-15 09:31:06,027 [cluster-ClusterId{value='5cb479899aec9c37c4ed2596', description='null'}-localhost:27017] INFO o.m.d.connection - Opened connection [connectionId{localValue:2, serverValue:3}] to localhost:27017
+2019-04-15 09:31:06,036 [cluster-ClusterId{value='5cb479899aec9c37c4ed2596', description='null'}-localhost:27017] INFO o.m.d.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 5]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=5828600}
+2019-04-15 09:31:06,450 [cluster-ClusterId{value='5cb479889aec9c37c4ed2595', description='null'}-localhost:27017] INFO o.m.d.connection - Opened connection [connectionId{localValue:1, serverValue:4}] to localhost:27017
+2019-04-15 09:31:06,459 [cluster-ClusterId{value='5cb479889aec9c37c4ed2595', description='null'}-localhost:27017] INFO o.m.d.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 5]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=8037000}
+2019-04-15 09:31:06,607 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field '_id' in type 'Cheque' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:31:06,613 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field 'cheques' in type 'Deposito' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:31:07,104 [main] INFO o.s.b.a.e.w.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2019-04-15 09:31:07,134 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/auditevents],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,135 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/beans],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,137 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,139 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/conditions],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,141 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/configprops],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,143 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/env],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,145 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/env/{toMatch}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,148 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,152 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/loggers],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,156 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/loggers/{name}],methods=[POST],consumes=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$WriteOperationHandler.handle(org.springframework.web.server.ServerWebExchange,java.util.Map<java.lang.String, java.lang.String>)
+2019-04-15 09:31:07,157 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/loggers/{name}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,160 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/heapdump],methods=[GET],produces=[application/octet-stream]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,162 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/threaddump],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,165 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/prometheus],methods=[GET],produces=[text/plain;version=0.0.4;charset=utf-8]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,167 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/metrics/{requiredMetricName}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,169 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/metrics],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,171 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/scheduledtasks],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,173 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/httptrace],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,175 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/mappings],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,176 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.reactive.WebFluxEndpointHandlerMapping.links(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:31:07,805 [main] INFO c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2019-04-15 09:31:08,231 [main] INFO c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2019-04-15 09:31:08,375 [main] INFO o.s.o.j.LocalContainerEntityManagerFactoryBean - Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-04-15 09:31:08,408 [main] INFO o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-04-15 09:31:08,614 [main] INFO o.h.Version - HHH000412: Hibernate Core {5.2.17.Final}
+2019-04-15 09:31:08,619 [main] INFO o.h.c.Environment - HHH000206: hibernate.properties not found
+2019-04-15 09:31:08,732 [main] INFO o.h.a.c.Version - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2019-04-15 09:31:09,203 [main] INFO o.h.d.Dialect - HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+2019-04-15 09:31:09,672 [main] INFO o.h.t.BasicTypeRegistry - HHH000270: Type registration [byte[]] overrides previous : org.hibernate.type.BinaryType@4cf01c41
+2019-04-15 09:31:09,672 [main] INFO o.h.t.BasicTypeRegistry - HHH000270: Type registration [[B] overrides previous : org.hibernate.type.BinaryType@4cf01c41
+2019-04-15 09:31:09,674 [main] INFO o.h.t.BasicTypeRegistry - HHH000270: Type registration [Byte[]] overrides previous : org.hibernate.type.WrapperBinaryType@c83ed77
+2019-04-15 09:31:09,674 [main] INFO o.h.t.BasicTypeRegistry - HHH000270: Type registration [[Ljava.lang.Byte;] overrides previous : org.hibernate.type.WrapperBinaryType@c83ed77
+2019-04-15 09:31:10,849 [main] INFO o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-04-15 09:31:14,949 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field '_id' in type 'Cheque' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:31:15,718 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field 'cheques' in type 'Deposito' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:31:17,669 [main] INFO o.a.k.c.a.AdminClientConfig - AdminClientConfig values: 
+	bootstrap.servers = [localhost:9092]
+	client.id = 
+	connections.max.idle.ms = 300000
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 120000
+	retries = 5
+	retry.backoff.ms = 100
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+
+2019-04-15 09:31:17,751 [main] INFO o.a.k.c.u.AppInfoParser - Kafka version : 1.0.2
+2019-04-15 09:31:17,753 [main] INFO o.a.k.c.u.AppInfoParser - Kafka commitId : 2a121f7b1d402825
+2019-04-15 09:31:19,031 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:20,430 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:21,623 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:22,829 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:24,237 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:26,199 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:28,111 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:30,125 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:32,087 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:34,249 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:36,161 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:38,330 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:40,194 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:42,156 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:43,969 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:45,778 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:47,945 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:50,110 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:52,224 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:54,442 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:56,304 [kafka-admin-client-thread | adminclient-1] WARN o.a.k.c.NetworkClient - [AdminClient clientId=adminclient-1] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:31:57,774 [kafka-admin-client-thread | adminclient-1] INFO o.a.k.c.a.KafkaAdminClient - [AdminClient clientId=adminclient-1] Forcing a hard I/O thread shutdown. Requests in progress will be aborted.
+2019-04-15 09:31:57,787 [main] INFO o.s.j.e.a.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+2019-04-15 09:31:57,789 [main] INFO o.s.j.e.a.AnnotationMBeanExporter - Bean with name 'dataSource' has been autodetected for JMX exposure
+2019-04-15 09:31:57,801 [main] INFO o.s.j.e.a.AnnotationMBeanExporter - Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2019-04-15 09:31:57,811 [main] INFO o.s.c.s.DefaultLifecycleProcessor - Starting beans in phase 2147483547
+2019-04-15 09:31:57,829 [main] INFO o.a.k.c.c.ConsumerConfig - ConsumerConfig values: 
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.id = consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0
+	connections.max.idle.ms = 540000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = guv
+	heartbeat.interval.ms = 3000
+	interceptor.classes = null
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 305000
+	retry.backoff.ms = 100
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2019-04-15 09:31:57,869 [main] INFO o.a.k.c.u.AppInfoParser - Kafka version : 1.0.2
+2019-04-15 09:31:57,869 [main] INFO o.a.k.c.u.AppInfoParser - Kafka commitId : 2a121f7b1d402825
+2019-04-15 09:31:57,876 [main] INFO o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 
+2019-04-15 09:31:57,986 [reactor-http-nio-1] INFO r.i.n.t.BlockingNettyContext - Started HttpServer on /0:0:0:0:0:0:0:0:8092
+2019-04-15 09:31:57,988 [main] INFO o.s.b.w.e.n.NettyWebServer - Netty started on port(s): 8092
+2019-04-15 09:31:57,997 [main] INFO c.b.g.p.PersistorApplication - Started PersistorApplication in 62.675 seconds (JVM running for 67.117)
+2019-04-15 09:31:58,404 [nioEventLoopGroup-2-2] INFO o.m.d.connection - Opened connection [connectionId{localValue:3, serverValue:5}] to localhost:27017
+2019-04-15 09:31:59,134 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:00,190 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:01,293 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:02,499 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:03,857 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:05,575 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:07,741 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:09,954 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:12,171 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:14,187 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:16,149 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:18,062 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:19,933 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:22,096 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:24,110 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:26,226 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:28,243 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:30,305 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:32,266 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:34,231 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:36,096 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:38,210 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:40,122 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:42,140 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:44,205 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:46,067 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:48,181 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:50,295 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:52,262 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:54,277 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:56,388 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:32:58,351 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:00,313 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:02,529 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:04,542 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:06,455 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:08,315 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:10,432 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:12,595 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:14,507 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:16,519 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:18,533 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:20,442 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:22,402 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:24,565 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:26,576 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:28,445 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:30,256 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:32,372 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:34,235 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:36,249 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:38,111 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:40,074 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:42,138 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:44,105 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:46,116 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:48,073 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:49,985 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:51,845 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:53,758 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:55,721 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:57,684 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:33:59,855 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:34:01,917 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:34:04,033 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:34:05,895 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:34:07,758 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:34:09,873 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node -1 could not be established. Broker may not be available.
+2019-04-15 09:34:16,287 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Error while fetching metadata with correlation id 2 : {correccion_topic=LEADER_NOT_AVAILABLE}
+2019-04-15 09:34:16,334 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Discovered group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null)
+2019-04-15 09:34:16,339 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Revoking previously assigned partitions []
+2019-04-15 09:34:16,339 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.s.k.l.KafkaMessageListenerContainer - partitions revoked: []
+2019-04-15 09:34:16,340 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] (Re-)joining group
+2019-04-15 09:34:16,371 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+2019-04-15 09:34:16,488 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Discovered group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null)
+2019-04-15 09:34:16,489 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+2019-04-15 09:34:16,596 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Discovered group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null)
+2019-04-15 09:34:16,597 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] (Re-)joining group
+2019-04-15 09:34:16,603 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+2019-04-15 09:34:16,708 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Discovered group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null)
+2019-04-15 09:34:16,709 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+2019-04-15 09:34:16,812 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Discovered group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null)
+2019-04-15 09:34:16,813 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] (Re-)joining group
+2019-04-15 09:34:16,821 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+2019-04-15 09:34:16,926 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Discovered group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null)
+2019-04-15 09:34:16,927 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+2019-04-15 09:34:17,050 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Discovered group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null)
+2019-04-15 09:34:17,053 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] (Re-)joining group
+2019-04-15 09:34:17,167 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] (Re-)joining group
+2019-04-15 09:34:17,274 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] (Re-)joining group
+2019-04-15 09:34:27,382 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Successfully joined group with generation 33
+2019-04-15 09:34:27,385 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Setting newly assigned partitions [correccion_topic-0]
+2019-04-15 09:34:27,396 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.s.k.l.KafkaMessageListenerContainer - partitions assigned: [correccion_topic-0]
+2019-04-15 09:34:41,202 [kafka-coordinator-heartbeat-thread | guv] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+2019-04-15 09:34:42,307 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:43,411 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:44,617 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:46,023 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:47,787 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:49,853 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:51,813 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:53,677 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:55,589 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:57,753 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:34:59,665 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:01,576 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:03,740 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:05,753 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:07,618 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:09,543 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:11,658 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:13,825 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:15,787 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:17,747 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:19,561 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:21,676 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:23,790 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:25,756 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:27,971 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:30,135 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:32,251 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:34,316 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:36,428 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:38,592 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:40,404 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:42,414 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:44,278 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:46,337 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:48,549 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:50,612 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:52,526 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:54,652 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:56,817 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:35:58,678 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:00,852 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:02,818 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:04,982 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:06,846 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:08,910 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:11,075 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:13,191 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:15,310 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:17,478 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:19,339 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:21,401 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:23,272 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:25,436 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:27,348 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:29,414 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:31,430 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:33,594 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:35,554 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:37,617 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:39,579 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:41,640 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:43,705 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:45,822 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:47,682 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:49,646 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:51,561 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:53,779 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:55,995 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:58,008 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:36:59,922 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Connection to node 0 could not be established. Broker may not be available.
+2019-04-15 09:37:05,319 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Error while fetching metadata with correlation id 59 : {correccion_topic=LEADER_NOT_AVAILABLE}
+2019-04-15 09:37:05,457 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Error while fetching metadata with correlation id 61 : {correccion_topic=LEADER_NOT_AVAILABLE}
+2019-04-15 09:37:05,578 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Error while fetching metadata with correlation id 63 : {correccion_topic=LEADER_NOT_AVAILABLE}
+2019-04-15 09:37:05,684 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.NetworkClient - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Error while fetching metadata with correlation id 65 : {correccion_topic=LEADER_NOT_AVAILABLE}
+2019-04-15 09:37:07,893 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Discovered group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null)
+2019-04-15 09:37:07,920 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Offset commit failed on partition correccion_topic-0 at offset 9: Specified group generation id is not valid.
+2019-04-15 09:37:07,924 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Asynchronous auto-commit of offsets {correccion_topic-0=OffsetAndMetadata{offset=9, metadata=''}} failed: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing the session timeout or by reducing the maximum size of batches returned in poll() with max.poll.records.
+2019-04-15 09:37:07,926 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Synchronous auto-commit of offsets {correccion_topic-0=OffsetAndMetadata{offset=9, metadata=''}} failed: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing the session timeout or by reducing the maximum size of batches returned in poll() with max.poll.records.
+2019-04-15 09:37:07,926 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Revoking previously assigned partitions [correccion_topic-0]
+2019-04-15 09:37:07,926 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.s.k.l.KafkaMessageListenerContainer - partitions revoked: [correccion_topic-0]
+2019-04-15 09:37:07,926 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] (Re-)joining group
+2019-04-15 09:37:08,099 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Successfully joined group with generation 1
+2019-04-15 09:37:08,100 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-cb3cc126-da75-4800-aea1-749f2dda9dc7-0, groupId=guv] Setting newly assigned partitions [correccion_topic-0]
+2019-04-15 09:37:08,119 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.s.k.l.KafkaMessageListenerContainer - partitions assigned: [correccion_topic-0]
+2019-04-15 09:37:23,177 [main] INFO c.b.g.p.PersistorApplication - Starting PersistorApplication on DESKTOP-DABJFGI with PID 10180 (C:\development\guv-persistor\target\classes started by GyL in C:\development\guv-persistor)
+2019-04-15 09:37:23,186 [main] DEBUG c.b.g.p.PersistorApplication - Running with Spring Boot v2.0.4.RELEASE, Spring v5.0.8.RELEASE
+2019-04-15 09:37:23,186 [main] INFO c.b.g.p.PersistorApplication - No active profile set, falling back to default profiles: default
+2019-04-15 09:37:23,341 [main] INFO o.s.b.w.r.c.AnnotationConfigReactiveWebServerApplicationContext - Refreshing org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@530712d: startup date [Mon Apr 15 09:37:23 ART 2019]; root of context hierarchy
+2019-04-15 09:37:25,419 [main] INFO o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-15 09:37:25,497 [main] INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JPA - Could not safely identify store assignment for repository candidate interface coop.bancocredicoop.guv.persistor.repositories.mongo.CorreccionImporteRepository.
+2019-04-15 09:37:25,536 [main] INFO o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-15 09:37:25,584 [main] INFO o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-15 09:37:25,606 [main] INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface coop.bancocredicoop.guv.persistor.repositories.ChequeRepository.
+2019-04-15 09:37:25,609 [main] INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface coop.bancocredicoop.guv.persistor.repositories.GuvConfigRepository.
+2019-04-15 09:37:26,102 [main] INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$cfdc0d07] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-15 09:37:26,364 [main] INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$fc29fb84] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-15 09:37:28,277 [main] INFO o.m.d.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=50}
+2019-04-15 09:37:29,163 [main] INFO o.m.d.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=50}
+2019-04-15 09:37:29,220 [cluster-ClusterId{value='5cb47b099aec9c27c4f3c606', description='null'}-localhost:27017] INFO o.m.d.connection - Opened connection [connectionId{localValue:2, serverValue:6}] to localhost:27017
+2019-04-15 09:37:29,228 [cluster-ClusterId{value='5cb47b099aec9c27c4f3c606', description='null'}-localhost:27017] INFO o.m.d.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 5]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=5208400}
+2019-04-15 09:37:29,475 [cluster-ClusterId{value='5cb47b089aec9c27c4f3c605', description='null'}-localhost:27017] INFO o.m.d.connection - Opened connection [connectionId{localValue:1, serverValue:7}] to localhost:27017
+2019-04-15 09:37:29,478 [cluster-ClusterId{value='5cb47b089aec9c27c4f3c605', description='null'}-localhost:27017] INFO o.m.d.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 5]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=2613700}
+2019-04-15 09:37:29,634 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field '_id' in type 'Cheque' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:37:29,638 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field 'cheques' in type 'Deposito' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:37:30,036 [main] INFO o.s.b.a.e.w.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2019-04-15 09:37:30,056 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/auditevents],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,057 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/beans],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,058 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,060 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/conditions],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,061 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/configprops],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,062 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/env],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,063 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/env/{toMatch}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,065 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,066 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/loggers],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,069 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/loggers/{name}],methods=[POST],consumes=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$WriteOperationHandler.handle(org.springframework.web.server.ServerWebExchange,java.util.Map<java.lang.String, java.lang.String>)
+2019-04-15 09:37:30,070 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/loggers/{name}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,072 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/heapdump],methods=[GET],produces=[application/octet-stream]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,074 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/threaddump],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,076 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/prometheus],methods=[GET],produces=[text/plain;version=0.0.4;charset=utf-8]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,077 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/metrics/{requiredMetricName}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,078 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/metrics],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,079 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/scheduledtasks],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,081 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/httptrace],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,082 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator/mappings],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public org.reactivestreams.Publisher<org.springframework.http.ResponseEntity<java.lang.Object>> org.springframework.boot.actuate.endpoint.web.reactive.AbstractWebFluxEndpointHandlerMapping$ReadOperationHandler.handle(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,083 [main] INFO o.s.b.a.e.w.r.WebFluxEndpointHandlerMapping - Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.reactive.WebFluxEndpointHandlerMapping.links(org.springframework.web.server.ServerWebExchange)
+2019-04-15 09:37:30,604 [main] INFO c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2019-04-15 09:37:30,974 [main] INFO c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2019-04-15 09:37:31,081 [main] INFO o.s.o.j.LocalContainerEntityManagerFactoryBean - Building JPA container EntityManagerFactory for persistence unit 'default'
+2019-04-15 09:37:31,102 [main] INFO o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-04-15 09:37:31,282 [main] INFO o.h.Version - HHH000412: Hibernate Core {5.2.17.Final}
+2019-04-15 09:37:31,285 [main] INFO o.h.c.Environment - HHH000206: hibernate.properties not found
+2019-04-15 09:37:31,410 [main] INFO o.h.a.c.Version - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2019-04-15 09:37:31,810 [main] INFO o.h.d.Dialect - HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+2019-04-15 09:37:32,093 [main] INFO o.h.t.BasicTypeRegistry - HHH000270: Type registration [byte[]] overrides previous : org.hibernate.type.BinaryType@6a7aa675
+2019-04-15 09:37:32,093 [main] INFO o.h.t.BasicTypeRegistry - HHH000270: Type registration [[B] overrides previous : org.hibernate.type.BinaryType@6a7aa675
+2019-04-15 09:37:32,094 [main] INFO o.h.t.BasicTypeRegistry - HHH000270: Type registration [Byte[]] overrides previous : org.hibernate.type.WrapperBinaryType@74a74070
+2019-04-15 09:37:32,095 [main] INFO o.h.t.BasicTypeRegistry - HHH000270: Type registration [[Ljava.lang.Byte;] overrides previous : org.hibernate.type.WrapperBinaryType@74a74070
+2019-04-15 09:37:32,998 [main] INFO o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-04-15 09:37:35,536 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field '_id' in type 'Cheque' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:37:35,538 [main] INFO o.s.d.m.c.i.MongoPersistentEntityIndexResolver - Found cycle for field 'cheques' in type 'Deposito' for path 'cheques -> deposito -> cheques'
+2019-04-15 09:37:36,248 [main] INFO o.a.k.c.a.AdminClientConfig - AdminClientConfig values: 
+	bootstrap.servers = [localhost:9092]
+	client.id = 
+	connections.max.idle.ms = 300000
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 120000
+	retries = 5
+	retry.backoff.ms = 100
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+
+2019-04-15 09:37:36,301 [main] INFO o.a.k.c.u.AppInfoParser - Kafka version : 1.0.2
+2019-04-15 09:37:36,301 [main] INFO o.a.k.c.u.AppInfoParser - Kafka commitId : 2a121f7b1d402825
+2019-04-15 09:37:36,626 [main] INFO o.s.k.c.KafkaAdmin - Topic 'correccion_topic' exists but has a different partition count: 1 not 4
+2019-04-15 09:37:36,630 [main] INFO o.s.j.e.a.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+2019-04-15 09:37:36,632 [main] INFO o.s.j.e.a.AnnotationMBeanExporter - Bean with name 'dataSource' has been autodetected for JMX exposure
+2019-04-15 09:37:36,641 [main] INFO o.s.j.e.a.AnnotationMBeanExporter - Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2019-04-15 09:37:36,648 [main] INFO o.s.c.s.DefaultLifecycleProcessor - Starting beans in phase 2147483547
+2019-04-15 09:37:36,663 [main] INFO o.a.k.c.c.ConsumerConfig - ConsumerConfig values: 
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.id = consumer-9fb64714-420a-4d7b-8826-70684091bd24-0
+	connections.max.idle.ms = 540000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = guv
+	heartbeat.interval.ms = 3000
+	interceptor.classes = null
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 305000
+	retry.backoff.ms = 100
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2019-04-15 09:37:36,699 [main] INFO o.a.k.c.u.AppInfoParser - Kafka version : 1.0.2
+2019-04-15 09:37:36,699 [main] INFO o.a.k.c.u.AppInfoParser - Kafka commitId : 2a121f7b1d402825
+2019-04-15 09:37:36,707 [main] INFO o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 
+2019-04-15 09:37:36,732 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-9fb64714-420a-4d7b-8826-70684091bd24-0, groupId=guv] Discovered group coordinator DESKTOP-DABJFGI:9092 (id: 2147483647 rack: null)
+2019-04-15 09:37:36,736 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-9fb64714-420a-4d7b-8826-70684091bd24-0, groupId=guv] Revoking previously assigned partitions []
+2019-04-15 09:37:36,736 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.s.k.l.KafkaMessageListenerContainer - partitions revoked: []
+2019-04-15 09:37:36,737 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-9fb64714-420a-4d7b-8826-70684091bd24-0, groupId=guv] (Re-)joining group
+2019-04-15 09:37:36,769 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-9fb64714-420a-4d7b-8826-70684091bd24-0, groupId=guv] Successfully joined group with generation 3
+2019-04-15 09:37:36,772 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-9fb64714-420a-4d7b-8826-70684091bd24-0, groupId=guv] Setting newly assigned partitions [correccion_topic-0]
+2019-04-15 09:37:36,779 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.s.k.l.KafkaMessageListenerContainer - partitions assigned: [correccion_topic-0]
+2019-04-15 09:37:36,833 [reactor-http-nio-1] INFO r.i.n.t.BlockingNettyContext - Started HttpServer on /0:0:0:0:0:0:0:0:8092
+2019-04-15 09:37:36,834 [main] INFO o.s.b.w.e.n.NettyWebServer - Netty started on port(s): 8092
+2019-04-15 09:37:36,846 [main] INFO c.b.g.p.PersistorApplication - Started PersistorApplication in 14.886 seconds (JVM running for 17.31)
+2019-04-15 09:37:37,155 [nioEventLoopGroup-2-2] INFO o.m.d.connection - Opened connection [connectionId{localValue:3, serverValue:8}] to localhost:27017
+2019-04-15 09:42:09,823 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-9fb64714-420a-4d7b-8826-70684091bd24-0, groupId=guv] Revoking previously assigned partitions [correccion_topic-0]
+2019-04-15 09:42:09,824 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.s.k.l.KafkaMessageListenerContainer - partitions revoked: [correccion_topic-0]
+2019-04-15 09:42:09,824 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-9fb64714-420a-4d7b-8826-70684091bd24-0, groupId=guv] (Re-)joining group
+2019-04-15 09:42:09,834 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.AbstractCoordinator - [Consumer clientId=consumer-9fb64714-420a-4d7b-8826-70684091bd24-0, groupId=guv] Successfully joined group with generation 4
+2019-04-15 09:42:09,834 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-9fb64714-420a-4d7b-8826-70684091bd24-0, groupId=guv] Setting newly assigned partitions [correccion_topic-0]
+2019-04-15 09:42:09,836 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO o.s.k.l.KafkaMessageListenerContainer - partitions assigned: [correccion_topic-0]

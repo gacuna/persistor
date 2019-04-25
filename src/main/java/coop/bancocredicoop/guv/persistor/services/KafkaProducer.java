@@ -6,6 +6,8 @@ import coop.bancocredicoop.guv.persistor.actors.VerifyMessage;
 import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
+import io.vavr.control.Either;
+import io.vavr.control.Option;
 import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,15 +31,17 @@ public class KafkaProducer {
     @Autowired
     private KafkaTemplate<String, VerifyMessage> verificationMessageTemplate;
 
-    public Try<ListenableFuture<SendResult<String, UpdateMessage>>> sendUpdateMessage(TipoCorreccionEnum tipoCorreccionEnum, Correccion correccion, String token) {
+    public Try<ListenableFuture<SendResult<String, UpdateMessage>>> sendUpdateMessage(Either<TipoCorreccionEnum, Cheque.Observacion> type,
+                                                                                      Correccion correccion,
+                                                                                      Option<String> token) {
         return Try.of(() ->
-            this.updateMessageTemplate.send(this.correccionTopic, new UpdateMessage(tipoCorreccionEnum, correccion, token))
+            this.updateMessageTemplate.send(this.correccionTopic, new UpdateMessage(type, correccion, token))
         );
     }
 
-    public Try<ListenableFuture<SendResult<String, VerifyMessage>>> sendVerificationMessage(TipoCorreccionEnum tipoCorreccionEnum, Cheque cheque, String token) {
+    public Try<ListenableFuture<SendResult<String, VerifyMessage>>> sendVerificationMessage(Either<TipoCorreccionEnum, Cheque.Observacion> type, Cheque cheque, String token) {
         return Try.of(() ->
-                this.verificationMessageTemplate.send(this.verificacionTopic, new VerifyMessage(tipoCorreccionEnum, cheque, token)));
+                this.verificationMessageTemplate.send(this.verificacionTopic, new VerifyMessage(type, cheque, token)));
     }
 
 }

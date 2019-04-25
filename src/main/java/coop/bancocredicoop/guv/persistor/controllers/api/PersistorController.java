@@ -5,6 +5,8 @@ import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
 import coop.bancocredicoop.guv.persistor.services.KafkaProducer;
+import io.vavr.control.Either;
+import io.vavr.control.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class PersistorController {
         //MDC.put("user", "bender");
         log.info("Iniciando correccion de tipo {} del cheque con id {}", type, correccion.getId());
 
-        this.producer.sendUpdateMessage(TipoCorreccionEnum.valueOf(type), correccion, token)
+        this.producer.sendUpdateMessage(Either.left(TipoCorreccionEnum.valueOf(type)), correccion, Option.of(token))
             .onFailure(ex -> log.error("Error al enviar mensaje de actualizacion del cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage()))
             .onSuccess(future -> log.info("Mensaje de actualizacion del cheque con id {} fue enviado correctamente a kafka", correccion.getId()));
 
@@ -40,13 +42,10 @@ public class PersistorController {
 
     @PostMapping("/observation/{type}")
     public Mono<String> observe(@PathVariable String type,
-                                @RequestBody Correccion correccion,
-                                @RequestHeader(CorreccionService.GUV_AUTH_TOKEN) String token) {
+                                @RequestBody Correccion correccion) {
         log.info("Iniciando observacion de tipo {} del cheque con id {}", type, correccion.getId());
 
-        correccion.setTipoObservacion(Cheque.Observacion.valueOf(type));
-
-        this.producer.sendUpdateMessage(TipoCorreccionEnum.valueOf(type), correccion, token)
+        this.producer.sendUpdateMessage(Either.right(Cheque.Observacion.valueOf(type)), correccion, Option.none())
                 .onFailure(ex -> log.error("Error al enviar mensaje de observacion del cheque con id {}, detalle: {}", correccion.getId(), ex.getMessage()))
                 .onSuccess(future -> log.info("Mensaje de observacion del cheque con id {} fue enviado correctamente a kafka", correccion.getId()));
         return Mono.just("OK");

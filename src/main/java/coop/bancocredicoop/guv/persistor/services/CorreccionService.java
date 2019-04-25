@@ -9,6 +9,7 @@ import coop.bancocredicoop.guv.persistor.repositories.ChequeRepository;
 import coop.bancocredicoop.guv.persistor.utils.ChequeValidator;
 import coop.bancocredicoop.guv.persistor.utils.GuvConfigEnum;
 import io.vavr.Function2;
+import io.vavr.Function3;
 import io.vavr.concurrent.Future;
 import io.vavr.control.Try;
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
@@ -202,9 +203,9 @@ public class CorreccionService {
         return cheque;
     };
 
-    public Function2<Correccion, Cheque, Cheque> setObservacion = ((correccion, cheque) -> {
-        if (!cheque.getObservaciones().contains(correccion.getTipoObservacion())) {
-            cheque.addObservacion(correccion.getTipoObservacion());
+    public Function3<Cheque.Observacion, Correccion, Cheque, Cheque> setObservacion = ((observacion, correccion, cheque) -> {
+        if (!cheque.getObservaciones().contains(observacion)) {
+            cheque.addObservacion(observacion);
         }
         return cheque;
     });

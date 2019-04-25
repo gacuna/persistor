@@ -1,14 +1,12 @@
 package coop.bancocredicoop.guv.persistor.models.mongo;
 
 import coop.bancocredicoop.guv.persistor.models.CMC7;
-import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.Deposito;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document
@@ -22,12 +20,11 @@ public class Correccion implements Serializable {
     protected CMC7 cmc7;
     protected Boolean truncado;
     protected Deposito deposito;
-    protected Cheque.Observacion tipoObservacion;
 
     public Correccion() {}
 
-    public Correccion(Long id, BigDecimal importe, Date fechaDiferida, Date fechaIngreso1, Date fechaIngreso2, String cuit,
-                      Integer codMoneda, CMC7 cmc7, Deposito deposito) {
+    public Correccion(Long id, BigDecimal importe, Date fechaDiferida, String cuit, Integer codMoneda,
+                      CMC7 cmc7, Deposito deposito) {
         this.id = id;
         this.importe = importe;
         this.fechaDiferida = fechaDiferida;
@@ -69,14 +66,6 @@ public class Correccion implements Serializable {
         return deposito;
     }
 
-    public Cheque.Observacion getTipoObservacion() {
-        return tipoObservacion;
-    }
-
-    public void setTipoObservacion(Cheque.Observacion tipoObservacion) {
-        this.tipoObservacion = tipoObservacion;
-    }
-
     @Override
     public String toString() {
         return "Correccion{" +
@@ -88,7 +77,6 @@ public class Correccion implements Serializable {
                 ", cmc7=" + (cmc7 != null ? cmc7.toString() : "") +
                 ", deposito= " + (deposito != null ? ObjectUtils.nullSafeToString(deposito.getId()) : "") +
                 ", truncado=" + truncado +
-                ", tipoObservacion=" + tipoObservacion.toString() +
                 '}';
     }
 }
