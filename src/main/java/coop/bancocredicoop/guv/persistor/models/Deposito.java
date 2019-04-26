@@ -1,10 +1,13 @@
 package coop.bancocredicoop.guv.persistor.models;
 
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Audited
 @Entity
 public class Deposito {
 

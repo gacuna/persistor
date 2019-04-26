@@ -1,6 +1,8 @@
 package coop.bancocredicoop.guv.persistor.models;
 
 import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 
@@ -9,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
+@Audited
 @Entity
 public class Cheque implements Serializable {
 
@@ -41,6 +44,7 @@ public class Cheque implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Deposito deposito;
 
+    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     private Moneda moneda;
 
