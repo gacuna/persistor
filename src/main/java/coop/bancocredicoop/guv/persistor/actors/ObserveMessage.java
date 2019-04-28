@@ -1,32 +1,32 @@
 package coop.bancocredicoop.guv.persistor.actors;
 
+import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
-import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
 
 public class ObserveMessage {
-    private TipoCorreccionEnum type;
-    private Correccion correccion;
+    private Cheque.Observacion type;
+    private Cheque cheque;
 
     public ObserveMessage() {}
 
-    public ObserveMessage(TipoCorreccionEnum type, Correccion correccion) {
+    public ObserveMessage(Cheque.Observacion type, Cheque cheque) {
         this.type = type;
-        this.correccion = correccion;
+        this.cheque = cheque;
     }
 
-    public TipoCorreccionEnum getType() {
+    public Cheque.Observacion getType() {
         return type;
     }
 
-    public Correccion getCorreccion() {
-        return correccion;
+    public Cheque getCorreccion() {
+        return cheque;
     }
 
     @Override
     public String toString() {
         return "ObserveMessage{" +
                 "type='" + type.toString() + '\'' +
-                ", correccion='" + correccion.toString() + '\'' +
+                ", cheque='" + cheque.toString() + '\'' +
                 '}';
     }
 }

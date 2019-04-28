@@ -1,6 +1,7 @@
 package coop.bancocredicoop.guv.persistor.config;
 
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
+import coop.bancocredicoop.guv.persistor.actors.VerifyMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,19 +24,26 @@ public class KafkaConsumerConfig {
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
 
-    @Value(value = "${kafka.groupId}")
-    private String groupId;
+    @Value(value = "${kafka.correccion.groupId}")
+    private String groupId1;
+
+    @Value(value = "${kafka.verificacion.groupId}")
+    private String groupId2;
 
     @Bean
     public ConsumerFactory<String, UpdateMessage> consumerFactory() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(ConsumerConfig.CLIENT_ID_CONFIG, "consumer-" + UUID.randomUUID());
+        Map<String, Object> props = buildProps();
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, "update-consumer-" + UUID.randomUUID());
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
                 new JsonDeserializer<>(UpdateMessage.class));
+    }
+
+    @Bean
+    public ConsumerFactory<String, VerifyMessage> consumerFactory2() {
+        Map<String, Object> props = buildProps();
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, "verify-consumer-" + UUID.randomUUID());
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
+                new JsonDeserializer<>(VerifyMessage.class));
     }
 
     @Bean
@@ -43,6 +51,22 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, UpdateMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, VerifyMessage> verifyMessageConcurrentKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, VerifyMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory2());
+        return factory;
+    }
+
+    private Map<String, Object> buildProps() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId1);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        return props;
     }
 
 }

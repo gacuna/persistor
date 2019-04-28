@@ -1,15 +1,18 @@
 package coop.bancocredicoop.guv.persistor.services;
 
+import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.repositories.ChequeRepository;
 import coop.bancocredicoop.guv.persistor.utils.GuvConfigEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class ChequeService {
@@ -40,6 +43,15 @@ public class ChequeService {
         Date fechaActual = new Date();
         Date fechaIngreso = feriadoService.calcularProximoDiaHabil(fechaActual, this.cantidadDias, true);
         return existeCMC7ByNumeroEntreFechas(numeroCMC7, fechaIngreso, fechaActual);
+    }
+
+    @Transactional
+    public Optional<Cheque> findById(Long id) {
+        return this.chequeRepository.findById(id).map(cheque -> cheque.initialize());
+    }
+
+    public Cheque save(Cheque cheque) {
+        return this.chequeRepository.save(cheque);
     }
 
 }

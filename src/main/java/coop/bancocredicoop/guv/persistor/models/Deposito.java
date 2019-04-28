@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Audited
+//@Audited
 @Entity
 public class Deposito {
 
@@ -66,6 +66,16 @@ public class Deposito {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Deposito{" +
+                "id=" + id +
+                ", prioridadForzada=" + prioridadForzada +
+                ", tipoOperatoria=" + tipoOperatoria +
+                ", estado=" + estado +
+                '}';
     }
 
     public enum TipoOperatoria {

@@ -4,9 +4,7 @@ import akka.actor.AbstractActor;
 import akka.actor.PoisonPill;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
-import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
-import coop.bancocredicoop.guv.persistor.services.KafkaProducer;
 import io.vavr.API;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -30,7 +28,7 @@ public class PostUpdateActor extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(VerifyMessage.class, msg -> {
-                    this.service.saveCorreccionBackgroundPost(msg.getCheque(), msg.getToken())
+                    this.service.postSaveBackgroundPost(msg.getCheque(), msg.getToken())
                         .recover(e -> API.Match(e).of(
                             Case($(instanceOf(Exception.class)), te -> logAndReturnStatus(te))
                         ))

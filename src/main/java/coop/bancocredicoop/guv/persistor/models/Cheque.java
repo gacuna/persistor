@@ -1,8 +1,9 @@
 package coop.bancocredicoop.guv.persistor.models;
 
-import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.Hibernate;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-@Audited
+//@Audited
 @Entity
 public class Cheque implements Serializable {
 
@@ -44,7 +45,6 @@ public class Cheque implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Deposito deposito;
 
-    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     private Moneda moneda;
 
@@ -182,35 +182,27 @@ public class Cheque implements Serializable {
         this.observaciones.add(observacion);
     }
 
-    public static Cheque of(Correccion correccion) {
-        Cheque cheque = new Cheque();
-        cheque.setId(correccion.getId());
-        cheque.setImporte(correccion.getImporte());
-        cheque.setFechaDiferida(correccion.getFechaDiferida());
-        cheque.setCuit(correccion.getCuit());
-        cheque.setDeposito(correccion.getDeposito());
-        cheque.setTruncado(correccion.getTruncado());
-        cheque.setCmc7(correccion.getCmc7());
-
-        return cheque;
-    }
-
+    @JsonIgnore
     public Boolean isCorregido() {
         return this.importeCorregido() && this.cmc7Corregido() && this.fechaCorregida() && this.cuitCorregido();
     }
 
+    @JsonIgnore
     public Boolean importeCorregido() {
         return ((this.getImporte() != null) && (this.getImporte().compareTo(BigDecimal.ZERO) > 0)) || this.observaciones.contains(Observacion.IMPORTE);
     }
 
+    @JsonIgnore
     public Boolean cmc7Corregido() {
         return this.cmc7.isCorregido() || isCmc7Observado();
     }
 
+    @JsonIgnore
     private Boolean isCmc7Observado() {
         return this.observaciones.contains(Observacion.CMC7);
     }
 
+    @JsonIgnore
     public Boolean fechaCorregida() {
         boolean flagFechaDiferida = Boolean.TRUE;
         if (!Deposito.TipoOperatoria.VAL_NEG.equals(this.deposito.getTipoOperatoria()) && this.deposito.getTipoOperatoria().isDiferido()) {
@@ -219,12 +211,40 @@ public class Cheque implements Serializable {
         return flagFechaDiferida || this.observaciones.contains(Observacion.FECHA);
     }
 
+    @JsonIgnore
     public Boolean cuitCorregido() {
         boolean flagCuit = Boolean.TRUE;
         if (!Deposito.TipoOperatoria.VAL_NEG.equals(this.deposito.getTipoOperatoria()) && this.deposito.getTipoOperatoria().isDiferido()) {
             flagCuit = this.cuit != null;
         }
         return flagCuit || this.observaciones.contains(Observacion.CUIT);
+    }
+
+    @Override
+    public String toString() {
+        return "Cheque{" +
+                "id=" + id +
+                ", importe=" + importe +
+                ", estado=" + estado +
+                ", fechaDiferida=" + fechaDiferida +
+                ", cuit=" + cuit +
+                ", deposito=" + ObjectUtils.nullSafeToString(deposito) +
+                ", moneda=" + moneda +
+                ", fechaIngreso=" + fechaIngreso +
+                ", fechaIngreso1=" + fechaIngreso1 +
+                ", fechaIngreso2=" + fechaIngreso2 +
+                ", truncado=" + truncado +
+                ", cmc7=" + ObjectUtils.nullSafeToString(cmc7)  +
+                '}';
+    }
+
+    public Cheque initialize() {
+        Hibernate.initialize((this.getObservaciones()));
+        Hibernate.initialize((this.getMoneda()));
+        Hibernate.initialize((this.getDeposito()));
+        //Hibernate.initialize((this.getRechazos()));
+        //Hibernate.initialize((this.getBancoDepositante()));
+        return this;
     }
 
 }

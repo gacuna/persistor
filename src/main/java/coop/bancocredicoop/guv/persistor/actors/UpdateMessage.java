@@ -2,41 +2,40 @@ package coop.bancocredicoop.guv.persistor.actors;
 
 import coop.bancocredicoop.guv.persistor.models.Cheque;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
-import coop.bancocredicoop.guv.persistor.models.mongo.Correccion;
-import io.vavr.control.Either;
-import io.vavr.control.Option;
+import org.springframework.util.ObjectUtils;
 
 public class UpdateMessage {
-    private Either<TipoCorreccionEnum, Cheque.Observacion> type;
-    private Correccion correccion;
-    private Option<String> token;
+
+    private MessageType<TipoCorreccionEnum, Cheque.Observacion> type;
+    private Cheque cheque;
+    private String token;
 
     public UpdateMessage() {}
 
-    public UpdateMessage(Either<TipoCorreccionEnum, Cheque.Observacion> type, Correccion correccion, Option<String> token) {
+    public UpdateMessage(MessageType<TipoCorreccionEnum, Cheque.Observacion> type, Cheque cheque, String token) {
         this.type= type;
-        this.correccion = correccion;
+        this.cheque = cheque;
         this.token = token;
     }
 
-    public Either<TipoCorreccionEnum, Cheque.Observacion> getType() {
+    public MessageType<TipoCorreccionEnum, Cheque.Observacion> getType() {
         return type;
     }
 
-    public Correccion getCorreccion() {
-        return correccion;
+    public Cheque getCheque() {
+        return cheque;
     }
 
-    public Option<String> getToken() {
+    public String getToken() {
         return token;
     }
 
     @Override
     public String toString() {
         return "UpdateMessage{" +
-                "tipoCorreccion='" + type.toString() + '\'' +
-                ", correccion='" + correccion.toString() + '\'' +
-                ", token='" + token.getOrNull() + '\'' +
+                "tipoCorreccion='" + ObjectUtils.nullSafeToString(type)  + '\'' +
+                ", cheque='" + cheque.toString() + '\'' +
+                ", token='" + ObjectUtils.nullSafeToString(token) + '\'' +
                 '}';
     }
 }
