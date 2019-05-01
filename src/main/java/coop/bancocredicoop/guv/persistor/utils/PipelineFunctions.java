@@ -93,7 +93,7 @@ public class PipelineFunctions {
 
         if (cheque.getFechaIngreso1() != null && cheque.getFechaIngreso2() != null) {
             if (DateUtils.isSameDay(cheque.getFechaIngreso1(), cheque.getFechaIngreso2())) {
-                LOGGER.info("Actualizando FechaDiferida {} del cheque con id {}", correccion.getFechaIngreso1(), cheque.getId());
+                LOGGER.info("Actualizando FechaDiferida {} del cheque con id {}", cheque.getFechaIngreso1(), cheque.getId());
                 cheque.setFechaDiferida(cheque.getFechaIngreso1());
             } else {
                 LOGGER.info("Agregando Observacion de tipo Fecha del cheque con id {}", cheque.getId());
