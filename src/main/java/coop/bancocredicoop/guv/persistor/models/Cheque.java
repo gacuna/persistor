@@ -3,6 +3,7 @@ package coop.bancocredicoop.guv.persistor.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.Hibernate;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-//@Audited
+@Audited
 @Entity
 public class Cheque implements Serializable {
 
@@ -26,6 +27,7 @@ public class Cheque implements Serializable {
     @Id
     private Long id;
 
+    @NotAudited
     @Column(name = "activo")
     private boolean activo;
 
@@ -45,6 +47,7 @@ public class Cheque implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Deposito deposito;
 
+    @NotAudited
     @ManyToOne(fetch = FetchType.LAZY)
     private Moneda moneda;
 
