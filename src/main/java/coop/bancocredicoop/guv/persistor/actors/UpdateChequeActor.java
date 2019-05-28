@@ -53,7 +53,7 @@ public class UpdateChequeActor extends AbstractActor {
                                 cheque.getId(), cheque.getDeposito().getId());
                         //envia mensaje de verificacion de deposito a kafka para que el consumer de kafka delegue
                         //esta accion al post update actor
-                        this.producer.sendVerificationMessage(type, cheque, msg.getToken());
+                        sendVerification(type, msg, cheque);
                     })
                     .onComplete((s) -> {
                         getSelf().tell("KILL-CHEQUE-ACTOR", getSelf());
@@ -65,6 +65,12 @@ public class UpdateChequeActor extends AbstractActor {
             })
             .matchAny(o -> LOGGER.error("Tipo de mensaje desconocido"))
             .build();
+    }
+
+    private void sendVerification(Either<TipoCorreccionEnum, Cheque.Observacion> type, UpdateMessage msg, Cheque cheque){
+        if(msg.getType().isLeft() &&
+                !msg.getType().left().get().equals(TipoCorreccionEnum.BALANCEO))
+            this.producer.sendVerificationMessage(type, cheque, msg.getToken());
     }
 
     /**
@@ -79,7 +85,7 @@ public class UpdateChequeActor extends AbstractActor {
                 Case($(TipoCorreccionEnum.CMC7), (type) -> pipeline.setCMC7),
                 Case($(TipoCorreccionEnum.FECHA), (type) -> pipeline.setFecha),
                 Case($(TipoCorreccionEnum.CUIT), (type) -> pipeline.setCuit),
-                Case($(TipoCorreccionEnum.BALANCEO), (type) -> pipeline.asd))
+                Case($(TipoCorreccionEnum.BALANCEO), (type) -> pipeline.applyAll))
                 .andThen(pipeline.setStatus.curried().apply(msg.getCheque()))
                 .andThen(pipeline.setFechaDiferidaAndCuit.curried().apply(msg.getCheque()));
     }

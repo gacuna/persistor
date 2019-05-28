@@ -165,11 +165,11 @@ public class PipelineFunctions {
         return cheque;
     });
 
-    public Function2<Cheque, Cheque, Cheque> asd = (correccion, cheque) ->
-            this.setImporteAndTruncado.curried().apply(cheque)
-            .andThen(this.setCMC7.curried().apply(cheque))
-            .andThen(this.setFecha.curried().apply(cheque))
-            .andThen(this.setCuit.curried().apply(cheque)).apply(cheque);
+    public Function2<Cheque, Cheque, Cheque> applyAll = (correccion, cheque) ->
+            this.setImporteAndTruncado.curried().apply(correccion)
+            .andThen(this.setCMC7.curried().apply(correccion))
+            .andThen(this.setFecha.curried().apply(correccion))
+            .andThen(this.setCuit.curried().apply(correccion)).apply(cheque);
 
     private Try<CMC7> fixCMC7Fields(CMC7 cmc7) {
         return Try.of(() -> {
