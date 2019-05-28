@@ -165,6 +165,12 @@ public class PipelineFunctions {
         return cheque;
     });
 
+    public Function2<Cheque, Cheque, Cheque> asd = (correccion, cheque) ->
+            this.setImporteAndTruncado.curried().apply(cheque)
+            .andThen(this.setCMC7.curried().apply(cheque))
+            .andThen(this.setFecha.curried().apply(cheque))
+            .andThen(this.setCuit.curried().apply(cheque)).apply(cheque);
+
     private Try<CMC7> fixCMC7Fields(CMC7 cmc7) {
         return Try.of(() -> {
             cmc7.setCodBanco(StringUtils.leftPad(cmc7.getCodBanco(), 3, "0"));

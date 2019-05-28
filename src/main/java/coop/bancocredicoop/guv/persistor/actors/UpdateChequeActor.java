@@ -78,7 +78,8 @@ public class UpdateChequeActor extends AbstractActor {
                 Case($(TipoCorreccionEnum.IMPORTE), (type) -> pipeline.setImporteAndTruncado),
                 Case($(TipoCorreccionEnum.CMC7), (type) -> pipeline.setCMC7),
                 Case($(TipoCorreccionEnum.FECHA), (type) -> pipeline.setFecha),
-                Case($(TipoCorreccionEnum.CUIT), (type) -> pipeline.setCuit))
+                Case($(TipoCorreccionEnum.CUIT), (type) -> pipeline.setCuit),
+                Case($(TipoCorreccionEnum.BALANCEO), (type) -> pipeline.asd))
                 .andThen(pipeline.setStatus.curried().apply(msg.getCheque()))
                 .andThen(pipeline.setFechaDiferidaAndCuit.curried().apply(msg.getCheque()));
     }
