@@ -1,9 +1,11 @@
 package coop.bancocredicoop.guv.persistor.services;
 
+import coop.bancocredicoop.guv.persistor.actors.BalanceMessage;
 import coop.bancocredicoop.guv.persistor.actors.MessageType;
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.actors.VerifyMessage;
 import coop.bancocredicoop.guv.persistor.models.Cheque;
+import coop.bancocredicoop.guv.persistor.models.Deposito;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import io.vavr.control.Either;
 import io.vavr.control.Try;
@@ -23,11 +25,17 @@ public class KafkaProducer {
     @Value(value = "${kafka.correccion.topic}")
     private String correccionTopic;
 
+    @Value(value = "${kafka.balanceo.topic}")
+    private String balanceoTopic;
+
     @Autowired
     private KafkaTemplate<String, UpdateMessage> updateMessageTemplate;
 
     @Autowired
     private KafkaTemplate<String, VerifyMessage> verificationMessageTemplate;
+
+    @Autowired
+    private KafkaTemplate<String, BalanceMessage> balanceMessageTemplate;
 
     /**
      *
@@ -58,4 +66,13 @@ public class KafkaProducer {
                 this.verificationMessageTemplate.send(this.verificacionTopic, new VerifyMessage(type, cheque, token)));
     }
 
+    /**
+     *
+     * @param deposito
+     * @return
+     */
+    public Try<ListenableFuture<SendResult<String, BalanceMessage>>> sendBalanceMessage(Deposito deposito) {
+        return Try.of(() ->
+                this.balanceMessageTemplate.send(this.balanceoTopic, new BalanceMessage(deposito)));
+    }
 }

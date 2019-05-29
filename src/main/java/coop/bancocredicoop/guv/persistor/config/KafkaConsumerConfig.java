@@ -1,5 +1,6 @@
 package coop.bancocredicoop.guv.persistor.config;
 
+import coop.bancocredicoop.guv.persistor.actors.BalanceMessage;
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.actors.VerifyMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -24,11 +25,8 @@ public class KafkaConsumerConfig {
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
 
-    @Value(value = "${kafka.correccion.groupId}")
-    private String groupId1;
-
-    @Value(value = "${kafka.verificacion.groupId}")
-    private String groupId2;
+    @Value(value = "${kafka.persistor.groupId}")
+    private String groupId;
 
     @Bean
     public ConsumerFactory<String, UpdateMessage> consumerFactory() {
@@ -47,6 +45,14 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
+    public ConsumerFactory<String, BalanceMessage> consumerFactory3() {
+        Map<String, Object> props = buildProps();
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, "balance-consumer-" + UUID.randomUUID());
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
+                new JsonDeserializer<>(BalanceMessage.class));
+    }
+
+    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, UpdateMessage> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, UpdateMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
@@ -60,10 +66,17 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, BalanceMessage> balanceMessageConcurrentKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, BalanceMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory3());
+        return factory;
+    }
+
     private Map<String, Object> buildProps() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId1);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return props;

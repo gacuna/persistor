@@ -2,6 +2,7 @@ package coop.bancocredicoop.guv.persistor.services;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import coop.bancocredicoop.guv.persistor.actors.BalanceMessage;
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.actors.VerifyMessage;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class KafkaConsumer {
 
     private static Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
 
-    @KafkaListener(id = "correccionListener", topics = "${kafka.correccion.topic}", groupId = "${kafka.correccion.groupId}")
+    @KafkaListener(id = "correccionListener", topics = "${kafka.correccion.topic}", groupId = "${kafka.persistor.groupId}")
     public void consume(@Payload UpdateMessage message, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition) {
         LOGGER.info("Mensaje de actualizacion recibido en particion: {}, json: {}", partition, message.toString());
         final ActorRef updateActor = system.actorOf(SPRING_EXTENSION_PROVIDER.get(system)
@@ -33,12 +34,23 @@ public class KafkaConsumer {
         updateActor.tell(message, ActorRef.noSender()); //fire and forget pattern!
     }
 
-    @KafkaListener(id = "verificacionListener", topics = "${kafka.verificacion.topic}", groupId = "${kafka.verificacion.groupId}", containerFactory = "verifyMessageConcurrentKafkaListenerContainerFactory")
+    @KafkaListener(id = "verificacionListener", topics = "${kafka.verificacion.topic}", groupId = "${kafka.persistor.groupId}", containerFactory = "verifyMessageConcurrentKafkaListenerContainerFactory")
     public void consume(@Payload VerifyMessage message, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition) {
         LOGGER.info("Mensaje de verificación recibido en particion: {}, json: {}", partition, message.toString());
         final ActorRef postUpdateActor = system.actorOf(SPRING_EXTENSION_PROVIDER.get(system)
                 .props("postUpdateActor"), "postUpdateActor_" + UUID.randomUUID());
         postUpdateActor.tell(message, ActorRef.noSender()); //fire and forget pattern!
+    }
+
+    @KafkaListener(id = "balanceoListener", topics = "${kafka.balanceo.topic}", groupId = "${kafka.persistor.groupId}", containerFactory = "balanceMessageConcurrentKafkaListenerContainerFactory")
+    public void consume(@Payload BalanceMessage message, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition) {
+        LOGGER.info("Mensaje de balanceo recibido en particion: {}, json: {}", partition, message.toString());
+        //TODO  Crear un actor para manejar el mensaje de balanceo
+        /*
+        final ActorRef postUpdateActor = system.actorOf(SPRING_EXTENSION_PROVIDER.get(system)
+                .props("postUpdateActor"), "postUpdateActor_" + UUID.randomUUID());
+        postUpdateActor.tell(message, ActorRef.noSender()); //fire and forget pattern!
+        */
     }
 
 }

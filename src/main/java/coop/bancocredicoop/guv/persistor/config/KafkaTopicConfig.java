@@ -24,11 +24,17 @@ public class KafkaTopicConfig {
     @Value(value = "${kafka.verificacion.topic}")
     private String verificacionTopic;
 
+    @Value(value = "${kafka.balanceo.topic}")
+    private String balanceoTopic;
+
     @Value(value = "${kafka.correccion.partitions}")
     private Integer partitions;
 
     @Value(value = "${kafka.verificacion.partitions}")
     private Integer verificacionPartitions;
+
+    @Value(value = "${kafka.balanceo.partitions}")
+    private Integer balanceoPartitions;
 
     @Bean
     public KafkaAdmin kafkaAdmin() {
@@ -46,4 +52,10 @@ public class KafkaTopicConfig {
     public NewTopic verificacionTopic() {
         return new NewTopic(verificacionTopic, verificacionPartitions, (short) 1);
     }
+
+    @Bean
+    public NewTopic balanceoTopic() {
+        return new NewTopic(balanceoTopic, balanceoPartitions, (short) 1);
+    }
+
 }

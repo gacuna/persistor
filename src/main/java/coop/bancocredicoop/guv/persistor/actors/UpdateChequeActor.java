@@ -11,12 +11,21 @@ import coop.bancocredicoop.guv.persistor.services.KafkaProducer;
 import coop.bancocredicoop.guv.persistor.utils.PipelineFunctions;
 import io.vavr.Function2;
 import io.vavr.control.Either;
+import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+import org.springframework.util.concurrent.ListenableFuture;
+
+import java.util.Optional;
+
 import static io.vavr.API.*;
 
+/**
+ * Actor que se encarga de realizar las operaciones relacionadas con la correccion de un cheque.
+ */
 @Component("updateChequeActor")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class UpdateChequeActor extends AbstractActor {
@@ -27,7 +36,7 @@ public class UpdateChequeActor extends AbstractActor {
     private CorreccionService service;
 
     @Autowired
-    private PipelineFunctions pipeline;
+    private PipelineFunctions functions;
 
     @Autowired
     private KafkaProducer producer;
@@ -67,10 +76,25 @@ public class UpdateChequeActor extends AbstractActor {
             .build();
     }
 
+    /**
+     * Envia un mensaje de verificacion a kafka para que sea enviado al backend de guv con el objeto de
+     * verificar el estado de la corrección.
+     * No se enviara dicho mensaje si se trata de una correccion en filial.
+     *
+     * @param type tipo de mensaje
+     * @param msg mensaje
+     * @param cheque cheque a corregir
+     */
     private void sendVerification(Either<TipoCorreccionEnum, Cheque.Observacion> type, UpdateMessage msg, Cheque cheque){
-        if(msg.getType().isLeft() &&
-                !msg.getType().left().get().equals(TipoCorreccionEnum.BALANCEO))
-            this.producer.sendVerificationMessage(type, cheque, msg.getToken());
+        Optional<TipoCorreccionEnum> correccionEnum = msg.getType().left();
+        if (correccionEnum.isPresent() && TipoCorreccionEnum.FILIAL != correccionEnum.get()) {
+            Try<ListenableFuture<SendResult<String, VerifyMessage>>> verificationFuture = this.producer.sendVerificationMessage(type, cheque, msg.getToken());
+            verificationFuture
+                .onFailure(this::logAndReturn)
+                .onSuccess((s) -> {
+                    LOGGER.info("Mensaje de verificacion enviado a guv-backend para cheque con id {} de forma exitosa", cheque.getId());
+                });
+        }
     }
 
     /**
@@ -80,14 +104,15 @@ public class UpdateChequeActor extends AbstractActor {
      * @return
      */
     private Function2<Cheque, Cheque, Cheque> correccionPipeline(UpdateMessage msg) {
-        return Match(msg.getType().left().get()).of(
-                Case($(TipoCorreccionEnum.IMPORTE), (type) -> pipeline.setImporteAndTruncado),
-                Case($(TipoCorreccionEnum.CMC7), (type) -> pipeline.setCMC7),
-                Case($(TipoCorreccionEnum.FECHA), (type) -> pipeline.setFecha),
-                Case($(TipoCorreccionEnum.CUIT), (type) -> pipeline.setCuit),
-                Case($(TipoCorreccionEnum.BALANCEO), (type) -> pipeline.applyAll))
-                .andThen(pipeline.setStatus.curried().apply(msg.getCheque()))
-                .andThen(pipeline.setFechaDiferidaAndCuit.curried().apply(msg.getCheque()));
+        Function2<Cheque, Cheque, Cheque> pipeline = Match(msg.getType().left().get()).of(
+                Case($(TipoCorreccionEnum.IMPORTE), (type) -> functions.setImporteAndTruncado),
+                Case($(TipoCorreccionEnum.CMC7), (type) -> functions.setCMC7),
+                Case($(TipoCorreccionEnum.FECHA), (type) -> functions.setFecha),
+                Case($(TipoCorreccionEnum.CUIT), (type) -> functions.setCuit),
+                Case($(TipoCorreccionEnum.FILIAL), (type) -> functions.applyAll));
+        return pipeline
+                .andThen(functions.setStatus.curried().apply(msg.getCheque()))
+                .andThen(functions.setFechaDiferidaAndCuit.curried().apply(msg.getCheque()));
     }
 
     /**
@@ -97,9 +122,9 @@ public class UpdateChequeActor extends AbstractActor {
      * @return
      */
     private Function2<Cheque, Cheque, Cheque> observacionPipeline(UpdateMessage msg) {
-        return pipeline.setObservacion.apply(msg.getType().right().get())
-                .andThen(pipeline.setStatus.curried().apply(msg.getCheque()))
-                .andThen(pipeline.setFechaDiferidaAndCuit.curried().apply(msg.getCheque()));
+        return functions.setObservacion.apply(msg.getType().right().get())
+                .andThen(functions.setStatus.curried().apply(msg.getCheque()))
+                .andThen(functions.setFechaDiferidaAndCuit.curried().apply(msg.getCheque()));
     }
 
     private void logAndReturn(Throwable e) {

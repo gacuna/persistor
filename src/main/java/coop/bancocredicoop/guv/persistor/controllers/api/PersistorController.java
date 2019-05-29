@@ -2,6 +2,7 @@ package coop.bancocredicoop.guv.persistor.controllers.api;
 
 import coop.bancocredicoop.guv.persistor.actors.MessageType;
 import coop.bancocredicoop.guv.persistor.models.Cheque;
+import coop.bancocredicoop.guv.persistor.models.Deposito;
 import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
 import coop.bancocredicoop.guv.persistor.services.KafkaProducer;
@@ -42,8 +43,21 @@ public class PersistorController {
         this.producer.sendUpdateMessage(buildMessageType(type, false), cheque, "")
                 .onFailure(ex -> log.error("Error al enviar mensaje de observacion del cheque con id {}, detalle: {}", cheque.getId(), ex.getMessage()))
                 .onSuccess(future -> log.info("Mensaje de observacion del cheque con id {} fue enviado correctamente a kafka", cheque.getId()));
+
         return Mono.just("OK");
     }
+
+    @PostMapping("/balance")
+    public Mono<String> balance(@RequestBody Deposito deposito) {
+        log.info("Iniciando balanceo del deposito con id {}", deposito.getId());
+
+        this.producer.sendBalanceMessage(deposito)
+                .onFailure(ex -> log.error("Error al enviar mensaje de balanceo del deposito con id {}, detalle: {}", deposito.getId(), ex.getMessage()))
+                .onSuccess(future -> log.info("Mensaje de balanceo del deposito con id {} fue enviado correctamente a kafka", deposito.getId()));
+
+        return Mono.just("OK");
+    }
+
 
     private MessageType<TipoCorreccionEnum, Cheque.Observacion> buildMessageType(String name, boolean isLeft) {
         MessageType<TipoCorreccionEnum, Cheque.Observacion> messageType = new MessageType<>();
