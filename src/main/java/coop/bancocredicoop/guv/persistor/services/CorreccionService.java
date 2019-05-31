@@ -48,7 +48,7 @@ public class CorreccionService {
         return Future.of(() -> {
             LOGGER.info("Cheque con id {} recibido para ser persistido en la base de datos", correccion.getId());
             final Optional<Cheque> chequeOpt = this.chequeService.findById(correccion.getId());
-            final Cheque chequeBD = chequeOpt.orElseThrow(EntityNotFoundException::new);
+            final Cheque chequeBD = chequeOpt.orElseThrow(() -> new EntityNotFoundException("Cheque no encontrado: " + correccion.getId()));
             Validation<String, Cheque> validation = ChequeValidator.validateStatusForUpdating(chequeBD);
             if (validation.isInvalid()) {
                 LOGGER.error("Cheque con id {} no puede ser actualizado dado que su estado en la base de datos es {}", chequeBD.getId(), chequeBD.getEstado());

@@ -54,4 +54,38 @@ public class ChequeService {
         return this.chequeRepository.save(cheque);
     }
 
+    public void quitarObservaciones(Cheque correccion, Cheque cheque) {
+        correccion.getObservaciones().forEach(observacion -> {
+            switch (observacion){
+                case IMPORTE:{
+                    if(correccion.getImporte() != null &&
+                            cheque.getImporte() != null &&
+                            !correccion.getImporte().equals(cheque.getImporte()))
+                        cheque.getObservaciones().remove(Cheque.Observacion.IMPORTE);
+                }
+                case CMC7:{
+                    if(correccion.getCmc7() != null &&
+                            cheque.getCmc7() != null &&
+                            !correccion.getCmc7().equals(cheque.getCmc7()))
+                        cheque.getObservaciones().remove(Cheque.Observacion.CMC7);
+                }
+                case CUIT:{
+                    if(correccion.getCuit() != null &&
+                            cheque.getCuit() != null &&
+                            !correccion.getCuit().equals(cheque.getCuit()))
+                        cheque.getObservaciones().remove(Cheque.Observacion.CUIT);
+                }
+                case FECHA:{
+                    if((correccion.getFechaIngreso1() != null &&
+                            cheque.getFechaIngreso1() != null &&
+                            !correccion.getCmc7().equals(cheque.getCmc7())) ||
+                        (correccion.getFechaIngreso2() != null &&
+                            cheque.getFechaIngreso2() != null &&
+                            !correccion.getFechaIngreso2().equals(cheque.getFechaIngreso2()))
+                    )
+                        cheque.getObservaciones().remove(Cheque.Observacion.CMC7);
+                }
+            }
+        });
+    }
 }

@@ -16,7 +16,7 @@ public class ChequeValidator {
 
     //Si la correccion es por parte de la filial el cheque se encuentra OBSERVADO y el dep DERIVADO_FILIAL
     public static Validation<String, Cheque> validateStatusForUpdating(Cheque cheque) {
-        return ((cheque.getEstado().equals(EstadoCheque.OBSERVADO) && cheque.getDeposito().getEstado().equals(Deposito.Estado.DERIVADO_FILIAL)) ||
+        return (cheque.getDeposito().getEstado().equals(Deposito.Estado.DERIVADO_FILIAL) ||
                 !estadosInvalidos.contains(cheque.getEstado())) ?
                 Validation.valid(cheque):
                 Validation.invalid("El estado del cheque ");

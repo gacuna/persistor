@@ -7,6 +7,7 @@ import coop.bancocredicoop.guv.persistor.models.EstadoCheque;
 import coop.bancocredicoop.guv.persistor.services.ChequeService;
 import coop.bancocredicoop.guv.persistor.services.FeriadoService;
 import coop.bancocredicoop.guv.persistor.services.GuvConfigService;
+import io.vavr.API;
 import io.vavr.Function2;
 import io.vavr.Function3;
 import io.vavr.control.Try;
@@ -166,10 +167,22 @@ public class PipelineFunctions {
     });
 
     public Function2<Cheque, Cheque, Cheque> applyAll = (correccion, cheque) ->
-            this.setImporteAndTruncado.curried().apply(correccion)
+            this.unsetObservations.curried().apply(correccion)
+            .andThen(this.setImporteAndTruncado.curried().apply(correccion))
             .andThen(this.setCMC7.curried().apply(correccion))
             .andThen(this.setFecha.curried().apply(correccion))
-            .andThen(this.setCuit.curried().apply(correccion)).apply(cheque);
+            .andThen(this.setCuit.curried().apply(correccion))
+            .apply(cheque);
+
+    public Function2<Cheque, Cheque, Cheque> unsetObservations = ((correccion, cheque) -> {
+        if(cheque.getDeposito() != null &&
+                cheque.getDeposito().getEstado().equals(Deposito.Estado.DERIVADO_FILIAL) &&
+                !correccion.getObservaciones().isEmpty()) {
+            LOGGER.info("Removiendo observaciones");
+            chequeService.quitarObservaciones(correccion, cheque);
+        }
+        return cheque;
+    });
 
     private Try<CMC7> fixCMC7Fields(CMC7 cmc7) {
         return Try.of(() -> {
