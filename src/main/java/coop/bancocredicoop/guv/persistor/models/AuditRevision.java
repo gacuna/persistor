@@ -7,9 +7,6 @@ import org.hibernate.envers.RevisionEntity;
 import javax.persistence.Entity;
 import java.util.Date;
 
-/**
- * Created by squintanilla on 21/07/2017.
- */
 @Entity
 @RevisionEntity(EnversListenerDelegated.class)
 public class AuditRevision extends DefaultRevisionEntity {

@@ -1,5 +1,6 @@
 package coop.bancocredicoop.guv.persistor.config;
 
+import coop.bancocredicoop.guv.persistor.actors.BalanceMessage;
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.actors.VerifyMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -32,6 +33,11 @@ public class KafkaProducerConfig {
     }
 
     @Bean
+    public ProducerFactory<String, BalanceMessage> balancingProducerFactory() {
+        return new DefaultKafkaProducerFactory<>(buildProps());
+    }
+
+    @Bean
     public KafkaTemplate<String, UpdateMessage> updateMessageTemplate() {
         return new KafkaTemplate<>(updateProducerFactory());
     }
@@ -39,6 +45,11 @@ public class KafkaProducerConfig {
     @Bean
     public KafkaTemplate<String, VerifyMessage> verificationMessageTemplate() {
         return new KafkaTemplate<>(verificationProducerFactory());
+    }
+
+    @Bean
+    public KafkaTemplate<String, BalanceMessage> balanceMessageKafkaTemplate() {
+        return new KafkaTemplate<>(balancingProducerFactory());
     }
 
     private Map<String, Object> buildProps() {
