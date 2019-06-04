@@ -11,13 +11,10 @@ import coop.bancocredicoop.guv.persistor.services.KafkaProducer;
 import coop.bancocredicoop.guv.persistor.utils.PipelineFunctions;
 import io.vavr.Function2;
 import io.vavr.control.Either;
-import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
-import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.Optional;
 
@@ -58,11 +55,10 @@ public class UpdateChequeActor extends AbstractActor {
                 this.service.update(pipeline, msg.getCheque())
                     .onFailure(this::logAndReturn)
                     .onSuccess((cheque) -> {
-                        LOGGER.info("cheque con id {} fue actualizado correctamente, se procede a verificar el estado del deposito {}",
-                                cheque.getId(), cheque.getDeposito().getId());
+                        LOGGER.info("cheque con id {} fue actualizado correctamente, se procede a verificar el estado del deposito del cheque", msg.getCheque().getId());
                         //envia mensaje de verificacion de deposito a kafka para que el consumer de kafka delegue
                         //esta accion al post update actor
-                        sendVerification(type, msg, cheque);
+                        sendVerification(msg);
                     })
                     .onComplete((s) -> {
                         getSelf().tell("KILL-CHEQUE-ACTOR", getSelf());
@@ -81,18 +77,15 @@ public class UpdateChequeActor extends AbstractActor {
      * verificar el estado de la corrección.
      * No se enviara dicho mensaje si se trata de una correccion en filial.
      *
-     * @param type tipo de mensaje
      * @param msg mensaje
-     * @param cheque cheque a corregir
      */
-    private void sendVerification(Either<TipoCorreccionEnum, Cheque.Observacion> type, UpdateMessage msg, Cheque cheque){
+    private void sendVerification(UpdateMessage msg){
         Optional<TipoCorreccionEnum> correccionEnum = msg.getType().left();
         if (correccionEnum.isPresent() && TipoCorreccionEnum.FILIAL != correccionEnum.get()) {
-            Try<ListenableFuture<SendResult<String, VerifyMessage>>> verificationFuture = this.producer.sendVerificationMessage(type, cheque, msg.getToken());
-            verificationFuture
+            this.producer.sendVerificationMessage(msg.getCheque().getId(), msg.getToken())
                 .onFailure(this::logAndReturn)
                 .onSuccess((s) -> {
-                    LOGGER.info("Mensaje de verificacion enviado a guv-backend para cheque con id {} de forma exitosa", cheque.getId());
+                    LOGGER.info("Mensaje de verificacion enviado a guv-backend para cheque con id {} de forma exitosa", msg.getCheque().getId());
                 });
         }
     }

@@ -63,23 +63,30 @@ public class CorreccionService {
     /**
      * Envia un mensaje de actualizacion de cheque al backend de GUV, utilizando el verbo HTTP POST.
      *
-     * @param cheque entidad a actualizar
+     * @param id de cheque a actualizar
      * @param token guv access token
      * @return http status code
      */
-    public Try<Integer> postSaveBackgroundPost(Cheque cheque, String token) {
+    public Try<Integer> postSaveBackgroundPost(Long id, String token) {
         return Try.of(() -> {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set(CorreccionService.GUV_AUTH_TOKEN, token);
 
-            HttpEntity<Cheque> request = new HttpEntity<Cheque>(cheque, headers);
             RestTemplate restTemplate = new RestTemplate();
 
-            String url = guvUrl + postSaveProcessEndpoint;
+            StringBuilder urlBuiler = new StringBuilder(guvUrl);
+            urlBuiler.append(postSaveProcessEndpoint);
+            urlBuiler.append("/");
+            urlBuiler.append(id);
 
-            ResponseEntity<Cheque> response = restTemplate.postForEntity(url, request, Cheque.class);
+            String url = urlBuiler.toString();
+
+            LOGGER.info("Enviando mensaje de actualización de deposito a GUV-Backend: {}", url);
+
+            ResponseEntity<Long> response = restTemplate.getForEntity(url, Long.class);
+
             return response.getStatusCodeValue();
         });
     }

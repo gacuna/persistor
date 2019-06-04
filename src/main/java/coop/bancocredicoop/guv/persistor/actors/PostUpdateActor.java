@@ -28,7 +28,7 @@ public class PostUpdateActor extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(VerifyMessage.class, msg -> {
-                    this.service.postSaveBackgroundPost(msg.getCheque(), msg.getToken())
+                    this.service.postSaveBackgroundPost(msg.getId(), msg.getToken())
                         .recover(e -> API.Match(e).of(
                             Case($(instanceOf(Exception.class)), te -> logAndReturnStatus(te))
                         ))

@@ -34,7 +34,7 @@ public class UpdateMessage {
     public String toString() {
         return "UpdateMessage{" +
                 "tipoCorreccion='" + ObjectUtils.nullSafeToString(type)  + '\'' +
-                ", cheque='" + cheque.toString() + '\'' +
+                ", cheque='" + cheque.getId() + '\'' +
                 ", token='" + ObjectUtils.nullSafeToString(token) + '\'' +
                 '}';
     }

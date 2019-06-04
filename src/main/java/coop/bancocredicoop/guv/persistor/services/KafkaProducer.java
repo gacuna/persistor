@@ -54,16 +54,13 @@ public class KafkaProducer {
 
     /**
      *
-     * @param type
-     * @param cheque
+     * @param id
      * @param token
      * @return
      */
-    public Try<ListenableFuture<SendResult<String, VerifyMessage>>> sendVerificationMessage(Either<TipoCorreccionEnum, Cheque.Observacion> type,
-                                                                                            Cheque cheque,
-                                                                                            String token) {
+    public Try<ListenableFuture<SendResult<String, VerifyMessage>>> sendVerificationMessage(Long id, String token) {
         return Try.of(() ->
-                this.verificationMessageTemplate.send(this.verificacionTopic, new VerifyMessage(type, cheque, token)));
+                this.verificationMessageTemplate.send(this.verificacionTopic, new VerifyMessage(id, token)));
     }
 
     /**
