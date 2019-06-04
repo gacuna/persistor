@@ -1,5 +1,6 @@
 package coop.bancocredicoop.guv.persistor.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.Hibernate;
 import org.hibernate.envers.Audited;
@@ -38,6 +39,7 @@ public class Cheque implements Serializable {
     @Column(name = "estado")
     private EstadoCheque estado;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", locale = "es_AR", timezone = "America/Argentina/Buenos_Aires")
     @Column(name = "fechadiferida")
     private Date fechaDiferida;
 
