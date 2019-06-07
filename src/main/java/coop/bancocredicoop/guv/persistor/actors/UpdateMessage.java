@@ -35,7 +35,7 @@ public class UpdateMessage {
         return "UpdateMessage{" +
                 "tipoCorreccion='" + ObjectUtils.nullSafeToString(type)  + '\'' +
                 ", cheque='" + cheque.getId() + '\'' +
-                ", token='" + ObjectUtils.nullSafeToString(token) + '\'' +
+                ", token='*****" + '\'' +
                 '}';
     }
 }
