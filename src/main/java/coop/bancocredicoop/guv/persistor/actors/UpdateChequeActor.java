@@ -44,10 +44,6 @@ public class UpdateChequeActor extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
             .match(UpdateMessage.class, msg -> {
-                Either<TipoCorreccionEnum, Cheque.Observacion> type = msg.getType().isLeft() ?
-                        Left(msg.getType().left().get()) :
-                        Right(msg.getType().right().get());
-
                 Function2<Cheque, Cheque, Cheque> pipeline = msg.getType().isLeft() ?
                     correccionPipeline(msg) :
                     observacionPipeline(msg);
