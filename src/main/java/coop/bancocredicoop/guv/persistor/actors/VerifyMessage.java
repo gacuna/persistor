@@ -27,7 +27,7 @@ public class VerifyMessage {
     public String toString() {
         return "VerifyMessage {" +
                 "id='" + id + '\'' +
-                ", token='" + token + '\'' +
+                ", token='*****" + '\'' +
                 '}';
     }
 }
