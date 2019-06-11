@@ -7,7 +7,6 @@ import coop.bancocredicoop.guv.persistor.models.EstadoCheque;
 import coop.bancocredicoop.guv.persistor.services.ChequeService;
 import coop.bancocredicoop.guv.persistor.services.FeriadoService;
 import coop.bancocredicoop.guv.persistor.services.GuvConfigService;
-import io.vavr.API;
 import io.vavr.Function2;
 import io.vavr.Function3;
 import io.vavr.control.Try;

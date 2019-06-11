@@ -1,9 +1,5 @@
 package coop.bancocredicoop.guv.persistor.actors;
 
-import coop.bancocredicoop.guv.persistor.models.Cheque;
-import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
-import org.springframework.util.ObjectUtils;
-
 public class VerifyMessage {
     private Long id;
     private String token;
