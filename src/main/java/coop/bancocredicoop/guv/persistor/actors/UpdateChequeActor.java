@@ -94,6 +94,7 @@ public class UpdateChequeActor extends AbstractActor {
      * @return
      */
     private Function2<Cheque, Cheque, Cheque> correccionPipeline(UpdateMessage msg) {
+        LOGGER.info("Pipeline de correccion seteado para cheque con id {}", msg.getCheque().getId());
         Function2<Cheque, Cheque, Cheque> pipeline = Match(msg.getType().left().get()).of(
                 Case($(TipoCorreccionEnum.IMPORTE), (type) -> functions.setImporteAndTruncado),
                 Case($(TipoCorreccionEnum.CMC7), (type) -> functions.setCMC7),
@@ -112,6 +113,7 @@ public class UpdateChequeActor extends AbstractActor {
      * @return
      */
     private Function2<Cheque, Cheque, Cheque> observacionPipeline(UpdateMessage msg) {
+        LOGGER.info("Pipeline de observacion seteado para cheque con id {}", msg.getCheque().getId());
         return functions.setObservacion.apply(msg.getType().right().get())
                 .andThen(functions.setStatus.curried().apply(msg.getCheque()))
                 .andThen(functions.setFechaDiferidaAndCuit.curried().apply(msg.getCheque()));
