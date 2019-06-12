@@ -9,7 +9,10 @@ import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
 import coop.bancocredicoop.guv.persistor.services.KafkaProducer;
 import coop.bancocredicoop.guv.persistor.utils.PipelineFunctions;
+import io.vavr.Function1;
 import io.vavr.Function2;
+import io.vavr.control.Try;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -53,7 +56,9 @@ public class UpdateChequeActor extends AbstractActor {
                         LOGGER.info("cheque con id {} fue actualizado correctamente, se procede a verificar el estado del deposito del cheque", msg.getCheque().getId());
                         //envia mensaje de verificacion de deposito a kafka para que el consumer de kafka delegue
                         //esta accion al post update actor
-                        sendVerification(msg);
+                        functions.mustExecutePostProcess.apply(msg)
+                                .onFailure(ex -> LOGGER.warning(ex.getMessage()))
+                                .onSuccess(result -> sendVerification(msg));
                     })
                     .onComplete((s) -> {
                         getSelf().tell("KILL-CHEQUE-ACTOR", getSelf());
@@ -75,14 +80,11 @@ public class UpdateChequeActor extends AbstractActor {
      * @param msg mensaje
      */
     private void sendVerification(UpdateMessage msg){
-        Optional<TipoCorreccionEnum> correccionEnum = msg.getType().left();
-        if (correccionEnum.isPresent() && TipoCorreccionEnum.FILIAL != correccionEnum.get()) {
-            this.producer.sendVerificationMessage(msg.getCheque().getId(), msg.getToken())
-                .onFailure(this::logAndReturn)
-                .onSuccess((s) -> {
-                    LOGGER.info("Mensaje de verificacion enviado a guv-backend para cheque con id {} de forma exitosa", msg.getCheque().getId());
-                });
-        }
+        this.producer.sendVerificationMessage(msg.getCheque().getId(), msg.getToken())
+            .onFailure(this::logAndReturn)
+            .onSuccess((future) ->
+                LOGGER.info("Mensaje de verificacion enviado a guv-backend para cheque con id {} de forma exitosa", msg.getCheque().getId())
+            );
     }
 
     /**

@@ -1,12 +1,13 @@
 package coop.bancocredicoop.guv.persistor.utils;
 
-import coop.bancocredicoop.guv.persistor.models.CMC7;
-import coop.bancocredicoop.guv.persistor.models.Cheque;
-import coop.bancocredicoop.guv.persistor.models.Deposito;
-import coop.bancocredicoop.guv.persistor.models.EstadoCheque;
+import akka.japi.Function;
+import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
+import coop.bancocredicoop.guv.persistor.exceptions.MessageNotUpdateableException;
+import coop.bancocredicoop.guv.persistor.models.*;
 import coop.bancocredicoop.guv.persistor.services.ChequeService;
 import coop.bancocredicoop.guv.persistor.services.FeriadoService;
 import coop.bancocredicoop.guv.persistor.services.GuvConfigService;
+import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.Function3;
 import io.vavr.control.Try;
@@ -181,6 +182,16 @@ public class PipelineFunctions {
             chequeService.quitarObservaciones(correccion, cheque);
         }
         return cheque;
+    });
+
+    public Function1<UpdateMessage, Try<Boolean>> mustExecutePostProcess = ((msg) -> {
+        Optional<TipoCorreccionEnum> correccionEnum = msg.getType().left();
+
+        //TODO Usar Match
+        if (correccionEnum.isPresent() && TipoCorreccionEnum.FILIAL == correccionEnum.get()) {
+            return Try.failure(new MessageNotUpdateableException("La correccion de filial no envia mensaje de actualizacion de deposito"));
+        }
+        return Try.success(Boolean.TRUE);
     });
 
     private Try<CMC7> fixCMC7Fields(CMC7 cmc7) {
