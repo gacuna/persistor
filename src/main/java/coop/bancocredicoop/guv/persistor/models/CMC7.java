@@ -37,10 +37,6 @@ public class CMC7 implements Serializable {
     @Column(name = "numero")
     private BigInteger numero;
 
-    public String getCodCMC7() {
-        return codBanco + codFilial + codPostal + codCheque + codCuenta;
-    }
-
     public String getCodBanco() {
         return codBanco;
     }

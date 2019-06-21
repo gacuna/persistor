@@ -35,14 +35,14 @@ public class ChequeService {
         this.cantidadDias = this.guvConfigService.getProperty(GuvConfigEnum.DIAS_VALIDACION_CMC7_DUPLICADOS, Integer.class);
     }
 
-    public Boolean existeCMC7ByNumeroEntreFechas(BigInteger numero, Date fechaPresentacion, Date fechaActual) {
-        return chequeRepository.existCMC7MatchingBetweenDatesAndNotCuentaAjuste(numero, fechaPresentacion, fechaActual);
+    public Boolean existeCMC7ByNumeroEntreFechas(BigInteger numero, Date fechaPresentacion, Date fechaActual, Long id) {
+        return chequeRepository.existCMC7MatchingBetweenDatesAndNotCuentaAjusteNotId(numero, fechaPresentacion, fechaActual, id);
     }
 
-    public Boolean existeCMC7Dulicado(BigInteger numeroCMC7) {
+    public Boolean existeCMC7Dulicado(BigInteger numeroCMC7, Long id) {
         Date fechaActual = new Date();
         Date fechaIngreso = feriadoService.calcularProximoDiaHabil(fechaActual, this.cantidadDias, true);
-        return existeCMC7ByNumeroEntreFechas(numeroCMC7, fechaIngreso, fechaActual);
+        return existeCMC7ByNumeroEntreFechas(numeroCMC7, fechaIngreso, fechaActual, id);
     }
 
     @Transactional

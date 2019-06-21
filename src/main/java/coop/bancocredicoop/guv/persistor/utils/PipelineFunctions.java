@@ -1,6 +1,5 @@
 package coop.bancocredicoop.guv.persistor.utils;
 
-import akka.japi.Function;
 import coop.bancocredicoop.guv.persistor.actors.UpdateMessage;
 import coop.bancocredicoop.guv.persistor.exceptions.MessageNotUpdateableException;
 import coop.bancocredicoop.guv.persistor.models.*;
@@ -22,6 +21,7 @@ import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -114,21 +114,28 @@ public class PipelineFunctions {
         return cheque;
     };
 
+    public Function2<Cheque, Cheque, Cheque> setCanjeInterno = (correccion, cheque) -> {
+        LOGGER.info("Ejecutando pipeline de actualización de marca de Canje Interno del cheque con id {}", cheque.getId());
+        if (!Objects.isNull(cheque.getCmc7()) && "191".equals(cheque.getCmc7().getCodBanco())) {
+            cheque.setCanjeInterno(true);
+        }
+        return cheque;
+    };
+
     /**
      * Funcion que permite calcular el nuevo estado del cheque.
      */
     public Function2<Cheque, Cheque, Cheque> setStatus = (correccion, cheque) -> {
         LOGGER.info("Ejecutando pipeline de actualización de Estado del cheque con id {}", cheque.getId());
-        if (cheque.isCorregido() && cheque.getObservaciones().isEmpty()) {
-            //Cheque corregido y sin observaciones
-            cheque.setEstado(EstadoCheque.CORREGIDO);
-        } else if (cheque.isCorregido()) {
+        if (cheque.isCorregido()) {
             // Verifica si el cheque esta duplicado por CMC7
-            if (!cheque.getObservaciones().contains(Cheque.Observacion.CMC7)
-                    && chequeService.existeCMC7Dulicado(cheque.getCmc7().getNumero())) {
+            if (chequeService.existeCMC7Dulicado(cheque.getCmc7().getNumero(), cheque.getId())) {
                 LOGGER.info("Marcando al cheque con id {} como duplicado por cmc7", cheque.getId());
                 cheque.setEstado(EstadoCheque.ELIMINADO_DUP);
-            } else {
+            } else if (cheque.getObservaciones().isEmpty()) {
+                //Cheque corregido y sin observaciones
+                cheque.setEstado(EstadoCheque.CORREGIDO);
+            } else if (cheque.getObservaciones().contains(Cheque.Observacion.CMC7)) {
                 //Cheque corregido pero con observaciones.
                 cheque.setEstado(EstadoCheque.OBSERVADO);
             }

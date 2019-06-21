@@ -65,6 +65,30 @@ public class Cheque implements Serializable {
     @Column(name = "truncado")
     private Boolean truncado;
 
+    @Column(name = "canjeInterno")
+    private Boolean canjeInterno;
+
+    @Column(name = "fechaRecepcionFisico")
+    private Date fechaRecepcionFisico;
+
+    @Column(name = "idDdif")
+    private Long idDdif;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Banco bancoDepositante;
+
+    @Column(name = "redeposito")
+    private Boolean redeposito;
+
+    @Column(name = "camaraEnviada")
+    private boolean camaraEnviada;
+
+    @Column(name = "rechazoRecibido")
+    private Boolean rechazoRecibido = false;
+
+    @Column(name = "fechaRecepcionRechazo")
+    private Date fechaRecepcionRechazo;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Observacion> observaciones;
 
@@ -175,12 +199,20 @@ public class Cheque implements Serializable {
         this.cmc7 = cmc7;
     }
 
-    public Boolean getTruncado() {
+    public Boolean isTruncado() {
         return truncado;
     }
 
     public void setTruncado(Boolean truncado) {
         this.truncado = truncado;
+    }
+
+    public Boolean isCanjeInterno() {
+        return canjeInterno;
+    }
+
+    public void setCanjeInterno(Boolean canjeInterno) {
+        this.canjeInterno = canjeInterno;
     }
 
     public void addObservacion(Observacion observacion) {
