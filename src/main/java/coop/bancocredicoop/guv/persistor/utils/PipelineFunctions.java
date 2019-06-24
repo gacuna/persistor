@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
@@ -130,13 +131,15 @@ public class PipelineFunctions {
         if (cheque.isCorregido()) {
             // Verifica si el cheque esta duplicado por CMC7
             if (chequeService.existeCMC7Dulicado(cheque.getCmc7().getNumero(), cheque.getId())) {
-                LOGGER.info("Marcando al cheque con id {} como duplicado por cmc7", cheque.getId());
+                LOGGER.info("Actualizando el cheque con id {} a ELIMINADO_DUP por cmc7", cheque.getId());
                 cheque.setEstado(EstadoCheque.ELIMINADO_DUP);
             } else if (cheque.getObservaciones().isEmpty()) {
                 //Cheque corregido y sin observaciones
+                LOGGER.info("Actualizando el cheque con id {} como CORREGIDO", cheque.getId());
                 cheque.setEstado(EstadoCheque.CORREGIDO);
-            } else if (cheque.getObservaciones().contains(Cheque.Observacion.CMC7)) {
+            } else if (!CollectionUtils.isEmpty(cheque.getObservaciones())) {
                 //Cheque corregido pero con observaciones.
+                LOGGER.info("Actualizando el cheque con id {} como OBSERVADO", cheque.getId());
                 cheque.setEstado(EstadoCheque.OBSERVADO);
             }
         }
