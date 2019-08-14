@@ -29,7 +29,7 @@ public class ChequeService {
 
     private Integer cantidadDias;
 
-    private static Logger LOGGER = LoggerFactory.getLogger(CorreccionService.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(ChequeService.class);
 
     @PostConstruct
     private void loadParameters() {

@@ -9,16 +9,11 @@ import coop.bancocredicoop.guv.persistor.models.TipoCorreccionEnum;
 import coop.bancocredicoop.guv.persistor.services.CorreccionService;
 import coop.bancocredicoop.guv.persistor.services.KafkaProducer;
 import coop.bancocredicoop.guv.persistor.utils.PipelineFunctions;
-import io.vavr.Function1;
 import io.vavr.Function2;
-import io.vavr.control.Try;
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 import static io.vavr.API.*;
 
@@ -103,8 +98,8 @@ public class UpdateChequeActor extends AbstractActor {
                 Case($(TipoCorreccionEnum.FILIAL), (type) -> functions.applyAll));
         return pipeline
                 .andThen(functions.setCanjeInterno.curried().apply(msg.getCheque()))
-                .andThen(functions.setStatus.curried().apply(msg.getCheque()))
-                .andThen(functions.setFechaDiferidaAndCuit.curried().apply(msg.getCheque()));
+                .andThen(functions.setFechaDiferidaAndCuit.curried().apply(msg.getCheque())
+                .andThen(functions.setStatus.curried().apply(msg.getCheque())));
     }
 
     /**
@@ -116,8 +111,8 @@ public class UpdateChequeActor extends AbstractActor {
     private Function2<Cheque, Cheque, Cheque> observacionPipeline(UpdateMessage msg) {
         LOGGER.info("Pipeline de observacion seteado para cheque con id {}", msg.getCheque().getId());
         return functions.setObservacion.apply(msg.getType().right().get())
-                .andThen(functions.setStatus.curried().apply(msg.getCheque()))
-                .andThen(functions.setFechaDiferidaAndCuit.curried().apply(msg.getCheque()));
+                .andThen(functions.setFechaDiferidaAndCuit.curried().apply(msg.getCheque())
+                .andThen(functions.setStatus.curried().apply(msg.getCheque())));
     }
 
     private void logAndReturn(Throwable e) {

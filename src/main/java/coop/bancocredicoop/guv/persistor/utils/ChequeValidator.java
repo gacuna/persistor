@@ -12,13 +12,13 @@ public class ChequeValidator {
 
     private final static List<EstadoCheque> estadosInvalidos = Arrays.asList(EstadoCheque.CORREGIDO,
             EstadoCheque.OBSERVADO, EstadoCheque.DERIVADO_FILIAL, EstadoCheque.RECHAZADO, EstadoCheque.BALANCEADO,
-            EstadoCheque.DIFERIDO_BALANCEADO, EstadoCheque.ELIMINADO_DUP, EstadoCheque.ELIMINADO);
+            EstadoCheque.DIFERIDO_BALANCEADO, EstadoCheque.ELIMINADO_DUP, EstadoCheque.ELIMINADO, EstadoCheque.PRESENTADO);
 
     //Si la correccion es por parte de la filial el cheque se encuentra OBSERVADO y el dep DERIVADO_FILIAL
     public static Validation<String, Cheque> validateStatusForUpdating(Cheque cheque) {
-        return (cheque.getDeposito().getEstado().equals(Deposito.Estado.DERIVADO_FILIAL) ||
-                !estadosInvalidos.contains(cheque.getEstado())) ?
-                Validation.valid(cheque):
+        return (cheque.getDeposito().getEstado() == Deposito.Estado.DERIVADO_FILIAL) ||
+                !estadosInvalidos.contains(cheque.getEstado()) ?
+                Validation.valid(cheque) :
                 Validation.invalid("El estado del cheque ");
     }
 
