@@ -21,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,7 +53,7 @@ public class PipelineFunctions {
      * Funcion para setear el importe y calcular si un cheque debe ser marcado como truncado.
      */
     public Function2<Cheque, Cheque, Cheque> setImporteAndTruncado = (correccion, cheque) -> {
-        LOGGER.info("Ejecutando pipeline de actualización de Importe y Truncamiento del cheque con id {}", cheque.getId());
+        LOGGER.info("Ejecutando pipeline de actualizacion de Importe y Truncamiento del cheque con id {}", cheque.getId());
         boolean truncado = this.importeTruncamiento.orElse(BigDecimal.ZERO).compareTo(correccion.getImporte()) > 0;
         cheque.setTruncado(truncado);
         cheque.setImporte(correccion.getImporte());
@@ -106,6 +107,16 @@ public class PipelineFunctions {
     };
 
     /**
+     * Funcion para calcular que fecha del cheque debe setearse.
+     */
+    public Function2<Cheque, Cheque, Cheque> setFechaDiferida = (correccion, cheque) -> {
+        LOGGER.info("Ejecutando pipeline de actualizacion de Fecha Diferida del cheque con id {}", cheque.getId());
+        cheque.setFechaDiferida(correccion.getFechaDiferida());
+        return cheque;
+    };
+
+
+    /**
      * Funcion para setear el cuit de un cheque.
      */
     public Function2<Cheque, Cheque, Cheque> setCuit = (correccion, cheque) -> {
@@ -155,13 +166,13 @@ public class PipelineFunctions {
         LOGGER.info("Ejecutando pipeline de Valores Negociados del cheque con id {}", cheque.getId());
         if (Deposito.TipoOperatoria.VAL_NEG.equals(cheque.getDeposito().getTipoOperatoria())) {
             if (cheque.getFechaDiferida() == null) {
-                Date proxHabil = feriadoService.calcularProximoDiaHabil(new Date(), 1);
-                cheque.setFechaDiferida(proxHabil);
-                LOGGER.info("Actualizando fecha diferida {} al cheque con id {}", proxHabil, CREDICOOP_CUIT, cheque.getId());
+                Date fechaDiferida = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
+                cheque.setFechaDiferida(fechaDiferida);
+                LOGGER.info("Actualizando fecha diferida {} al cheque con id {}", fechaDiferida, cheque.getId());
             }
             if (StringUtils.trimToEmpty(cheque.getCuit()).length() == 0) {
                 cheque.setCuit(CREDICOOP_CUIT);
-                LOGGER.info("Actualizando cuit {} (CREDICOOP) al cheque con id {}", CREDICOOP_CUIT, cheque.getId());
+                LOGGER.info("Actualizando cuit {} (BCO. CREDICOOP) al cheque con id {}", CREDICOOP_CUIT, cheque.getId());
             }
         }
         return cheque;
@@ -180,13 +191,12 @@ public class PipelineFunctions {
             this.unsetObservations.curried().apply(correccion)
             .andThen(this.setImporteAndTruncado.curried().apply(correccion))
             .andThen(this.setCMC7.curried().apply(correccion))
-            .andThen(this.setFecha.curried().apply(correccion))
+            .andThen(this.setFechaDiferida.curried().apply(correccion))
             .andThen(this.setCuit.curried().apply(correccion))
             .apply(cheque);
 
     public Function2<Cheque, Cheque, Cheque> unsetObservations = ((correccion, cheque) -> {
-        if(cheque.getDeposito() != null &&
-                cheque.getDeposito().getEstado().equals(Deposito.Estado.DERIVADO_FILIAL) &&
+        if(cheque.getDeposito().getEstado() == Deposito.Estado.DERIVADO_FILIAL &&
                 !correccion.getObservaciones().isEmpty()) {
             LOGGER.info("Removiendo observaciones");
             chequeService.quitarObservaciones(correccion, cheque);
